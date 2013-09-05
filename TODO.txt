@@ -3,7 +3,11 @@
 (_)clean up all network-related functions
 (X)clean up updateOwnedStocks function
 (_)figure out why we need to use setCoreModel function so many times
+<<<<<<< HEAD
 (_)portfolio - view controller
 (_)portfolio - table
 (_)portfolio - display value value
 (_)portfolio table cell - buy/sell option
+=======
+(_)draw a table of currently owned stocks on the portfolio page
+>>>>>>> f83dd0c9fdccd2593ac8b57641f3cc11804611be
