@@ -170,7 +170,7 @@
     else
     {
         double totalPrice = price * amount;
-        double debugPrice = self.userModel.coreModel.portfolio.cashvalue.doubleValue;
+        //double debugPrice = self.userModel.coreModel.portfolio.cashvalue.doubleValue;
         //if you can buy the stock
         if (totalPrice <= self.userModel.coreModel.portfolio.cashvalue.doubleValue)
         {
