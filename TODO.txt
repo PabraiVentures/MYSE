@@ -2,3 +2,4 @@
 (_)encapsulate all networks functions in try/catch
 (_)clean up all network-related functions
 (X)clean up updateOwnedStocks function
+(_)figure out why we need to use setCoreModel function so many times
