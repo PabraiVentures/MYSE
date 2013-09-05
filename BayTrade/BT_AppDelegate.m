@@ -24,7 +24,7 @@
 @implementation BT_AppDelegate
 @synthesize managedObjectModel=_managedObjectModel;
 @synthesize session = _session;
-
+//Session and object model are used for stackmob data transfer
 
 
 /*---------------------application didFinishLaunchingWithOptions:(NSDictionary*) launchOptions------------------
