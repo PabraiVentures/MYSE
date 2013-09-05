@@ -3,3 +3,4 @@
 (_)clean up all network-related functions
 (X)clean up updateOwnedStocks function
 (_)figure out why we need to use setCoreModel function so many times
+(_)draw a table of currently owned stocks on the portfolio page
