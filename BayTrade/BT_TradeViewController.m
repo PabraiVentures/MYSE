@@ -113,8 +113,8 @@
     if(needsUpdate)
     {
         /***Updates display HERE now***/
-        [self updateBuyPower];
-        [self updateValue];
+       [self updateBuyPower];
+       [self updateValue];
     }
         
     } onFailure:^(NSError *error) {
@@ -343,6 +343,9 @@
     }
     return amtAndPrc;
 }
+
+
+
 
 
 /**
