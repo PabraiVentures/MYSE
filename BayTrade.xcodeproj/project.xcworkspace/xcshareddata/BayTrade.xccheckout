@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>BD31BED0-2B50-4D72-8DD0-770BC08FF920</string>
+	<key>IDESourceControlProjectName</key>
+	<string>BayTrade</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>4E38DED6-6AE4-4149-B03B-CE56F0E6E691</key>
+		<string>https://github.com/nate8185/MYSE.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>BayTrade.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>4E38DED6-6AE4-4149-B03B-CE56F0E6E691</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/nate8185/MYSE.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>4E38DED6-6AE4-4149-B03B-CE56F0E6E691</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>4E38DED6-6AE4-4149-B03B-CE56F0E6E691</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MYSE</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -46,7 +46,7 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     
-    self.ScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0, 35.0, 320.0, 465.0) ];
+    self.ScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0, 65.0, 320.0, 465.0) ];
     [self.view addSubview:self.ScrollView];
     
     //get the trade events for this user
