@@ -1,0 +1,4 @@
+(_)encapsulate NSLogs in if-debug statements
+(_)encapsulate all networks functions in try/catch
+(_)clean up all network-related functions
+(X)clean up updateOwnedStocks function
