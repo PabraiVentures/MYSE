@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 byteNsell. All rights reserved.
 //
 
-#import "Corestock.h"
+#import "CoreStock.h"
 
 
-@implementation Corestock
+@implementation CoreStock
 
 @dynamic amount;
 @dynamic buyprice;

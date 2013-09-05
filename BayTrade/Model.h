@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Portfolio.h"
 #import "Stock.h"
-#import "Coremodel.h"
+#import "CorePortfolio.h"
+#import "CoreModel.h"
 #import "BT_TradeEvent.h"
 
 #define QUOTE_QUERY_PREFIX @"http://query.yahooapis.com/v1/public/yql?q=select%20symbol%2C%20Open%20from%20yahoo.finance.quotes%20where%20symbol%20in%20("
@@ -18,10 +18,10 @@
 
 @interface Model : NSObject
 
-@property (nonatomic, retain) Portfolio *modelPort;
+@property (nonatomic, retain) CorePortfolio *modelPort;
 @property (nonatomic, retain) NSMutableArray* eventArray;
 @property (nonatomic,retain) NSString* userID;
-@property (nonatomic, retain) Coremodel* coreModel;
+@property (nonatomic, retain) CoreModel* coreModel;
 
 
 //-(void)assignPort: (Portfolio*) myPort;

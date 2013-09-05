@@ -20,6 +20,7 @@
 @property (strong, nonatomic) id<FBGraphUser> loggedInUser;
 @property (weak, nonatomic) IBOutlet FBProfilePictureView *profilePic;
 @property (weak, nonatomic) IBOutlet UILabel *investorName;
+
 - (IBAction)buyButtonClicked:(id)sender;
 - (IBAction)sellButtonClicked:(id)sender;
 - (IBAction)logoutButtonClicked:(id)sender;

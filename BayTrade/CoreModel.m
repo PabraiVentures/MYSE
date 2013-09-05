@@ -6,12 +6,11 @@
 //  Copyright (c) 2013 byteNsell. All rights reserved.
 //
 
-#import "Coremodel.h"
-#import "Coreportfolio.h"
-#import "Coretradeevent.h"
+#import "CoreModel.h"
+#import "CorePortfolio.h"
+#import "CoreTradeEvent.h"
 
-
-@implementation Coremodel
+@implementation CoreModel
 
 @dynamic model_id;
 @dynamic portfolio;

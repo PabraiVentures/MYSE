@@ -54,28 +54,26 @@
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"totalValue" ascending:NO] ;
     NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
     NSArray *sortedArray;
-    sortedArray = [self.userModel.modelPort.stockList sortedArrayUsingDescriptors:sortDescriptors];
+    sortedArray = [self.userModel.modelPort.stocks sortedArrayUsingDescriptors:sortDescriptors];
     
     //need to take care of removing stocks and having less stocks then last time on page!!!!!!!
     
     //replace current array with sorted array
-    for (int i = 0; i < [self.userModel.modelPort.stockList count]; i++) {
-        [self.userModel.modelPort.stockList replaceObjectAtIndex:i withObject:[sortedArray objectAtIndex:i]];
-    }
+    self.userModel.modelPort.stocks = [NSSet setWithArray:sortedArray];
     
-    if([self.userModel.modelPort.stockList count] > 0)
+    if([self.userModel.modelPort.stocks count] > 0)
     {
         int counter = 0;
         int position = 80;
-        while (counter < 4 && counter < [self.userModel.modelPort.stockList count]) {
-            [self buildLargestSTockButtons: counter++ andPos:position];
+        while (counter < 4 && counter < [self.userModel.modelPort.stocks count]) {
+            [self buildLargestStockButtons: counter++ andPos:position];
             position += 50;
         }
     }
     
 }
 
--(void) buildLargestSTockButtons: (int) index andPos: (int) pos
+-(void) buildLargestStockButtons: (int) index andPos: (int) pos
 {
     UIButton *buttonL = [UIButton buttonWithType:UIButtonTypeCustom];
     buttonL.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -87,8 +85,8 @@
     buttonL.backgroundColor = c;
 
     
-    NSString *leftTitle=[NSString stringWithFormat:@"%@            $%.2f", ((Stock*)([self.userModel.modelPort.stockList objectAtIndex:index])).symbol,
-                         ((Stock*)([self.userModel.modelPort.stockList objectAtIndex:index])).totalValue ];
+    NSString *leftTitle=[NSString stringWithFormat:@"%@            $%.2f", ((Stock*)([self.userModel.modelPort.stocks objectAtIndex:index])).symbol,
+                         ((Stock*)([self.userModel.modelPort.stocks objectAtIndex:index])).totalValue ];
     
     
     buttonL.titleLabel.font = [UIFont systemFontOfSize:14];
@@ -123,7 +121,7 @@
     buttonL.backgroundColor = c;
     buttonR.backgroundColor = c;
     
-    NSString *leftTitle=[NSString stringWithFormat:@"Account Value(USD):\n$%.2f",self.userModel.modelPort.value];
+    NSString *leftTitle=[NSString stringWithFormat:@"Account Value(USD):\n$%.2f", self.userModel.modelPort.totalPortfolioValue];
     
     buttonL.titleLabel.font = [UIFont systemFontOfSize:14];
     buttonR.titleLabel.font = [UIFont systemFontOfSize:14];

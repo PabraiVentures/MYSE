@@ -9,19 +9,19 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Coreportfolio, Coretradeevent;
+@class CorePortfolio, CoreTradeEvent;
 
-@interface Coremodel : NSManagedObject
+@interface CoreModel : NSManagedObject
 
 @property (nonatomic, retain) NSString * model_id;
-@property (nonatomic, retain) Coreportfolio *portfolio;
+@property (nonatomic, retain) CorePortfolio *portfolio;
 @property (nonatomic, retain) NSSet *tradeevents;
 @end
 
-@interface Coremodel (CoreDataGeneratedAccessors)
+@interface CoreModel (CoreDataGeneratedAccessors)
 
-- (void)addTradeeventsObject:(Coretradeevent *)value;
-- (void)removeTradeeventsObject:(Coretradeevent *)value;
+- (void)addTradeeventsObject:(CoreTradeEvent *)value;
+- (void)removeTradeeventsObject:(CoreTradeEvent *)value;
 - (void)addTradeevents:(NSSet *)values;
 - (void)removeTradeevents:(NSSet *)values;
 

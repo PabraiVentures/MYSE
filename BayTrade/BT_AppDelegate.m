@@ -16,8 +16,8 @@
 
 #import "BT_AppDelegate.h"
 #import "StackMob.h"
-#import "Coreportfolio.h"
-#import "Coremodel.h"
+#import "CorePortfolio.h"
+#import "CoreModel.h"
 #import <CoreData/CoreData.h>
 @class NSManagedObject;
 

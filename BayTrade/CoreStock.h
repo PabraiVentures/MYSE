@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 
-@interface Corestock : NSManagedObject
+@interface CoreStock : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * amount;
 @property (nonatomic, retain) NSNumber * buyprice;

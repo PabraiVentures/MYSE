@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 byteNsell. All rights reserved.
 //
 
-#import "Coretradeevent.h"
+#import "CoreTradeEvent.h"
 
 
-@implementation Coretradeevent
+@implementation CoreTradeEvent
 
 @dynamic actionid;
 @dynamic ticker;

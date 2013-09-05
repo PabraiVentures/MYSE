@@ -10,15 +10,14 @@
 #import "BT_TabBarController.h"
 #import "BT_AppDelegate.h"
 #import "Stock.h"
-#import "Portfolio.h"
 #import "Controller.h"
 #import "Model.h"
 #import "StackMob.h"
 #import <CoreData/CoreData.h>
-#import "Coremodel.h"
-#import "Corestock.h"
-#import "Coreportfolio.h"
-#import "Coretradeevent.h"
+#import "CoreModel.h"
+#import "CoreStock.h"
+#import "CorePortfolio.h"
+#import "CoreTradeEvent.h"
 #import <FacebookSDK/FacebookSDK.h>
 @interface BT_TradeViewController ()
 
@@ -83,7 +82,7 @@
     /********GET COREMODEL FROM STACKMOB***********/
     //download stackmob coremodel and save to local coremodel
     //get the model, update and send back to stackmob
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Coremodel"];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CoreModel"];
     
     // query for coremodel for THIS user
     NSString* coreModelRequest=[ NSString stringWithFormat:@"user == '%@'",self.userModel.userID ];
@@ -100,13 +99,12 @@
     
     @try {
         NSManagedObject* myModel=[results objectAtIndex:0];
-        self.userModel.coreModel = (Coremodel *) myModel; //now we can access coremodel from anywhere
+        self.userModel.coreModel = (CoreModel *) myModel; //now we can access coremodel from anywhere
     }
     @catch (NSException *exception) {
         [self.valueDisplay setText:@"100000.00"];
         [self.cashDisplay setText:@"100000.00"];
-        self.userModel.coreModel.portfolio.cashvalue = [NSNumber numberWithDouble:100000.00];
-        self.userModel.coreModel.portfolio.totalvalue = [NSNumber numberWithDouble:100000.00];
+        self.userModel.coreModel.portfolio.totalcashvalue = 100000.00;
         needsUpdate = NO;
     }
     
@@ -172,12 +170,12 @@
         double totalPrice = price * amount;
         //double debugPrice = self.userModel.coreModel.portfolio.cashvalue.doubleValue;
         //if you can buy the stock
-        if (totalPrice <= self.userModel.coreModel.portfolio.cashvalue.doubleValue)
+        if (totalPrice <= self.userModel.coreModel.portfolio.totalcashvalue)
         {
-            self.userModel.modelPort.cash = self.userModel.modelPort.cash - totalPrice;
+            self.userModel.modelPort.totalcashvalue = self.userModel.modelPort.totalcashvalue - totalPrice;
             
             //get the model, update and send back to stackmob
-            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Coremodel"];
+            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CoreModel"];
             // query for coremodel for THIS user
             NSString* getRightUser=[ NSString stringWithFormat:@"user == '%@'",self.userModel.userID ];
             [fetchRequest setPredicate:[NSPredicate predicateWithFormat:getRightUser]];
@@ -187,18 +185,18 @@
             [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {
                 NSLog(@"!!!!!%@",results);
                 NSManagedObject* myModel=[results objectAtIndex:0];
-                self.userModel.coreModel= (Coremodel* ) myModel;
+                self.userModel.coreModel= (CoreModel* ) myModel;
                 [self.userModel updateHistory:[Stock initWithSymbol:buyingSymbol AndPrice:price AndAmount:amount] andAmount: amountForHistory andID:1];
                 
                 
                 //subtract money from purchase
-                double cashMoney = self.userModel.coreModel.portfolio.cashvalue.doubleValue - (price * amount);
-                self.userModel.coreModel.portfolio.cashvalue = [NSNumber numberWithDouble:cashMoney];
+                double cashMoney = self.userModel.coreModel.portfolio.totalcashvalue - (price * amount);
+                self.userModel.coreModel.portfolio.totalcashvalue = cashMoney;
                 NSMutableArray *amountAndPrice = [self accountForPrevOwnedStock:buyingSymbol andInt: amount andPrice:price];
                 
                 
                 /***CREATE CORESTOCK TO BE PLACED INTO COREMODEL.PORTFOLIO******/
-                Corestock* thestock=[NSEntityDescription insertNewObjectForEntityForName:@"Corestock" inManagedObjectContext:self.managedObjectContext];
+                CoreStock* thestock=[NSEntityDescription insertNewObjectForEntityForName:@"CoreStock" inManagedObjectContext:self.managedObjectContext];
                 //NSNumber* theamt=[NSNumber numberWithInt:amount];
                 thestock.amount = [amountAndPrice objectAtIndex:0];
                 thestock.buyprice=[amountAndPrice objectAtIndex:1];
@@ -207,7 +205,7 @@
                 /***DONE CREATING CORESTOCK TO BE PLACED INTO COREMODEL.PORTFOLIO******/
                 
                 //ADDING STOCK TO COREMODEL.PORTFOLIO TO BE SAVED LATER
-                [((Coremodel*)(myModel)).portfolio addStocksObject:thestock];// the stock is now in the portfolio
+                [((CoreModel*)(myModel)).portfolio addStocksObject:thestock];// the stock is now in the portfolio
                 //SAVE COREMODEL TO STACKMOB
                 
                 
@@ -231,9 +229,8 @@
             [alert show];
             
         }
-        for(int i = 0; i < [self.userModel.modelPort.stockList count]; i++)
+        for(Stock *s in self.userModel.modelPort.stocks)
         {
-            Stock* s = [self.userModel.modelPort.stockList objectAtIndex:i];
             NSLog(@"%@ : $%.2f\tamount:%i\n", s.symbol, s.openPrice, s.amount);
         }
         NSLog(@"\n\n");
@@ -272,14 +269,14 @@
     double value = 0.0;
     double prc = 0.0;
     int amt = 0;
-    for(Corestock *stock in self.userModel.coreModel.portfolio.stocks)
+    for(CoreStock *stock in self.userModel.coreModel.portfolio.stocks)
     {
         prc = stock.buyprice.doubleValue;
         amt = stock.amount.intValue;
         value += (prc * amt);
     }
     
-    value += self.userModel.coreModel.portfolio.cashvalue.doubleValue;
+    value += self.userModel.coreModel.portfolio.totalcashvalue;
     
     NSString *valString = [NSString stringWithFormat:@"$%.2f", value];
     [self.valueDisplay setText: valString];
@@ -287,7 +284,7 @@
 
 - (void)updateBuyPower
 {
-    NSString *money = [NSString stringWithFormat:@"$%.2f", self.userModel.coreModel.portfolio.cashvalue.doubleValue];
+    NSString *money = [NSString stringWithFormat:@"$%.2f", self.userModel.coreModel.portfolio.totalcashvalue];
     [self.cashDisplay setText: money ];
 }
 
@@ -306,9 +303,9 @@
     //Stock *moreStock = NULL;
     
     int matching = -1;
-    for(int i = 0; i < [self.userModel.modelPort.stockList count]; i++)
+    for(int i = 0; i < [self.userModel.modelPort.stocks count]; i++)
     {
-        Stock* s = [self.userModel.modelPort.stockList objectAtIndex:i];
+        Stock* s = [self.userModel.modelPort.stocks objectAtIndex:i];
         if ([s.symbol isEqual: symbol])
         {
             matching = i;
@@ -327,7 +324,7 @@
     NSNumber *thePrice = [NSNumber numberWithDouble:price];
     NSMutableArray *amtAndPrc = [[NSMutableArray alloc] initWithObjects:theAmount, thePrice, nil];
     
-    for(Corestock* stock in self.userModel.coreModel.portfolio.stocks)
+    for(CoreStock* stock in self.userModel.coreModel.portfolio.stocks)
     {
         //Stock* s = [self.userModel.coreModel.portfolio.stocks objectAtIndex:i];
         if ([symbol isEqual: stock.symbol])
@@ -352,7 +349,7 @@
 {
     NSNumber *theAmountToSell = [NSNumber numberWithInt:amount];
     
-    for(Corestock* stock in self.userModel.coreModel.portfolio.stocks)
+    for(CoreStock* stock in self.userModel.coreModel.portfolio.stocks)
     {
         if ([symbol isEqual: stock.symbol])
         {
@@ -380,8 +377,8 @@
             NSString *myStockPrice = sellData[@"Open"];
             double sellPrice = [myStockPrice doubleValue];
             
-            self.userModel.coreModel.portfolio.cashvalue =
-            [NSNumber numberWithDouble:(self.userModel.coreModel.portfolio.cashvalue.doubleValue+sellPrice * theAmountToSell.intValue)];
+            self.userModel.coreModel.portfolio.totalcashvalue =
+            (self.userModel.coreModel.portfolio.totalcashvalue+sellPrice * theAmountToSell.intValue);
             
             /***** CREATE LOCAL STOCK TO SAVE IN HISTORY *****/
             Stock *hStock = [[Stock alloc] init];
@@ -414,14 +411,14 @@
 -(void) updateBoughtStockAmount: (int)amount andPrice: (int) price andMatch: (int) matching
 {
     /*******change amount of stocks in portfolio********/
-    double newvalue= ((Stock*)([self.userModel.modelPort.stockList objectAtIndex:matching])).purchasedPrice *  ((Stock*)([self.userModel.modelPort.stockList objectAtIndex:matching])).amount + price*amount;
+    double newvalue= ((Stock*)([self.userModel.modelPort.stocks objectAtIndex:matching])).purchasedPrice *  ((Stock*)([self.userModel.modelPort.stocks objectAtIndex:matching])).amount + price*amount;
     /*******change amount of stocks in portfolio********/
     
     /*******update weighted buy price*************/
-    double newqty= amount+ ((Stock*)([self.userModel.modelPort.stockList objectAtIndex:matching])).amount;
+    double newqty= amount+ ((Stock*)([self.userModel.modelPort.stocks objectAtIndex:matching])).amount;
     double newpurchasedprice=newvalue/newqty;
-    ((Stock*)([self.userModel.modelPort.stockList objectAtIndex:matching])).amount = amount;//update amount
-    ((Stock*)([self.userModel.modelPort.stockList objectAtIndex:matching])).purchasedPrice=newpurchasedprice;
+    ((Stock*)([self.userModel.modelPort.stocks objectAtIndex:matching])).amount = amount;//update amount
+    ((Stock*)([self.userModel.modelPort.stocks objectAtIndex:matching])).purchasedPrice=newpurchasedprice;
     /*******update weighted buy price*************/
     
 }
@@ -430,8 +427,7 @@
  *  Updates stock data in stackmob with current Stock Prices
  */
 - (void) updateOwnedStocks {
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Corestock"];//get the model, update and send back to stackmob
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CoreStock"];//get the model, update and send back to stackmob
     
     NSString* getOwnedStocks= [NSString stringWithFormat:@"sm_owner == 'user/%@'",self.userModel.userID];// query for coremodel for THIS user
     
@@ -445,7 +441,7 @@
         NSMutableArray *ownedSymbols = [[NSMutableArray alloc] init];//create array of symbols to pass to Yahoo! Finance
         for(NSManagedObject* stock in ownedStocks)
         {
-            Corestock *ownedStock = (Corestock *) stock;
+            CoreStock *ownedStock = (CoreStock *) stock;
             [ownedSymbols addObject:ownedStock.symbol];
         }
         
@@ -527,7 +523,7 @@
         NSLog(@"dictArray: %@", dictArray);
         
         //loop through all stocks and update with bidRealTime values
-        for(Corestock* stock in self.userModel.coreModel.portfolio.stocks)
+        for(CoreStock* stock in self.userModel.coreModel.portfolio.stocks)
         {
             NSLog(@"looping through stocks");
             NSLog(@"%@", stock.symbol);

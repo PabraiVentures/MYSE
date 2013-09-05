@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		525122A017D774FC00A8782B /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5251229F17D774FC00A8782B /* FacebookSDK.framework */; };
+		525122A617D8FC0100A8782B /* BT_PortfolioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 525122A517D8FC0100A8782B /* BT_PortfolioViewController.m */; };
 		7D06431D17BAE70800889177 /* BT_LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D06431C17BAE70800889177 /* BT_LoginViewController.m */; };
 		7DF8F95717BC7F91005553A1 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DF8F95617BC7F91005553A1 /* User.m */; };
 		9307A2EE17A43E6B00E647DF /* wallpaper.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9307A2ED17A43E6B00E647DF /* wallpaper.jpg */; };
@@ -27,10 +28,10 @@
 		93D5A0C917A3C73B00ECA5D8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93D5A0C817A3C73B00ECA5D8 /* SystemConfiguration.framework */; };
 		93D5A0CB17A3C74500ECA5D8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93D5A0CA17A3C74500ECA5D8 /* MobileCoreServices.framework */; };
 		93D5A0CD17A3C75300ECA5D8 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93D5A0CC17A3C75300ECA5D8 /* CoreLocation.framework */; };
-		93DD2C5817A3E35900B3FE71 /* Coretradeevent.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DD2C5717A3E35900B3FE71 /* Coretradeevent.m */; };
-		93DD2C5B17A3E38300B3FE71 /* Corestock.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DD2C5A17A3E38300B3FE71 /* Corestock.m */; };
-		93DD2C5E17A3E39600B3FE71 /* Coreportfolio.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DD2C5D17A3E39600B3FE71 /* Coreportfolio.m */; };
-		93DD2C6117A3E3AB00B3FE71 /* Coremodel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DD2C6017A3E3AB00B3FE71 /* Coremodel.m */; };
+		93DD2C5817A3E35900B3FE71 /* CoreTradeEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DD2C5717A3E35900B3FE71 /* CoreTradeEvent.m */; };
+		93DD2C5B17A3E38300B3FE71 /* CoreStock.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DD2C5A17A3E38300B3FE71 /* CoreStock.m */; };
+		93DD2C5E17A3E39600B3FE71 /* CorePortfolio.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DD2C5D17A3E39600B3FE71 /* CorePortfolio.m */; };
+		93DD2C6117A3E3AB00B3FE71 /* CoreModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DD2C6017A3E3AB00B3FE71 /* CoreModel.m */; };
 		93E19F7C17A36420000D60B5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E19F7B17A36420000D60B5 /* UIKit.framework */; };
 		93E19F7E17A36420000D60B5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E19F7D17A36420000D60B5 /* Foundation.framework */; };
 		93E19F8017A36420000D60B5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E19F7F17A36420000D60B5 /* CoreGraphics.framework */; };
@@ -51,7 +52,6 @@
 		93E19FC317A36492000D60B5 /* BT_TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E19FC217A36492000D60B5 /* BT_TabBarController.m */; };
 		93E19FCB17A365E9000D60B5 /* Model.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E19FC817A365E8000D60B5 /* Model.m */; };
 		93E19FCC17A365E9000D60B5 /* Stock.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E19FCA17A365E8000D60B5 /* Stock.m */; };
-		93E19FCF17A36681000D60B5 /* Portfolio.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E19FCE17A36681000D60B5 /* Portfolio.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +66,8 @@
 
 /* Begin PBXFileReference section */
 		5251229F17D774FC00A8782B /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		525122A417D8FC0000A8782B /* BT_PortfolioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BT_PortfolioViewController.h; sourceTree = "<group>"; };
+		525122A517D8FC0100A8782B /* BT_PortfolioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BT_PortfolioViewController.m; sourceTree = "<group>"; };
 		7D06431B17BAE70800889177 /* BT_LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BT_LoginViewController.h; sourceTree = "<group>"; };
 		7D06431C17BAE70800889177 /* BT_LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BT_LoginViewController.m; sourceTree = "<group>"; };
 		7DF8F95417BC5CC7005553A1 /* BT_AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BT_AppDelegate.h; sourceTree = "<group>"; };
@@ -142,14 +144,14 @@
 		93D5A0C817A3C73B00ECA5D8 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		93D5A0CA17A3C74500ECA5D8 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		93D5A0CC17A3C75300ECA5D8 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		93DD2C5617A3E35900B3FE71 /* Coretradeevent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coretradeevent.h; sourceTree = "<group>"; };
-		93DD2C5717A3E35900B3FE71 /* Coretradeevent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Coretradeevent.m; sourceTree = "<group>"; };
-		93DD2C5917A3E38300B3FE71 /* Corestock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Corestock.h; sourceTree = "<group>"; };
-		93DD2C5A17A3E38300B3FE71 /* Corestock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Corestock.m; sourceTree = "<group>"; };
-		93DD2C5C17A3E39600B3FE71 /* Coreportfolio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coreportfolio.h; sourceTree = "<group>"; };
-		93DD2C5D17A3E39600B3FE71 /* Coreportfolio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Coreportfolio.m; sourceTree = "<group>"; };
-		93DD2C5F17A3E3AB00B3FE71 /* Coremodel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coremodel.h; sourceTree = "<group>"; };
-		93DD2C6017A3E3AB00B3FE71 /* Coremodel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Coremodel.m; sourceTree = "<group>"; };
+		93DD2C5617A3E35900B3FE71 /* CoreTradeEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreTradeEvent.h; sourceTree = "<group>"; };
+		93DD2C5717A3E35900B3FE71 /* CoreTradeEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreTradeEvent.m; sourceTree = "<group>"; };
+		93DD2C5917A3E38300B3FE71 /* CoreStock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreStock.h; sourceTree = "<group>"; };
+		93DD2C5A17A3E38300B3FE71 /* CoreStock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreStock.m; sourceTree = "<group>"; };
+		93DD2C5C17A3E39600B3FE71 /* CorePortfolio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CorePortfolio.h; sourceTree = "<group>"; };
+		93DD2C5D17A3E39600B3FE71 /* CorePortfolio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CorePortfolio.m; sourceTree = "<group>"; };
+		93DD2C5F17A3E3AB00B3FE71 /* CoreModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreModel.h; sourceTree = "<group>"; };
+		93DD2C6017A3E3AB00B3FE71 /* CoreModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreModel.m; sourceTree = "<group>"; };
 		93E19F7817A36420000D60B5 /* BayTrade.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BayTrade.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93E19F7B17A36420000D60B5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		93E19F7D17A36420000D60B5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -179,8 +181,6 @@
 		93E19FC817A365E8000D60B5 /* Model.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Model.m; sourceTree = "<group>"; };
 		93E19FC917A365E8000D60B5 /* Stock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stock.h; sourceTree = "<group>"; };
 		93E19FCA17A365E8000D60B5 /* Stock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stock.m; sourceTree = "<group>"; };
-		93E19FCD17A36681000D60B5 /* Portfolio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Portfolio.h; sourceTree = "<group>"; };
-		93E19FCE17A36681000D60B5 /* Portfolio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Portfolio.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,6 +235,8 @@
 			children = (
 				93E19FC117A36492000D60B5 /* BT_TabBarController.h */,
 				93E19FC217A36492000D60B5 /* BT_TabBarController.m */,
+				525122A417D8FC0000A8782B /* BT_PortfolioViewController.h */,
+				525122A517D8FC0100A8782B /* BT_PortfolioViewController.m */,
 				7D06431B17BAE70800889177 /* BT_LoginViewController.h */,
 				7D06431C17BAE70800889177 /* BT_LoginViewController.m */,
 				93E19F9617A36420000D60B5 /* BT_HomeViewController.h */,
@@ -252,22 +254,18 @@
 			children = (
 				93E19FC717A365E8000D60B5 /* Model.h */,
 				93E19FC817A365E8000D60B5 /* Model.m */,
-				93DD2C5F17A3E3AB00B3FE71 /* Coremodel.h */,
-				93DD2C6017A3E3AB00B3FE71 /* Coremodel.m */,
-				93DD2C5C17A3E39600B3FE71 /* Coreportfolio.h */,
-				93DD2C5D17A3E39600B3FE71 /* Coreportfolio.m */,
+				93DD2C5F17A3E3AB00B3FE71 /* CoreModel.h */,
+				93DD2C6017A3E3AB00B3FE71 /* CoreModel.m */,
+				93DD2C5C17A3E39600B3FE71 /* CorePortfolio.h */,
+				93DD2C5D17A3E39600B3FE71 /* CorePortfolio.m */,
 				93A82DB917A3746E00787732 /* BT_TradeEvent.h */,
 				93A82DBA17A3746E00787732 /* BT_TradeEvent.m */,
-				93DD2C5917A3E38300B3FE71 /* Corestock.h */,
-				93DD2C5A17A3E38300B3FE71 /* Corestock.m */,
-				93DD2C5617A3E35900B3FE71 /* Coretradeevent.h */,
-				93DD2C5717A3E35900B3FE71 /* Coretradeevent.m */,
-				93E19FCD17A36681000D60B5 /* Portfolio.h */,
-				93E19FCE17A36681000D60B5 /* Portfolio.m */,
+				93DD2C5917A3E38300B3FE71 /* CoreStock.h */,
+				93DD2C5A17A3E38300B3FE71 /* CoreStock.m */,
+				93DD2C5617A3E35900B3FE71 /* CoreTradeEvent.h */,
+				93DD2C5717A3E35900B3FE71 /* CoreTradeEvent.m */,
 				93E19FC917A365E8000D60B5 /* Stock.h */,
 				93E19FCA17A365E8000D60B5 /* Stock.m */,
-				931713F217A3792200B7D377 /* Controller.h */,
-				931713F317A3792200B7D377 /* Controller.m */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -394,6 +392,8 @@
 				93E19F9317A36420000D60B5 /* MainStoryboard.storyboard */,
 				7DF8F95417BC5CC7005553A1 /* BT_AppDelegate.h */,
 				93E19F8B17A36420000D60B5 /* BT_AppDelegate.m */,
+				931713F217A3792200B7D377 /* Controller.h */,
+				931713F317A3792200B7D377 /* Controller.m */,
 				525122A217D7757300A8782B /* View Controllers */,
 				525122A317D7759100A8782B /* Objects */,
 				93E19F8217A36420000D60B5 /* Supporting Files */,
@@ -557,16 +557,16 @@
 				93E19FC317A36492000D60B5 /* BT_TabBarController.m in Sources */,
 				93E19FCB17A365E9000D60B5 /* Model.m in Sources */,
 				93E19FCC17A365E9000D60B5 /* Stock.m in Sources */,
-				93E19FCF17A36681000D60B5 /* Portfolio.m in Sources */,
 				93A82DBB17A3746E00787732 /* BT_TradeEvent.m in Sources */,
 				931713F417A3792200B7D377 /* Controller.m in Sources */,
 				931713F717A382DF00B7D377 /* BT_HistoryViewController.m in Sources */,
-				93DD2C5817A3E35900B3FE71 /* Coretradeevent.m in Sources */,
-				93DD2C5B17A3E38300B3FE71 /* Corestock.m in Sources */,
-				93DD2C5E17A3E39600B3FE71 /* Coreportfolio.m in Sources */,
-				93DD2C6117A3E3AB00B3FE71 /* Coremodel.m in Sources */,
+				93DD2C5817A3E35900B3FE71 /* CoreTradeEvent.m in Sources */,
+				93DD2C5B17A3E38300B3FE71 /* CoreStock.m in Sources */,
+				93DD2C5E17A3E39600B3FE71 /* CorePortfolio.m in Sources */,
+				93DD2C6117A3E3AB00B3FE71 /* CoreModel.m in Sources */,
 				93C7138F17A3FCBC00258C6A /* themodel.xcdatamodeld in Sources */,
 				7D06431D17BAE70800889177 /* BT_LoginViewController.m in Sources */,
+				525122A617D8FC0100A8782B /* BT_PortfolioViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

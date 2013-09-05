@@ -144,7 +144,7 @@
         appDelegate.managedObjectContext = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
         
         //create a core model object
-        NSManagedObject* coremodel=[NSEntityDescription insertNewObjectForEntityForName:@"Coremodel" inManagedObjectContext:appDelegate.managedObjectContext];
+        NSManagedObject* coremodel=[NSEntityDescription insertNewObjectForEntityForName:@"CoreModel" inManagedObjectContext:appDelegate.managedObjectContext];
         
         //set the coremodel's primary key value in the coremodel table
         [coremodel setValue:[coremodel assignObjectId] forKey:[coremodel primaryKeyField]];
@@ -156,7 +156,7 @@
         [theUser setValue:coremodel forKey:@"coremodel"];
         
         //create portfolio
-        NSManagedObject* coreportfolio=[NSEntityDescription insertNewObjectForEntityForName:@"Coreportfolio" inManagedObjectContext:appDelegate.managedObjectContext];
+        NSManagedObject* coreportfolio=[NSEntityDescription insertNewObjectForEntityForName:@"CorePortfolio" inManagedObjectContext:appDelegate.managedObjectContext];
         [coreportfolio setValue:[coreportfolio assignObjectId] forKey:[coreportfolio primaryKeyField]];
         //add portfolio to the model
         [coremodel setValue:coreportfolio forKey:@"portfolio"];
@@ -198,7 +198,7 @@
 -(void) searchModelsForUser : (NSDictionary *) result andDelegate : (BT_AppDelegate* ) appDelegate
 {
     NSString *userID = [NSString stringWithFormat:@"%@",[result valueForKey:@"user_id"]];
-    NSFetchRequest *requestModelByUserID = [[NSFetchRequest alloc] initWithEntityName:@"Coremodel"];
+    NSFetchRequest *requestModelByUserID = [[NSFetchRequest alloc] initWithEntityName:@"CoreModel"];
     //search string for users with the model's userID
     NSString* userWithUserID=[ NSString stringWithFormat:@"user == '%@'",userID ];
     

@@ -8,7 +8,7 @@
 
 #import "Model.h"
 #import "BT_TradeEvent.h"
-#import "Coretradeevent.h"
+#import "CoreTradeEvent.h"
 #import "StackMob.h"
 
 @implementation Model
@@ -23,8 +23,8 @@
 {
         if(self = [super init])
         {
-            self.modelPort = [Portfolio initSelf];
-            self.modelPort.value = [self calcValue];
+            self.modelPort = [[CorePortfolio alloc] init];
+            //self.modelPort.value = [self.modelPort totalPortfolioValue];
             self.eventArray = [NSMutableArray arrayWithCapacity:0]; 
         }
     return self;
@@ -53,7 +53,7 @@
     
     NSManagedObjectContext *moc = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
     /****create tradeevent and put it into managedObjectContext (so it can be saved later), THEN fill it up with its data****/
-    Coretradeevent* tradeevent=[NSEntityDescription insertNewObjectForEntityForName:@"Coretradeevent" inManagedObjectContext:moc];
+    CoreTradeEvent* tradeevent=[NSEntityDescription insertNewObjectForEntityForName:@"CoreTradeEvent" inManagedObjectContext:moc];
     tradeevent.ticker=theStock.symbol;
     [tradeevent setValue:[tradeevent assignObjectId] forKey:[tradeevent primaryKeyField]];
     
@@ -81,16 +81,4 @@
     
 }
 
--(double) calcValue
-{
-    double value = 0;
-    for(Stock* theStock in self.modelPort.stockList)
-    {
-        value += (theStock.openPrice * theStock.amount);
-    }
-    return value + self.modelPort.cash;
-}
-
-
 @end
-

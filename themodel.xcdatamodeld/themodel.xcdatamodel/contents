@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12E55" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Coremodel" syncable="YES">
+    <entity name="CoreModel" syncable="YES">
         <attribute name="coremodel_id" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="portfolio" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Coreportfolio" inverseName="model" inverseEntity="Coreportfolio" syncable="YES"/>
-        <relationship name="tradeevents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Coretradeevent" inverseName="model" inverseEntity="Coretradeevent" syncable="YES"/>
+        <relationship name="portfolio" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="CorePortfolio" inverseName="model" inverseEntity="CorePortfolio" syncable="YES"/>
+        <relationship name="tradeevents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CoreTradeEvent" inverseName="model" inverseEntity="CoreTradeEvent" syncable="YES"/>
         <relationship name="user" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="coremodel" inverseEntity="User" syncable="YES"/>
     </entity>
-    <entity name="Coreportfolio" syncable="YES">
-        <attribute name="cashvalue" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+    <entity name="CorePortfolio" syncable="YES">
         <attribute name="coreportfolio_id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="totalvalue" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="model" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Coremodel" inverseName="portfolio" inverseEntity="Coremodel" syncable="YES"/>
-        <relationship name="stocks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Corestock" inverseName="portfolio" inverseEntity="Corestock" syncable="YES"/>
+        <attribute name="totalcashvalue" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="totalportfoliovalue" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="model" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="CoreModel" inverseName="portfolio" inverseEntity="CoreModel" syncable="YES"/>
+        <relationship name="stocks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CoreStock" inverseName="portfolio" inverseEntity="CoreStock" syncable="YES"/>
     </entity>
-    <entity name="Corestock" syncable="YES">
+    <entity name="CoreStock" syncable="YES">
         <attribute name="amount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="buyprice" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="closeprice" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
@@ -24,26 +24,26 @@
         <attribute name="sellprice" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="symbol" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="totalvalue" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="portfolio" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Coreportfolio" inverseName="stocks" inverseEntity="Coreportfolio" syncable="YES"/>
+        <relationship name="portfolio" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="CorePortfolio" inverseName="stocks" inverseEntity="CorePortfolio" syncable="YES"/>
     </entity>
-    <entity name="Coretradeevent" syncable="YES">
+    <entity name="CoreTradeEvent" syncable="YES">
         <attribute name="actionid" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="coretradeevent_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="ticker" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tradeamount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="tradeprice" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="model" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Coremodel" inverseName="tradeevents" inverseEntity="Coremodel" syncable="YES"/>
+        <relationship name="model" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="CoreModel" inverseName="tradeevents" inverseEntity="CoreModel" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="user_id" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="coremodel" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Coremodel" inverseName="user" inverseEntity="Coremodel" syncable="YES"/>
+        <relationship name="coremodel" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="CoreModel" inverseName="user" inverseEntity="CoreModel" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Coremodel" positionX="-27" positionY="-9" width="128" height="105"/>
-        <element name="Coreportfolio" positionX="-189" positionY="108" width="128" height="118"/>
-        <element name="Corestock" positionX="-110" positionY="315" width="128" height="210"/>
-        <element name="Coretradeevent" positionX="70" positionY="392" width="128" height="148"/>
-        <element name="User" positionX="187" positionY="150" width="128" height="73"/>
+        <element name="CoreModel" positionX="0" positionY="0" width="128" height="105"/>
+        <element name="CorePortfolio" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="CoreStock" positionX="0" positionY="0" width="128" height="210"/>
+        <element name="CoreTradeEvent" positionX="0" positionY="0" width="128" height="150"/>
+        <element name="User" positionX="0" positionY="0" width="128" height="75"/>
     </elements>
 </model>

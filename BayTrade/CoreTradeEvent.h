@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 
-@interface Coretradeevent : NSManagedObject
+@interface CoreTradeEvent : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * actionid;
 @property (nonatomic, retain) NSString * ticker;

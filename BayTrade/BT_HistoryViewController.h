@@ -12,14 +12,18 @@
 #import "BT_HistoryViewController.h"
 #import "BT_TradeEvent.h"
 #import <QuartzCore/QuartzCore.h>
-#import "Coremodel.h"
-#import "Corestock.h"
-#import "Coreportfolio.h"
-#import "Coretradeevent.h"
+#import "CoreModel.h"
+#import "CoreStock.h"
+#import "CorePortfolio.h"
+#import "CoreTradeEvent.h"
 #import "StackMob.h"
 
-@interface BT_HistoryViewController : UIViewController <UITabBarControllerDelegate>
-@property (strong, nonatomic) IBOutlet UIScrollView *ScrollView;
+@interface BT_HistoryViewController : UIViewController <UITabBarControllerDelegate, UITableViewDataSource, UITableViewDelegate> {
+    NSArray *events;
+}
+
+@property (strong, nonatomic) IBOutlet UITableView *historyTable;
 @property (weak, nonatomic) Model* userModel;
-@property(weak,nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (weak,nonatomic) NSManagedObjectContext *managedObjectContext;
+
 @end

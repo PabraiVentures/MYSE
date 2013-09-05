@@ -7,11 +7,14 @@
 //
 
 #import "BT_HistoryViewController.h"
+#import "CoreTradeEvent.h"
 @interface BT_HistoryViewController ()
 
 @end
 
 @implementation BT_HistoryViewController
+
+@synthesize historyTable;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -41,16 +44,13 @@
 }
 
 -(void) viewWillDisappear:(BOOL)animated{
-    [self.ScrollView removeFromSuperview];
+    [self.historyTable removeFromSuperview];
 }
 
--(void)viewDidAppear:(BOOL)animated{
-    
-    self.ScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0, 35.0, 320.0, 465.0) ];
-    [self.view addSubview:self.ScrollView];
-    
+-(void)viewDidAppear:(BOOL)animated
+{    
     //get the trade events for this user
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Coretradeevent"];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CoreTradeEvent"];
     // query for tradeevents for THIS user
     NSString* getRightEvents=[ NSString stringWithFormat:@"sm_owner == 'user/%@'",self.userModel.userID ];
     [fetchRequest setPredicate:[NSPredicate predicateWithFormat:getRightEvents]];
@@ -63,77 +63,139 @@
             /** Sort the tradeEvents by time/supposed order of events **/
             NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:NO] ;
             NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-            tradeEvents = [tradeEvents sortedArrayUsingDescriptors:sortDescriptors];
-            
-            
+            events = [tradeEvents sortedArrayUsingDescriptors:sortDescriptors];
             //Use Sorted array to visualize data
-            int count = 0;
-            for (Coretradeevent *event in tradeEvents) {
+            for (CoreTradeEvent *event in events) {
                 NSLog(@"At %@ you %@ %@ amount: %@ price: %@", event.time, (event.actionid.intValue > 0)? @"bought" : @"sold" ,event.ticker, event.tradeamount, event.tradeprice);
-                
-                
-                UIButton* button = [self makeAButton:event];
-                button.frame = CGRectMake(10.0, count, 300.0, 85.0);
-       
-                //SET SCROLLVIEW SIZE
-                CGSize contentSize=self.ScrollView.frame.size;
-                int numEvents = [tradeEvents count];
-                if (numEvents > 5)
-                {
-                    contentSize.height = numEvents * 90;
-                }
-                else
-                {
-                    contentSize.height= self.view.frame.size.height;
-                }
-                [self.ScrollView setContentSize:contentSize];
-                
-                //Draw button on scrollview
-                [self.ScrollView addSubview:button];
-                count+=90;
             }
-            
+            [historyTable reloadData];
         }
     } onFailure:^(NSError *error) {
         NSLog(@"Error fetching: %@", error);
     }];
 }
 
+#pragma mark - Table View Methods
+
+-(int)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+-(int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [events count];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 80;
+}
+
+-(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"Cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    }
+    cell.textLabel.backgroundColor = [UIColor clearColor];
+    cell.detailTextLabel.backgroundColor = [UIColor clearColor];
+    cell.detailTextLabel.numberOfLines = 5;
+    
+    CoreTradeEvent *event = [events objectAtIndex:indexPath.row];
+    
+    double doMath = event.tradeamount.intValue * event.tradeprice.doubleValue;
+    
+    NSString *action = @"Sold";
+    if (event.actionid.intValue == 1)
+    {
+        action = @"Bought";
+    }
+
+    NSString *actionDetail = [NSString stringWithFormat:@"\n%@ %@ shares of %@\nTrade Value: $%@ x %@ = %.2f", action, event.tradeamount, [event.ticker uppercaseString], event.tradeprice, event.tradeamount, doMath];
+    
+    cell.textLabel.text = [self timeString:event.time withAction:action];
+    cell.detailTextLabel.text = actionDetail;
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if ([[(CoreTradeEvent*)[events objectAtIndex:indexPath.row] actionid] intValue] == 1) { //if this was a selling trade event
+        cell.backgroundColor = [UIColor colorWithRed:1.0 green:0 blue:0 alpha:0.2];
+        return;
+    }
+    cell.backgroundColor = [UIColor colorWithRed:0 green:1.0 blue:0 alpha:0.2];
+}
+
+-(NSString*) timeString: (NSString*) tradeDate withAction: (NSString*) action
+{
+    NSString *time;
+    NSLog(@"time: %@", tradeDate);
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MM-dd-yyyy HH:mm"];
+    NSDate *date = [dateFormatter dateFromString:tradeDate];
+    NSLog(@"date: %@", date);
+    
+    int seconds = -(int)[date timeIntervalSinceNow];
+    int hours = seconds/3600;
+    int minutes = seconds/60;
+    if (hours < 24) {
+        time = [NSString stringWithFormat:@"%@ %i hours ago", action, hours];
+        if (minutes < 60) time = [NSString stringWithFormat:@"%@ %i minutes ago", action, minutes];
+    }
+    else {
+        NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDateComponents *components = [gregorian components:(NSHourCalendarUnit | NSMinuteCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:date];
+        
+        int hour = [components hour];
+        int minute = [components minute];
+        int day = [components day];
+        int month = [components month];
+        int year = [components year];
+        time = [NSString stringWithFormat:@"%@ at %i:%i on %i/%i/%i", action, hour, minute, month, day, year];
+    }
+    return time;
+}
+
 /**
  Makes a button (for display only) for a Coretradeevent
  */
--(UIButton*) makeAButton :(Coretradeevent*) event
-{
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    button.titleLabel.textAlignment = NSTextAlignmentCenter;
-    button.layer.borderWidth = 0.5f;
-    button.layer.cornerRadius = 10.0f;
-    NSString* action = @"Sold";
-    
-    if(event.actionid.intValue > 0)//if actionID = 1 -> buy
-    {
-        action = @"Bought";
-        UIColor* c = [UIColor colorWithHue:.6 saturation:.75 brightness:.55 alpha:.53];
-        button.backgroundColor = c;
-    }
-    else{
-        UIColor* c = [UIColor colorWithHue:1 saturation:.75 brightness:.5 alpha:.53
-                      ];
-        button.backgroundColor = c;
-    }
-    double doMath = event.tradeamount.intValue * event.tradeprice.doubleValue;
-    
-    NSString *butttitle=[NSString stringWithFormat:@"%@\n%@ %@ shares of %@\nTrade Value: $%@ x %@ = %.2f", event.time, action, event.tradeamount, event.ticker, event.tradeprice, event.tradeamount, doMath];
-    
-    [button addTarget:self
-               action:@selector(BS)
-     forControlEvents:UIControlEventTouchDown];
-    [button setTitle:butttitle forState:UIControlStateNormal];
-    
-    button.enabled=false;
-    
-    return button;
-}
+//-(UIButton*) makeAButton :(CoreTradeEvent*) event
+//{
+//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+//    button.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+//    button.titleLabel.textAlignment = NSTextAlignmentCenter;
+//    button.layer.borderWidth = 0.5f;
+//    button.layer.cornerRadius = 10.0f;
+//    NSString* action = @"Sold";
+//    
+//    if(event.actionid.intValue > 0)//if actionID = 1 -> buy
+//    {
+//        action = @"Bought";
+//        UIColor* c = [UIColor colorWithHue:.6 saturation:.75 brightness:.55 alpha:.53];
+//        button.backgroundColor = c;
+//    }
+//    else{
+//        UIColor* c = [UIColor colorWithHue:1 saturation:.75 brightness:.5 alpha:.53
+//                      ];
+//        button.backgroundColor = c;
+//    }
+//    double doMath = event.tradeamount.intValue * event.tradeprice.doubleValue;
+//    
+//    NSString *butttitle=[NSString stringWithFormat:@"%@\n%@ %@ shares of %@\nTrade Value: $%@ x %@ = %.2f", event.time, action, event.tradeamount, event.ticker, event.tradeprice, event.tradeamount, doMath];
+//    
+//    [button addTarget:self
+//               action:@selector(BS)
+//     forControlEvents:UIControlEventTouchDown];
+//    [button setTitle:butttitle forState:UIControlStateNormal];
+//    
+//    button.enabled=false;
+//    
+//    return button;
+//}
 
 @end
