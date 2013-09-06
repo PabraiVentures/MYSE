@@ -8,7 +8,6 @@
 
 #import "CorePortfolio.h"
 #import "CoreStock.h"
-#import "Stock.h"
 
 
 @implementation CorePortfolio
@@ -16,6 +15,7 @@
 @synthesize totalcashvalue;
 @synthesize portfolio_id;
 @synthesize stocks;
+@synthesize totalportfoliovalue;
 
 @synthesize owner;
 
@@ -28,6 +28,7 @@
     return thePortfolio;
 }
 
+<<<<<<< HEAD
 -(id) init
 {
     
@@ -38,6 +39,9 @@
     }
     return self;
 }
+=======
+
+>>>>>>> 44eb4ec6010b847ac85a48b4a4e8569408c99ce7
 
 -(id) initWithStock: (Stock *) theStock
 {
@@ -50,7 +54,7 @@
     return self;
 }
 
--(bool) addStock:(Stock *)addedStock
+-(bool) addStocksObject:(Stock *)addedStock
 {
     @try {
         [self.stocks addObject:addedStock];
@@ -87,13 +91,10 @@
 
 -(double) totalPortfolioValue
 {
-    return [self totalStockValue] + [self totalCashValue];
+    return [self totalStockValue] + [[self totalcashvalue]doubleValue];
 }
 
--(double)totalCashValue
-{
-    return totalcashvalue;
-}
+
 
 /**
  Finds a stock in your portfolio based on symbol string
@@ -102,15 +103,15 @@
  will have amount and price of your stock
  not what was entered into text box/new prices
  */
-- (Stock *) findStock: (NSString *) symbol
+- (CoreStock *) findStock: (NSString *) symbol
 {
-    Stock *foundStock;
+    CoreStock *foundStock;
     
-    for(Stock *s in self.stocks)
+    for(CoreStock *s in self.stocks)
     {
         if ([s.symbol isEqual: symbol])
         {
-            foundStock = [Stock initWithSymbol:s.symbol AndPrice:s.openPrice AndAmount:s.amount];
+            foundStock = [CoreStock initWithSymbol:s.symbol AndPrice:s.openprice.doubleValue AndAmount:s.amount.intValue];
             break;
         }
     }

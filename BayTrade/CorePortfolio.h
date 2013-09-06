@@ -39,17 +39,23 @@
 
 @property (nonatomic, retain) NSString *owner;
 
+<<<<<<< HEAD
 @property (nonatomic) double totalcashvalue;
+=======
+//@property (nonatomic, retain)           NSNumber * totalCashValue;
+//@property (nonatomic, retain, readonly) NSNumber * totalStockValue;
+//@property (nonatomic, retain, readonly) NSNumber * totalPortfolioValue;
+
+@property (nonatomic) NSNumber *totalcashvalue;
+@property (nonatomic) NSNumber *totalportfoliovalue;
+
+>>>>>>> 44eb4ec6010b847ac85a48b4a4e8569408c99ce7
 @property (nonatomic, retain) NSString * portfolio_id;
 @property (nonatomic, retain) NSMutableArray *stocks;
 
 @end
 
-@interface CorePortfolio (CoreDataGeneratedAccessors)
-
--(double)totalPortfolioValue;
--(double)totalStockValue;
--(double)totalCashValue;
+@interface CorePortfolio (CoreDataGeneratedAccessors);
 
 
 - (void)addStocksObject:(CoreStock *)value;

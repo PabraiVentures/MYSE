@@ -121,7 +121,7 @@
     buttonL.backgroundColor = c;
     buttonR.backgroundColor = c;
     
-    NSString *leftTitle=[NSString stringWithFormat:@"Account Value(USD):\n$%.2f", self.userModel.modelPort.totalPortfolioValue];
+    NSString *leftTitle=[NSString stringWithFormat:@"Account Value(USD):\n$%.2f", self.userModel.modelPort.totalportfoliovalue.floatValue];
     
     buttonL.titleLabel.font = [UIFont systemFontOfSize:14];
     buttonR.titleLabel.font = [UIFont systemFontOfSize:14];
