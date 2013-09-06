@@ -8,5 +8,8 @@
 (_)portfolio - display value value
 (_)portfolio table cell - buy/sell option
 (_)universal methods for retrieving /syncing owned stocks
-(_)merge Portfolio.m into CorePortfolio.m
+(X)merge Portfolio.m into CorePortfolio.m
 (_)merge Stock.m into CoreStock.m
+(_)merge TradeEvent with CoreTradeEvent
+(_)history tab - convert scrollview to uitableviewcontroller
+(_)fix login loop error

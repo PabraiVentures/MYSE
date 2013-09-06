@@ -24,6 +24,7 @@
 @implementation BT_AppDelegate
 @synthesize managedObjectModel=_managedObjectModel;
 @synthesize session = _session;
+@synthesize loginView;
 //Session and object model are used for stackmob data transfer
 
 
@@ -55,12 +56,8 @@
     
     self.coreDataStore = [self.client coreDataStoreWithManagedObjectModel:self.managedObjectModel];
     self.client.userPrimaryKeyField = @"user_id";
-    
-
-    
     return YES;
 }
-
 
 // FBSample logic
 // The native facebook application transitions back to an authenticating application when the user
@@ -77,17 +74,22 @@
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
     // attempt to extract a token from the url
-    return [FBAppCall handleOpenURL:url
-                  sourceApplication:sourceApplication
-                        withSession:self.session];
+    NSLog(@"opening url");
+    NSLog(@"self.session 1: %@", self.session);
+    bool didWork = [FBAppCall handleOpenURL:url
+                          sourceApplication:sourceApplication
+                                withSession:FBSession.activeSession];
+    NSLog(@"self.session 2: %@", self.session);
+    NSLog(@"did work? 1 = yes --> %i", didWork);
+    if (didWork) {
+        NSLog(@"it worked; calling updateview");
+        [loginView updateView];
+    }
+    return didWork;
 }
-
-
-
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [FBAppEvents activateApp];
-    
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */

@@ -59,7 +59,7 @@
     //need to take care of removing stocks and having less stocks then last time on page!!!!!!!
     
     //replace current array with sorted array
-    self.userModel.modelPort.stocks = [NSSet setWithArray:sortedArray];
+    self.userModel.modelPort.stocks = [NSMutableArray arrayWithArray:sortedArray];
     
     if([self.userModel.modelPort.stocks count] > 0)
     {

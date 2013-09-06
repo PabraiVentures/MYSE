@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
-@interface BT_LoginViewController : UIViewController
-- (IBAction)loginButtonPressed:(id)sender;
+@interface BT_LoginViewController : UIViewController {
+    NSString *token;
+}
+
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UITextView *statusText;
 
+- (IBAction)loginButtonPressed:(id)sender;
+- (void)updateView;
 @end

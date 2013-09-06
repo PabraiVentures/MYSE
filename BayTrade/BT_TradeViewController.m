@@ -479,17 +479,16 @@
             jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
             //NSLog(@"jsonString: %@", jsonString);
             jsonArray = [jsonString componentsSeparatedByCharactersInSet: [NSCharacterSet characterSetWithCharactersInString: @"{}[]\n,"]];
-            NSLog(@"jsonArray: %@", jsonArray);
+            //NSLog(@"jsonArray: %@", jsonArray);
             
             //loops through results of API call and create 1 dictionary per stock
             //then puts each dictionary in an array
             for (NSString *currentLine in jsonArray) {
-                NSLog(@"looping");
+                //NSLog(@"looping");
                 NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
                 
                 if ([currentLine rangeOfString:@"BidRealtime"].location != NSNotFound)
                 {
-                    NSLog(@"bidrealtime");
                     NSArray *components = [currentLine componentsSeparatedByString:@"\"BidRealtime\" : "];
                     NSString *bidRealTime = (NSString*)[components objectAtIndex:1];
                     bidRealTime = [bidRealTime stringByReplacingOccurrencesOfString:@"\"" withString:@""];
@@ -497,7 +496,6 @@
                 }
                 if ([currentLine rangeOfString:@"Open"].location != NSNotFound)
                 {
-                    NSLog(@"open");
                     NSArray *components = [currentLine componentsSeparatedByString:@"\"Open\" : "];
                     NSString *open = @"error";
                     if ([components count] >= 1) {
@@ -508,7 +506,6 @@
                 }
                 if ([currentLine rangeOfString:@"symbol"].location != NSNotFound)
                 {
-                    NSLog(@"symbol");
                     NSArray *components = [currentLine componentsSeparatedByString:@"\"symbol\" : "];
                     NSString *symbol = (NSString* )[components objectAtIndex:1];
                     symbol = [symbol stringByReplacingOccurrencesOfString:@"\"" withString:@""];
@@ -528,7 +525,7 @@
             NSLog(@"looping through stocks");
             NSLog(@"%@", stock.symbol);
             for (int j = 0; j < [dictArray count]; j++) {
-                NSLog(@"looping through idx");
+                //NSLog(@"looping through idx");
                 NSString *sym = [((NSMutableDictionary *)[dictArray objectAtIndex:j]) objectForKey:@"symbol"];
                 if ([sym isEqual: stock.symbol])
                 {
