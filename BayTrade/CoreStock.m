@@ -22,4 +22,24 @@
 @dynamic symbol;
 @dynamic totalvalue;
 
+
++(CoreStock*) initWithSymbol: (NSString *) theSymbol AndPrice: (double) thePrice AndAmount: (int) theAmount
+{
+    CoreStock *theStock=[[CoreStock alloc] init];
+    
+    //initialize variables
+    
+    theStock.symbol = theSymbol;
+    theStock.openprice = [NSNumber numberWithFloat: thePrice];//replace with method to get open price.
+    theStock.buyprice = [NSNumber numberWithFloat: 0.00];    //replace with method to get buy price.
+    theStock.sellprice = [NSNumber numberWithFloat: 0.00];   //replace with method to get sell price.
+    theStock.closeprice = [NSNumber numberWithFloat: 0.00];  //replace with method to get close price.
+    theStock.currentprice = [NSNumber numberWithFloat: 0.00];   //replace with method to get current price.
+    theStock.amount = [NSNumber numberWithFloat: theAmount];
+    // theStock.totalValue = theAmount * theOpen;
+    
+    
+    theStock.buyprice=[NSNumber numberWithFloat: thePrice];
+    return theStock;
+}
 @end
