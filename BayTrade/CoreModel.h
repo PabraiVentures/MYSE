@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "CorePortfolio.h"
+#import "CoreTradeEvent.h"
 
-@class CorePortfolio, CoreTradeEvent;
+//@class CorePortfolio, CoreTradeEvent;
 
 @interface CoreModel : NSManagedObject
 

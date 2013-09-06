@@ -23,7 +23,7 @@
 
 @implementation BT_AppDelegate
 @synthesize managedObjectModel=_managedObjectModel;
-@synthesize session = _session;
+//@synthesize session = _session;
 @synthesize loginView;
 //Session and object model are used for stackmob data transfer
 
@@ -75,11 +75,11 @@
          annotation:(id)annotation {
     // attempt to extract a token from the url
     NSLog(@"opening url");
-    NSLog(@"self.session 1: %@", self.session);
+    //NSLog(@"self.session 1: %@", self.session);
     bool didWork = [FBAppCall handleOpenURL:url
                           sourceApplication:sourceApplication
                                 withSession:FBSession.activeSession];
-    NSLog(@"self.session 2: %@", self.session);
+    //NSLog(@"self.session 2: %@", self.session);
     NSLog(@"did work? 1 = yes --> %i", didWork);
     if (didWork) {
         NSLog(@"it worked; calling updateview");
@@ -97,7 +97,7 @@
     // FBSample logic
     // We need to properly handle activation of the application with regards to SSO
     //  (e.g., returning from iOS 6.0 authorization dialog or from fast app switching).
-    [FBAppCall handleDidBecomeActiveWithSession:self.session];
+    [FBAppCall handleDidBecomeActiveWithSession: FBSession.activeSession];
 }
 
 
@@ -113,7 +113,7 @@
     // this is a good idea because things may be hanging off the session, that need
     // releasing (completion block, etc.) and other components in the app may be awaiting
     // close notification in order to do cleanup
-    [self.session close];
+    [FBSession.activeSession close];
 }
 
 - (NSManagedObjectModel *)managedObjectModel

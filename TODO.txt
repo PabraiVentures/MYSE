@@ -11,5 +11,7 @@
 (X)merge Portfolio.m into CorePortfolio.m
 (_)merge Stock.m into CoreStock.m
 (_)merge TradeEvent with CoreTradeEvent
+(_)merge coremodel and model
 (_)history tab - convert scrollview to uitableviewcontroller
 (_)fix login loop error
+(_)fix totalcashamount error

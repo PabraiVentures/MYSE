@@ -39,10 +39,6 @@
 
 @property (nonatomic, retain) NSString *owner;
 
-//@property (nonatomic, retain)           NSNumber * totalCashValue;
-//@property (nonatomic, retain, readonly) NSNumber * totalStockValue;
-//@property (nonatomic, retain, readonly) NSNumber * totalPortfolioValue;
-
 @property (nonatomic) double totalcashvalue;
 @property (nonatomic, retain) NSString * portfolio_id;
 @property (nonatomic, retain) NSMutableArray *stocks;
@@ -60,5 +56,7 @@
 - (void)removeStocksObject:(CoreStock *)value;
 - (void)addStocks:(NSSet *)values;
 - (void)removeStocks:(NSSet *)values;
+
++ (CorePortfolio*)initSelf;
 
 @end

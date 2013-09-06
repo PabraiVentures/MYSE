@@ -32,8 +32,12 @@
         NSData *jsonData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:query] encoding:NSUTF8StringEncoding error:nil] dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *results = jsonData ? [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil] : nil;
         NSDictionary *quoteEntry = nil;
+        NSLog(@"results in fetchquotes: %@", results);
         quoteEntry = [results valueForKeyPath:@"query.results.quote"];
         return quoteEntry;
+    }
+    else {
+        NSLog(@"no tickers given.");
     }
     return quotes;
 }

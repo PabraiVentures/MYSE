@@ -85,7 +85,7 @@
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CoreModel"];
     
     // query for coremodel for THIS user
-    NSString* coreModelRequest=[ NSString stringWithFormat:@"user == '%@'",self.userModel.userID ];
+    NSString* coreModelRequest=[NSString stringWithFormat:@"user == '%@'",self.userModel.userID];
     [fetchRequest setPredicate:[NSPredicate predicateWithFormat:coreModelRequest]];
     
     //get the object context to work with stackmob data
@@ -100,6 +100,9 @@
     @try {
         NSManagedObject* myModel=[results objectAtIndex:0];
         self.userModel.coreModel = (CoreModel *) myModel; //now we can access coremodel from anywhere
+        NSLog(@"self.coremodel: %@", self.userModel.coreModel);
+        NSLog(@"self.coremodel.portfolio: %@", self.userModel.coreModel.portfolio);
+        NSLog(@"self.coremodel.portfolio.totalcashval: %f", self.userModel.coreModel.portfolio.totalcashvalue);
     }
     @catch (NSException *exception) {
         [self.valueDisplay setText:@"100000.00"];
@@ -128,8 +131,10 @@
 
 - (IBAction) buyButtonClicked:(id)sender
 {
+    NSLog(@"beginning buybuttonclicked");
     //assign self.userModel.coreModel to the StackMob coreModel
     [self setCoreModel];
+    NSLog(@"finished setcoremodel");
     NSString *buyingSymbol = [NSString string];
     if([self.symbolField.text length] > 0) buyingSymbol = self.symbolField.text;
     else buyingSymbol = NULL;
@@ -141,6 +146,7 @@
     NSDictionary *data;
     @try {
         data = [self callFetchQuotes:buyingSymbol];
+        NSLog(@"finished calling fetch quotes");
     }
     @catch (NSException *exception) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Uh Oh!"
@@ -150,7 +156,7 @@
         [alert show];
         return;
     }
-    
+    NSLog(@"data: %@", data);
     NSString *myStockPrice = data[@"Open"];
     
     double price = [myStockPrice doubleValue];
@@ -167,10 +173,14 @@
     }
     else
     {
+        NSLog(@"beginning else");
         double totalPrice = price * amount;
         //double debugPrice = self.userModel.coreModel.portfolio.cashvalue.doubleValue;
         //if you can buy the stock
-        if (totalPrice <= self.userModel.coreModel.portfolio.totalcashvalue)
+        NSLog(@"totalcashvalue: %f", self.userModel.coreModel.portfolio.totalcashvalue);
+        NSLog(@"totalcashvalue in modelport: %f", self.userModel.modelPort.totalcashvalue);
+        
+        if (totalPrice <= self.userModel.modelPort.totalcashvalue)
         {
             self.userModel.modelPort.totalcashvalue = self.userModel.modelPort.totalcashvalue - totalPrice;
             
@@ -233,8 +243,8 @@
         {
             NSLog(@"%@ : $%.2f\tamount:%i\n", s.symbol, s.openPrice, s.amount);
         }
-        NSLog(@"\n\n");
     }
+    NSLog(@"ending buybuttonclicked");
 }
 
 /************************SELLING**************************/
@@ -247,7 +257,7 @@
     //assign self.userModel.coreModel to the StackMob coreModel
     [self setCoreModel];
     
-    NSString *sellingSymbol = [NSString string];
+    NSString *sellingSymbol;
     if([self.symbolField.text length] > 0)
         sellingSymbol = self.symbolField.text;
     else sellingSymbol = NULL;
@@ -275,8 +285,12 @@
         amt = stock.amount.intValue;
         value += (prc * amt);
     }
+    NSLog(@"updating value");
+    NSLog(@"stock value = %.2f", value);
     
-    value += self.userModel.coreModel.portfolio.totalcashvalue;
+    value += self.userModel.modelPort.totalcashvalue;
+    
+    NSLog(@"total value = %.2f", value);
     
     NSString *valString = [NSString stringWithFormat:@"$%.2f", value];
     [self.valueDisplay setText: valString];
@@ -284,16 +298,17 @@
 
 - (void)updateBuyPower
 {
-    NSString *money = [NSString stringWithFormat:@"$%.2f", self.userModel.coreModel.portfolio.totalcashvalue];
-    [self.cashDisplay setText: money ];
+    NSLog(@"updating buy power");
+    NSString *money = [NSString stringWithFormat:@"$%.2f", self.userModel.modelPort.totalcashvalue];
+    [self.cashDisplay setText: money];
 }
 
 /************Gets stock data from YahooFinance**********/
 - (NSDictionary *) callFetchQuotes : (NSString*) stockSymbol
 {
     NSArray *stock = [NSArray arrayWithObjects: stockSymbol, nil];
-    NSDictionary *data = [[NSDictionary dictionary] init];
-    data = [Controller fetchQuotesFor:stock];
+    NSLog(@"stock array: %@", stock);
+    NSDictionary *data = [Controller fetchQuotesFor:stock];
     return data;
 }
 
@@ -564,11 +579,8 @@
 }
 
 - (IBAction)logoutButtonClicked:(id)sender {
-    // get the app delegate so that we can access the session property
-    BT_AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
-    
     //delete token info
-    [appDelegate.session closeAndClearTokenInformation];
+    [FBSession.activeSession closeAndClearTokenInformation];
     
 }
 

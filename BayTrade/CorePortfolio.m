@@ -14,7 +14,7 @@
 @implementation CorePortfolio
 
 @synthesize totalcashvalue;
-@dynamic portfolio_id;
+@synthesize portfolio_id;
 @synthesize stocks;
 
 @synthesize owner;
@@ -23,6 +23,8 @@
 {
     CorePortfolio* thePortfolio = [[CorePortfolio alloc] init];
     thePortfolio.stocks = [NSMutableArray arrayWithCapacity:10];
+    thePortfolio.totalcashvalue = 100000.0;
+    NSLog(@"initSelf");
     return thePortfolio;
 }
 
@@ -31,6 +33,7 @@
     
     if (self = [super init])
     {
+        self.totalcashvalue = 100000.0;
         NSLog(@"calling coreportfolio init");
     }
     return self;
@@ -69,6 +72,17 @@
         value += (s.openPrice * s.amount);
     }
     return value;
+}
+
+-(void)setTotalcashvalue:(double)totalcvalue
+{
+    NSLog(@"set totalcvalue from %f to %f", totalcashvalue, totalcvalue);
+    totalcashvalue = totalcvalue;
+}
+
+-(double) totalcashvalue
+{
+    return totalcashvalue;
 }
 
 -(double) totalPortfolioValue

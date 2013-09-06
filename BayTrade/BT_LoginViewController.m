@@ -82,7 +82,6 @@
                                                          NSError *error) {
             token = session.accessTokenData.accessToken;
             NSLog(@"opening appdelegate session");
-            NSLog(@"appdelegate session: %@", appDelegate.session);
             NSLog(@"local session: %@", session);
             // and here we make sure to update our UX according to the new session state
             //[self performSelector:@selector(updateView) withObject:nil afterDelay:0.5];
@@ -97,12 +96,10 @@
     NSLog(@"inside UpdateView");
     // get the app delegate, so that we can reference the session property
     BT_AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
-    //if (appDelegate.session.isOpen) {
     if (FBSession.activeSession.isOpen) {
         NSLog(@"appdelegate session is open");
         //Gets FacebookID and creates a StackMob user if needed
         NSLog(@"token: %@", FBSession.activeSession.accessTokenData.accessToken);
-        NSLog(@"local token: %@", FBSession.activeSession.accessTokenData.accessToken);
         [[SMClient defaultClient] loginWithFacebookToken:FBSession.activeSession.accessTokenData.accessToken createUserIfNeeded:YES usernameForCreate:nil onSuccess:^(NSDictionary *result) {
             NSLog(@"Logged in with StackMob. \nData: %@",[result valueForKey:@"user_id"]);
             //download StackMob user object and see if it has a model
@@ -174,8 +171,8 @@ NSLog(@"end of update view");
         [coreportfolio setValue:[coreportfolio assignObjectId] forKey:[coreportfolio primaryKeyField]];
         //add portfolio to the model
         [coremodel setValue:coreportfolio forKey:@"portfolio"];
-        [coreportfolio setValue:[NSNumber numberWithDouble:100000] forKey:@"totalcashvalue"];
-        [coreportfolio setValue:[NSNumber numberWithDouble:100000] forKey:@"totalportfoliovalue"];
+        [coreportfolio setValue:[NSNumber numberWithDouble:100000.0] forKey:@"totalcashvalue"];
+        [coreportfolio setValue:[NSNumber numberWithDouble:100000.0] forKey:@"totalportfoliovalue"];
         
         
         [appDelegate.managedObjectContext saveOnSuccess:^{
@@ -223,7 +220,8 @@ NSLog(@"end of update view");
     appDelegate.managedObjectContext = [[[SMClient defaultClient] coreDataStore] contextForCurrentThread];
     [appDelegate.managedObjectContext executeFetchRequest:requestModelByUserID onSuccess:^(NSArray *results) {
         
-        NSLog(@"Results of search: %d",[results count]);
+        NSLog(@"Number of Results: %d",[results count]);
+        NSLog(@"Results: %@", results);
         if([results count] == 0)
         {
             NSLog(@"model exists?: %d", [results count]);

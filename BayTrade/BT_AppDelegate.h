@@ -19,7 +19,7 @@
 @property (strong, nonatomic) SMCoreDataStore *coreDataStore;
 @property (strong, nonatomic) SMClient *client;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (strong, nonatomic) FBSession *session;
+//@property (strong, nonatomic) FBSession *session;
 @property (strong, nonatomic) BT_LoginViewController *loginView;
 
 @end

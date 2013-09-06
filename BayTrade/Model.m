@@ -21,11 +21,41 @@
 @synthesize coreModel;
 -(id) init
 {
+    NSLog(@"initializing model.m");
         if(self = [super init])
         {
-            self.modelPort = [[CorePortfolio alloc] init];
+//            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CorePortfolio"];
+//            
+//            // query for coreportfolio for THIS user
+//            //NSString* corePortfolioRequest=[NSString stringWithFormat:@"user == '%@'",self.userID];
+//            //[fetchRequest setPredicate:[NSPredicate predicateWithFormat:corePortfolioRequest]];
+//            NSManagedObjectContext *managedObjectContext = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
+//            
+//            // execute the request
+//            [managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {
+//                NSLog(@"model.m results: %@",results);
+//                
+//                @try {
+//                    NSManagedObject* myPortfolio=[results objectAtIndex:0];
+//                    self.modelPort = (CorePortfolio *) myPortfolio;
+//                    NSLog(@"succeeded!");
+//                }
+//                @catch (NSException *exception) {
+//                    NSLog(@"error in model.m: %@", exception);
+//                }
+//                
+//            } onFailure:^(NSError *error) {
+//                NSLog(@"There was an error! %@", error);
+//            }];
+
+            self.modelPort = [CorePortfolio initSelf];
+            NSLog(@"self.modelport.cashval: %f", self.modelPort.totalcashvalue);
+            
             //self.modelPort.value = [self.modelPort totalPortfolioValue];
             self.eventArray = [NSMutableArray arrayWithCapacity:0]; 
+        }
+        else {
+            NSLog(@"error initializing model.m");
         }
     return self;
 }
@@ -39,17 +69,6 @@
     tradeEvent.tradePrice = theStock.openPrice;//change to purchase price
     tradeEvent.tradeAmount = theAmount;
     tradeEvent.actionID = ID;
-//    /***Get date string*****/
-//    NSDate *now = [[NSDate alloc] init];
-//    NSDateFormatter *format = [[NSDateFormatter alloc] init];
-//    [format setDateFormat:@"HH:mm MMM dd, yyyy"];
-//    NSString *dateString = [format stringFromDate:now];
-//    /***Get date string*****/
-//    tradeEvent.date = dateString;
-//    
-//    [self.eventArray addObject:tradeEvent];
-    
-    
     
     NSManagedObjectContext *moc = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
     /****create tradeevent and put it into managedObjectContext (so it can be saved later), THEN fill it up with its data****/
