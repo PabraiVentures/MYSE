@@ -2,14 +2,17 @@
 (_)encapsulate all networks functions in try/catch
 (_)clean up all network-related functions
 (X)clean up updateOwnedStocks function
-(_)figure out why we need to use setCoreModel function so many times
+(_)figure out why we need to use setCoreModel function so many times-> this is what downloads stack mob data!
+
 (_)portfolio - view controller
 (_)portfolio - table
 (_)portfolio - display value value
 (_)portfolio table cell - buy/sell option
 (_)universal methods for retrieving /syncing owned stocks
 (X)merge Portfolio.m into CorePortfolio.m
-(_)merge Stock.m into CoreStock.m
+(X)merge Stock.m into CoreStock.m
 (_)merge TradeEvent with CoreTradeEvent
 (_)history tab - convert scrollview to uitableviewcontroller
 (_)fix login loop error
+(_)completely debug trade screen
+(_)completely debug login for first time to first trade flow
