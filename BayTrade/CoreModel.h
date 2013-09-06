@@ -26,8 +26,6 @@
 - (void)removeTradeeventsObject:(CoreTradeEvent *)value;
 - (void)addTradeevents:(NSSet *)values;
 - (void)removeTradeevents:(NSSet *)values;
--(void)addPortfolio:(CorePortfolio*) value;
--(void)removePortfolio:(CorePortfolio*)value;
 
 
 @end

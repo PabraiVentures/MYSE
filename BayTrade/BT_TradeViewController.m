@@ -107,7 +107,7 @@
     @catch (NSException *exception) {
         [self.valueDisplay setText:@"100000.00"];
         [self.cashDisplay setText:@"100000.00"];
-        self.userModel.coreModel.portfolio.totalcashvalue = [NSNumber numberWithInt:100000.00];
+        self.userModel.modelPort.totalcashvalue = 100000.00;
         needsUpdate = NO;
     }
     
@@ -177,16 +177,12 @@
         double totalPrice = price * amount;
         //double debugPrice = self.userModel.coreModel.portfolio.cashvalue.doubleValue;
         //if you can buy the stock
-<<<<<<< HEAD
-        NSLog(@"totalcashvalue: %f", self.userModel.coreModel.portfolio.totalcashvalue);
+        NSLog(@"totalcashvalue: %f", self.userModel.modelPort.totalcashvalue);
         NSLog(@"totalcashvalue in modelport: %f", self.userModel.modelPort.totalcashvalue);
         
         if (totalPrice <= self.userModel.modelPort.totalcashvalue)
-=======
-        if (totalPrice <= self.userModel.coreModel.portfolio.totalcashvalue.doubleValue)
->>>>>>> 44eb4ec6010b847ac85a48b4a4e8569408c99ce7
         {
-            self.userModel.modelPort.totalcashvalue =[NSNumber numberWithFloat: self.userModel.modelPort.totalcashvalue.doubleValue - totalPrice];
+            self.userModel.modelPort.totalcashvalue = self.userModel.modelPort.totalcashvalue - totalPrice;
             
             //get the model, update and send back to stackmob
             NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CoreModel"];
@@ -204,8 +200,8 @@
                 
                 
                 //subtract money from purchase
-                double cashMoney = self.userModel.coreModel.portfolio.totalcashvalue.doubleValue - (price * amount);
-                self.userModel.coreModel.portfolio.totalcashvalue =[NSNumber numberWithFloat: cashMoney];
+                double cashMoney = self.userModel.coreModel.portfolio.totalcashvalue - (price * amount);
+                self.userModel.coreModel.portfolio.totalcashvalue = cashMoney;
                 NSMutableArray *amountAndPrice = [self accountForPrevOwnedStock:buyingSymbol andInt: amount andPrice:price];
                 
                 
@@ -283,7 +279,7 @@
     double value = 0.0;
     double prc = 0.0;
     int amt = 0;
-    for(CoreStock *stock in self.userModel.coreModel.portfolio.stocks)
+    for(CoreStock *stock in self.userModel.modelPort.stocks)
     {
         prc = stock.buyprice.doubleValue;
         amt = stock.amount.intValue;
@@ -292,13 +288,9 @@
     NSLog(@"updating value");
     NSLog(@"stock value = %.2f", value);
     
-<<<<<<< HEAD
     value += self.userModel.modelPort.totalcashvalue;
     
     NSLog(@"total value = %.2f", value);
-=======
-    value += self.userModel.coreModel.portfolio.totalcashvalue.doubleValue;
->>>>>>> 44eb4ec6010b847ac85a48b4a4e8569408c99ce7
     
     NSString *valString = [NSString stringWithFormat:@"$%.2f", value];
     [self.valueDisplay setText: valString];
@@ -400,8 +392,8 @@
             NSString *myStockPrice = sellData[@"Open"];
             double sellPrice = [myStockPrice doubleValue];
             
-            self.userModel.coreModel.portfolio.totalcashvalue =[NSNumber numberWithFloat: 
-            (self.userModel.coreModel.portfolio.totalcashvalue.doubleValue+sellPrice * theAmountToSell.intValue)];
+            self.userModel.coreModel.portfolio.totalcashvalue =
+            (self.userModel.coreModel.portfolio.totalcashvalue+sellPrice * theAmountToSell.intValue);
             
             /***** CREATE LOCAL STOCK TO SAVE IN HISTORY *****/
             Stock *hStock = [[Stock alloc] init];

@@ -53,6 +53,7 @@
 		93E19FB817A36420000D60B5 /* BayTradeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E19FB717A36420000D60B5 /* BayTradeTests.m */; };
 		93E19FC317A36492000D60B5 /* BT_TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E19FC217A36492000D60B5 /* BT_TabBarController.m */; };
 		93E19FCB17A365E9000D60B5 /* Model.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E19FC817A365E8000D60B5 /* Model.m */; };
+		93E19FCC17A365E9000D60B5 /* Stock.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E19FCA17A365E8000D60B5 /* Stock.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -182,6 +183,8 @@
 		93E19FC217A36492000D60B5 /* BT_TabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BT_TabBarController.m; sourceTree = "<group>"; };
 		93E19FC717A365E8000D60B5 /* Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
 		93E19FC817A365E8000D60B5 /* Model.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Model.m; sourceTree = "<group>"; };
+		93E19FC917A365E8000D60B5 /* Stock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stock.h; sourceTree = "<group>"; };
+		93E19FCA17A365E8000D60B5 /* Stock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stock.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -267,6 +270,8 @@
 				93DD2C5A17A3E38300B3FE71 /* CoreStock.m */,
 				93DD2C5617A3E35900B3FE71 /* CoreTradeEvent.h */,
 				93DD2C5717A3E35900B3FE71 /* CoreTradeEvent.m */,
+				93E19FC917A365E8000D60B5 /* Stock.h */,
+				93E19FCA17A365E8000D60B5 /* Stock.m */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -559,6 +564,7 @@
 				93E19F9F17A36420000D60B5 /* BT_TradeViewController.m in Sources */,
 				93E19FC317A36492000D60B5 /* BT_TabBarController.m in Sources */,
 				93E19FCB17A365E9000D60B5 /* Model.m in Sources */,
+				93E19FCC17A365E9000D60B5 /* Stock.m in Sources */,
 				93A82DBB17A3746E00787732 /* BT_TradeEvent.m in Sources */,
 				931713F417A3792200B7D377 /* Controller.m in Sources */,
 				931713F717A382DF00B7D377 /* BT_HistoryViewController.m in Sources */,
