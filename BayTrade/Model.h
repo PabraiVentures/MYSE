@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Stock.h"
 #import "CorePortfolio.h"
 #import "CoreModel.h"
 #import "BT_TradeEvent.h"
@@ -25,7 +24,7 @@
 
 
 //-(void)assignPort: (Portfolio*) myPort;
--(void) updateHistory:(Stock* )theStock andAmount: (int) theAmount andID: (int) ID;
+-(void) updateHistory:(CoreStock*)theStock andAmount: (int) theAmount andID: (int) ID;
 
 -(double) calcValue;
 

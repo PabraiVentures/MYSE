@@ -10,30 +10,8 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "Stock.h"
 
 @class CoreStock;
-
-//#ifndef Stocks_Portfolio_h
-//#define Stocks_Portfolio_h
-//
-//@interface Portfolio : NSObject
-//@property (nonatomic, retain) NSMutableArray *stockList;
-//@property (nonatomic) double value;
-//
-//
-//
-////add methods for initWithStock and such
-//
-//+(id) initSelf;
-//-(id) initWithStock:(Stock *) theStock;
-//-(bool) addStock: (Stock *) addedStock;
-//-(Stock *) findStock: (NSString *) symbol;
-//-(void) calculateValue;
-//@end
-//
-//
-//#endif
 
 @interface CorePortfolio : NSManagedObject
 
@@ -43,13 +21,14 @@
 @property (nonatomic, retain) NSString * portfolio_id;
 @property (nonatomic, retain) NSMutableArray *stocks;
 
+-(double)totalPortfolioValue;
+
 @end
 
 @interface CorePortfolio (CoreDataGeneratedAccessors)
 
--(double)totalPortfolioValue;
--(double)totalStockValue;
--(double)totalCashValue;
+//-(double)totalStockValue;
+//-(double)totalCashValue;
 
 
 - (void)addStocksObject:(CoreStock *)value;

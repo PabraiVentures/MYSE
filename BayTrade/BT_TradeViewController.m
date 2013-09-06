@@ -9,7 +9,6 @@
 #import "BT_TradeViewController.h"
 #import "BT_TabBarController.h"
 #import "BT_AppDelegate.h"
-#import "Stock.h"
 #import "Controller.h"
 #import "Model.h"
 #import "StackMob.h"
@@ -196,7 +195,7 @@
                 NSLog(@"!!!!!%@",results);
                 NSManagedObject* myModel=[results objectAtIndex:0];
                 self.userModel.coreModel= (CoreModel* ) myModel;
-                [self.userModel updateHistory:[Stock initWithSymbol:buyingSymbol AndPrice:price AndAmount:amount] andAmount: amountForHistory andID:1];
+                [self.userModel updateHistory:[CoreStock initWithSymbol:buyingSymbol AndPrice:price AndAmount:amount] andAmount: amountForHistory andID:1];
                 
                 
                 //subtract money from purchase
@@ -239,9 +238,9 @@
             [alert show];
             
         }
-        for(Stock *s in self.userModel.modelPort.stocks)
+        for(CoreStock *s in self.userModel.modelPort.stocks)
         {
-            NSLog(@"%@ : $%.2f\tamount:%i\n", s.symbol, s.openPrice, s.amount);
+            NSLog(@"%@ : $%.2f\tamount:%i\n", s.symbol, s.openprice.doubleValue, s.amount.intValue);
         }
     }
     NSLog(@"ending buybuttonclicked");
@@ -320,11 +319,11 @@
     int matching = -1;
     for(int i = 0; i < [self.userModel.modelPort.stocks count]; i++)
     {
-        Stock* s = [self.userModel.modelPort.stocks objectAtIndex:i];
+        CoreStock* s = [self.userModel.modelPort.stocks objectAtIndex:i];
         if ([s.symbol isEqual: symbol])
         {
             matching = i;
-            *amount += s.amount;
+            *amount += s.amount.intValue;
             //moreStock = [Stock initWithSymbol:s.symbol AndPrice:s.openPrice AndAmount:s.amount];
             break;
         }
@@ -396,10 +395,10 @@
             (self.userModel.coreModel.portfolio.totalcashvalue+sellPrice * theAmountToSell.intValue);
             
             /***** CREATE LOCAL STOCK TO SAVE IN HISTORY *****/
-            Stock *hStock = [[Stock alloc] init];
-            hStock.amount = theAmountToSell.intValue;
+            CoreStock *hStock = [[CoreStock alloc] init];
+            [hStock setAmount: theAmountToSell];
             hStock.symbol = symbol;
-            hStock.openPrice = sellPrice;
+            hStock.openprice = [NSNumber numberWithDouble: sellPrice];
             /***** CREATE LOCAL STOCK TO SAVE IN HISTORY *****/
             
             [self.userModel updateHistory:hStock andAmount: theAmountToSell.intValue andID:0];
@@ -426,14 +425,14 @@
 -(void) updateBoughtStockAmount: (int)amount andPrice: (int) price andMatch: (int) matching
 {
     /*******change amount of stocks in portfolio********/
-    double newvalue= ((Stock*)([self.userModel.modelPort.stocks objectAtIndex:matching])).purchasedPrice *  ((Stock*)([self.userModel.modelPort.stocks objectAtIndex:matching])).amount + price*amount;
+    double newvalue= ((CoreStock*)([self.userModel.modelPort.stocks objectAtIndex:matching])).buyprice.doubleValue *  ((CoreStock*)([self.userModel.modelPort.stocks objectAtIndex:matching])).amount.intValue + price*amount;
     /*******change amount of stocks in portfolio********/
     
     /*******update weighted buy price*************/
-    double newqty= amount+ ((Stock*)([self.userModel.modelPort.stocks objectAtIndex:matching])).amount;
+    double newqty= amount + ((CoreStock*)([self.userModel.modelPort.stocks objectAtIndex:matching])).amount.doubleValue;
     double newpurchasedprice=newvalue/newqty;
-    ((Stock*)([self.userModel.modelPort.stocks objectAtIndex:matching])).amount = amount;//update amount
-    ((Stock*)([self.userModel.modelPort.stocks objectAtIndex:matching])).purchasedPrice=newpurchasedprice;
+    ((CoreStock*)([self.userModel.modelPort.stocks objectAtIndex:matching])).amount = [NSNumber numberWithInt: amount];//update amount
+    ((CoreStock*)([self.userModel.modelPort.stocks objectAtIndex:matching])).buyprice = [NSNumber numberWithDouble:newpurchasedprice];
     /*******update weighted buy price*************/
     
 }

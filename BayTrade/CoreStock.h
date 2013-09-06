@@ -23,4 +23,6 @@
 @property (nonatomic, retain) NSString * symbol;
 @property (nonatomic, retain) NSNumber * totalvalue;
 
++(CoreStock*) initWithSymbol: (NSString *) theSymbol AndPrice: (double) thePrice AndAmount: (int) theAmount;
+
 @end

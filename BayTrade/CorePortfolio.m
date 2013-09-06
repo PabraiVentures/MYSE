@@ -8,7 +8,6 @@
 
 #import "CorePortfolio.h"
 #import "CoreStock.h"
-#import "Stock.h"
 
 
 @implementation CorePortfolio
@@ -39,7 +38,7 @@
     return self;
 }
 
--(id) initWithStock: (Stock *) theStock
+-(id) initWithStocksObject: (CoreStock *) theStock
 {
     if (self = [super init])
     {
@@ -50,7 +49,7 @@
     return self;
 }
 
--(bool) addStock:(Stock *)addedStock
+-(bool) addStocksObject:(CoreStock *)addedStock
 {
     @try {
         [self.stocks addObject:addedStock];
@@ -67,9 +66,9 @@
 -(double) totalStockValue
 {
     double value = 0.0;
-    for (Stock *s in self.stocks)
+    for (CoreStock *s in self.stocks)
     {
-        value += (s.openPrice * s.amount);
+        value += ([s.openprice doubleValue] * [s.amount doubleValue]);
     }
     return value;
 }
@@ -102,15 +101,15 @@
  will have amount and price of your stock
  not what was entered into text box/new prices
  */
-- (Stock *) findStock: (NSString *) symbol
+- (CoreStock *) findStock: (NSString *) symbol
 {
-    Stock *foundStock;
+    CoreStock *foundStock;
     
-    for(Stock *s in self.stocks)
+    for(CoreStock *s in self.stocks)
     {
         if ([s.symbol isEqual: symbol])
         {
-            foundStock = [Stock initWithSymbol:s.symbol AndPrice:s.openPrice AndAmount:s.amount];
+            foundStock = [CoreStock initWithSymbol:s.symbol AndPrice:[s.openprice doubleValue] AndAmount:[s.amount intValue]];
             break;
         }
     }

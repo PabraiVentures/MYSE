@@ -10,6 +10,7 @@
 #import "BT_TradeEvent.h"
 #import "CoreTradeEvent.h"
 #import "StackMob.h"
+#import "CoreStock.h"
 
 @implementation Model
 
@@ -60,13 +61,13 @@
     return self;
 }
 
--(void) updateHistory:(Stock* )theStock andAmount: (int) theAmount andID: (int) ID
+-(void) updateHistory:(CoreStock* )theStock andAmount: (int) theAmount andID: (int) ID
 {
     //create a tradeEvent
     //add to self.eventArray
     BT_TradeEvent* tradeEvent = [[BT_TradeEvent alloc] init];
-    tradeEvent.ticker = theStock.symbol;
-    tradeEvent.tradePrice = theStock.openPrice;//change to purchase price
+    tradeEvent.ticker = [theStock symbol];
+    tradeEvent.tradePrice = theStock.openprice.doubleValue;//change to purchase price
     tradeEvent.tradeAmount = theAmount;
     tradeEvent.actionID = ID;
     
@@ -87,7 +88,7 @@
     tradeevent.time=dateString;
     
     tradeevent.tradeamount=[NSNumber numberWithInt:theAmount];
-    tradeevent.tradeprice=[NSNumber numberWithDouble:theStock.openPrice];
+    tradeevent.tradeprice=[NSNumber numberWithDouble:theStock.openprice.doubleValue];
     tradeevent.actionid=[NSNumber numberWithInt:ID];
     
     /*****DONE CREATING TRADEEVENT INSIDE MANAGEDOBJECTCONTEXT*******/

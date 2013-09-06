@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Stock.h"
 #import "Model.h"
 
 //#define QUOTE_QUERY_PREFIX @"http://query.yahooapis.com/v1/public/yql?q=select%20BidRealtime%2C%20Open%2C%20symbol%20from%20yahoo.finance.quotes%20where%20symbol%20in%20("

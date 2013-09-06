@@ -11,7 +11,7 @@
 #import "Model.h"
 #import "BT_TradeEvent.h"
 #import <QuartzCore/QuartzCore.h>
-#import "Stock.h"
+#import "CoreStock.h"
 
 @interface BT_HomeViewController ()
 
@@ -85,8 +85,8 @@
     buttonL.backgroundColor = c;
 
     
-    NSString *leftTitle=[NSString stringWithFormat:@"%@            $%.2f", ((Stock*)([self.userModel.modelPort.stocks objectAtIndex:index])).symbol,
-                         ((Stock*)([self.userModel.modelPort.stocks objectAtIndex:index])).totalValue ];
+    NSString *leftTitle=[NSString stringWithFormat:@"%@            $%.2f", [((CoreStock*)([self.userModel.modelPort.stocks objectAtIndex:index])) symbol],
+                         [((CoreStock*)([self.userModel.modelPort.stocks objectAtIndex:index])).totalvalue doubleValue]];
     
     
     buttonL.titleLabel.font = [UIFont systemFontOfSize:14];
