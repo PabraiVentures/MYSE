@@ -95,7 +95,7 @@
     //NSLog(@"????%@",results);
     
     BOOL needsUpdate = YES;
-    
+        NSLog(@"SM download result: %@",results);
     @try {
         NSManagedObject* myModel=[results objectAtIndex:0];
         self.userModel.coreModel = (CoreModel *) myModel; //now we can access coremodel from anywhere

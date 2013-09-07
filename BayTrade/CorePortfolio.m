@@ -12,7 +12,6 @@
 
 @implementation CorePortfolio
 
-@synthesize totalcashvalue;
 @synthesize portfolio_id;
 @synthesize stocks;
 
@@ -75,13 +74,13 @@
 
 -(void)setTotalcashvalue:(double)totalcvalue
 {
-    NSLog(@"set totalcvalue from %f to %f", totalcashvalue, totalcvalue);
-    totalcashvalue = totalcvalue;
+    NSLog(@"set totalcvalue from %f to %f", self.totalcashvalue, totalcvalue);
+    self.totalcashvalue = totalcvalue;
 }
 
 -(double) totalcashvalue
 {
-    return totalcashvalue;
+    return self.totalcashvalue;
 }
 
 -(double) totalPortfolioValue
@@ -91,7 +90,7 @@
 
 -(double)totalCashValue
 {
-    return totalcashvalue;
+    return self.totalcashvalue;
 }
 
 /**
