@@ -11,7 +11,7 @@
 
 
 @implementation CorePortfolio
-@dynamic portfolio_id;
+@dynamic coreportfolio_id;
 @dynamic stocks;
 @dynamic totalcashvalue;
 @dynamic totalportfoliovalue;

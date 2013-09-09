@@ -207,6 +207,8 @@
                 thestock.amount = [amountAndPrice objectAtIndex:0];
                 thestock.buyprice=[amountAndPrice objectAtIndex:1];
                 thestock.symbol=buyingSymbol;
+                NSLog(@"thestock primaryKeyField: %@", [thestock primaryKeyField]);
+                NSLog(@"thestock assignobjectid: %@", [thestock assignObjectId]);
                 [thestock setValue:[thestock assignObjectId] forKey:[thestock primaryKeyField]];
                 /***DONE CREATING CORESTOCK TO BE PLACED INTO COREMODEL.PORTFOLIO******/
                 

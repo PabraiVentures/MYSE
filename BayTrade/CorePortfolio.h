@@ -18,7 +18,7 @@
 @property (nonatomic, retain) NSString *owner;
 @property (nonatomic,retain) NSNumber *totalcashvalue;
 @property (nonatomic,retain) NSNumber *totalportfoliovalue;
-@property (nonatomic, retain) NSString *portfolio_id;
+@property (nonatomic, retain) NSString *coreportfolio_id;
 @property (nonatomic, retain) NSMutableSet *stocks;
 
 -(double)totalPortfolioValue;
