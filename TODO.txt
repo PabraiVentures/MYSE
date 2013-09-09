@@ -19,3 +19,7 @@
 (X)add real-time current price getter methods to controller
 (X)refactor model.m
 (X)set sell trade price
+(_)refresh portfolio table
+(_)confirm purchase with user first
+(_)confirm sale with user first
+(_)ios7 capabilities

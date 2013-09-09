@@ -29,7 +29,6 @@
 {
     [super viewDidLoad];
     //get the object context to work with stackmob data
-    
     self.managedObjectContext = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
     self.userModel=((BT_TabBarController*)(self.tabBarController)).userModel;
 }
@@ -39,12 +38,9 @@
     [super didReceiveMemoryWarning];
 }
 
--(void) BS {
-    //when you die nothing happens
-}
-
--(void) viewWillDisappear:(BOOL)animated{
-    [self.historyTable removeFromSuperview];
+-(void) viewWillDisappear:(BOOL)animated
+{
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -160,42 +156,5 @@
     }
     return time;
 }
-
-/**
- Makes a button (for display only) for a Coretradeevent
- */
-//-(UIButton*) makeAButton :(CoreTradeEvent*) event
-//{
-//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-//    button.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-//    button.titleLabel.textAlignment = NSTextAlignmentCenter;
-//    button.layer.borderWidth = 0.5f;
-//    button.layer.cornerRadius = 10.0f;
-//    NSString* action = @"Sold";
-//    
-//    if(event.actionid.intValue > 0)//if actionID = 1 -> buy
-//    {
-//        action = @"Bought";
-//        UIColor* c = [UIColor colorWithHue:.6 saturation:.75 brightness:.55 alpha:.53];
-//        button.backgroundColor = c;
-//    }
-//    else{
-//        UIColor* c = [UIColor colorWithHue:1 saturation:.75 brightness:.5 alpha:.53
-//                      ];
-//        button.backgroundColor = c;
-//    }
-//    double doMath = event.tradeamount.intValue * event.tradeprice.doubleValue;
-//    
-//    NSString *butttitle=[NSString stringWithFormat:@"%@\n%@ %@ shares of %@\nTrade Value: $%@ x %@ = %.2f", event.time, action, event.tradeamount, event.ticker, event.tradeprice, event.tradeamount, doMath];
-//    
-//    [button addTarget:self
-//               action:@selector(BS)
-//     forControlEvents:UIControlEventTouchDown];
-//    [button setTitle:butttitle forState:UIControlStateNormal];
-//    
-//    button.enabled=false;
-//    
-//    return button;
-//}
 
 @end

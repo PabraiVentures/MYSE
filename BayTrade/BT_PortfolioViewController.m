@@ -39,6 +39,12 @@
     self.stocks = [self.userModel.modelPort.stocks allObjects];
 }
 
+-(void) viewWillAppear:(BOOL)animated
+{
+    self.stocks = [self.userModel.modelPort.stocks allObjects];
+    [stockTable reloadData];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

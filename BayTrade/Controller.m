@@ -10,7 +10,6 @@
 
 @implementation Controller
 
-
 /**
  This method takes an array of stock symbols and returns data for each of them in a dictionary.
  */
@@ -41,8 +40,7 @@
 + (NSNumber*) currentPriceForSymbol: (NSString*) symbol
 {
     NSDictionary *quote = [Controller fetchQuotesFor:[NSArray arrayWithObject:symbol]];
-    return quote[@"Open"];
+    return quote[@"LastTradePriceOnly"];
 }
-
 
 @end

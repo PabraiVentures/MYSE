@@ -24,7 +24,6 @@
 
 @implementation BT_TradeViewController
 @synthesize managedObjectContext;
-//@synthesize labelFirstName = _labelFirstName;
 @synthesize loggedInUser = _loggedInUser;
 @synthesize profilePic = _profilePic;
 
@@ -53,7 +52,6 @@
     [self.view addGestureRecognizer:tap];
     
     [self setCoreModel];
-    [self updateOwnedStocks];
     [self updateBuyPower];
     [self updateValue];
 }
@@ -92,7 +90,6 @@
     //NSLog(@"????%@",results);
     
     BOOL needsUpdate = YES;
-        NSLog(@"SM download result: %@",results);
     @try {
         NSManagedObject* myModel=[results objectAtIndex:0];
         self.userModel.coreModel = (CoreModel *) myModel; //now we can access coremodel from anywhere
@@ -123,18 +120,16 @@
 
 /************************BUYING**************************/
 /************************BUYING**************************/
-/************************BUYING**************************/
-/************************BUYING**************************/
 
 - (IBAction) buyButtonClicked:(id)sender
 {
     NSLog(@"beginning buybuttonclicked");
     //assign self.userModel.coreModel to the StackMob coreModel
     [self setCoreModel];
-    NSLog(@"finished setcoremodel");
     NSString *buyingSymbol = [NSString string];
     if([self.symbolField.text length] > 0) buyingSymbol = self.symbolField.text;
     else buyingSymbol = NULL;
+    NSLog(@"buying symbol: %@", buyingSymbol);
     int amount;
     int amountForHistory;
     if([self.amountField.text length] > 0) amount = [self.amountField.text intValue];
@@ -143,7 +138,6 @@
     NSDictionary *data;
     @try {
         data = [self callFetchQuotes:buyingSymbol];
-        NSLog(@"finished calling fetch quotes");
     }
     @catch (NSException *exception) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Uh Oh!"
@@ -154,7 +148,7 @@
         return;
     }
     NSLog(@"data: %@", data);
-    NSString *myStockPrice = data[@"Open"];
+    NSString *myStockPrice = data[@"LastTradePriceOnly"];
     
     double price = [myStockPrice doubleValue];
     
@@ -182,7 +176,6 @@
             NSString* getRightUser=[ NSString stringWithFormat:@"user == '%@'",self.userModel.userID ];
             [fetchRequest setPredicate:[NSPredicate predicateWithFormat:getRightUser]];
             
-            
             /**********START CODE BLOCK FOR REQUEST ACTION************/
             [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {
                 NSLog(@"!!!!!%@",results);
@@ -197,7 +190,6 @@
                 
                 /***CREATE CORESTOCK TO BE PLACED INTO COREMODEL.PORTFOLIO******/
                 CoreStock* thestock=[NSEntityDescription insertNewObjectForEntityForName:@"CoreStock" inManagedObjectContext:self.managedObjectContext];
-                //NSNumber* theamt=[NSNumber numberWithInt:amount];
                 thestock.amount = [amountAndPrice objectAtIndex:0];
                 thestock.buyprice=[amountAndPrice objectAtIndex:1];
                 thestock.symbol=buyingSymbol;
@@ -229,7 +221,6 @@
                                                            delegate:self cancelButtonTitle:@"Got it"
                                                   otherButtonTitles: nil];
             [alert show];
-            
         }
         for(CoreStock *s in self.userModel.modelPort.stocks)
         {
@@ -239,8 +230,6 @@
     NSLog(@"ending buybuttonclicked");
 }
 
-/************************SELLING**************************/
-/************************SELLING**************************/
 /************************SELLING**************************/
 /************************SELLING**************************/
 
@@ -381,7 +370,7 @@
             }
             NSDictionary *sellData = [self callFetchQuotes:symbol];
             
-            NSString *myStockPrice = sellData[@"Open"];
+            NSString *myStockPrice = sellData[@"LastTradePriceOnly"];
             double sellPrice = [myStockPrice doubleValue];
             
             self.userModel.coreModel.portfolio.totalcashvalue =
@@ -404,153 +393,16 @@
             }];
             return YES;
         }//if
-    }//for
-    
-    //if outside, then you don't own the stock
-    
+    }
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Nice try!" message:@"You don't own enought of this stock" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
     [alert show];
     
     return NO;
 }
 
-
-
-/**
- *  Updates stock data in stackmob with current Stock Prices
- */
-- (void) updateOwnedStocks {
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CoreStock"];//get the model, update and send back to stackmob
-    
-    NSString* getOwnedStocks= [NSString stringWithFormat:@"sm_owner == 'user/%@'",self.userModel.userID];// query for coremodel for THIS user
-    
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:getOwnedStocks]];
-    
-    
-    /**********START CODE BLOCK FOR REQUEST ACTION************/
-    [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *ownedStocks) {
-        NSLog(@"owned stocks:%@",ownedStocks);
-        
-        NSMutableArray *ownedSymbols = [[NSMutableArray alloc] init];//create array of symbols to pass to Yahoo! Finance
-        for(NSManagedObject* stock in ownedStocks)
-        {
-            CoreStock *ownedStock = (CoreStock *) stock;
-            [ownedSymbols addObject:ownedStock.symbol];
-        }
-        
-        if([ownedSymbols count] == 0) {
-            NSLog(@"No owned symbols");
-            return;
-        }
-        
-        //API call to Yahoo! Finance for all stocks in your portfolio
-        NSDictionary *data = [[NSDictionary dictionary] init];
-        data = [Controller fetchQuotesFor:ownedSymbols];
-        
-        NSLog(@"fetched data from controller: %@", data);
-        
-        NSError *error;
-        NSData *jsonData;
-        
-        @try {
-            jsonData = [NSJSONSerialization dataWithJSONObject:data
-                                                       options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
-                                                         error:&error];
-        }
-        @catch (NSException *exception) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Problem" message:@"Try again later" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-            [alert show];
-        }
-        
-        NSString *jsonString;
-        NSArray* jsonArray;
-        NSMutableArray *dictArray = [[NSMutableArray alloc] init];
-        //int idx = 0;
-        if (!jsonData) {
-            NSLog(@"Got an error: %@", error);
-        } else {
-            jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-            //NSLog(@"jsonString: %@", jsonString);
-            jsonArray = [jsonString componentsSeparatedByCharactersInSet: [NSCharacterSet characterSetWithCharactersInString: @"{}[]\n,"]];
-            //NSLog(@"jsonArray: %@", jsonArray);
-            
-            //loops through results of API call and create 1 dictionary per stock
-            //then puts each dictionary in an array
-            for (NSString *currentLine in jsonArray) {
-                //NSLog(@"looping");
-                NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-                
-                if ([currentLine rangeOfString:@"BidRealtime"].location != NSNotFound)
-                {
-                    NSArray *components = [currentLine componentsSeparatedByString:@"\"BidRealtime\" : "];
-                    NSString *bidRealTime = (NSString*)[components objectAtIndex:1];
-                    bidRealTime = [bidRealTime stringByReplacingOccurrencesOfString:@"\"" withString:@""];
-                    [dict setObject: bidRealTime forKey: @"BidRealTime"]; //add brt price to dict in array
-                }
-                if ([currentLine rangeOfString:@"Open"].location != NSNotFound)
-                {
-                    NSArray *components = [currentLine componentsSeparatedByString:@"\"Open\" : "];
-                    NSString *open = @"error";
-                    if ([components count] >= 1) {
-                        open = (NSString*)[components objectAtIndex:1];
-                    }
-                    open = [open stringByReplacingOccurrencesOfString:@"\"" withString:@""];
-                    [dict setObject: open forKey: @"Open"]; //add brt price to dict in array
-                }
-                if ([currentLine rangeOfString:@"symbol"].location != NSNotFound)
-                {
-                    NSArray *components = [currentLine componentsSeparatedByString:@"\"symbol\" : "];
-                    NSString *symbol = (NSString* )[components objectAtIndex:1];
-                    symbol = [symbol stringByReplacingOccurrencesOfString:@"\"" withString:@""];
-                    [dict setObject: symbol forKey: @"symbol"]; //add brt price to dict in array
-                }
-                if ([dict count] >= 1) {
-                    [dictArray addObject:dict];
-                }
-            }
-        }
-        NSLog(@"done looping");
-        NSLog(@"dictArray: %@", dictArray);
-        
-        //loop through all stocks and update with bidRealTime values
-        for(CoreStock* stock in self.userModel.coreModel.portfolio.stocks)
-        {
-            NSLog(@"looping through stocks");
-            NSLog(@"%@", stock.symbol);
-            for (int j = 0; j < [dictArray count]; j++) {
-                //NSLog(@"looping through idx");
-                NSString *sym = [((NSMutableDictionary *)[dictArray objectAtIndex:j]) objectForKey:@"symbol"];
-                if ([sym isEqual: stock.symbol])
-                {
-                    NSLog(@"added symbol %@ = %@", sym, stock.symbol);
-                    break;
-                }
-            }
-        }
-        //ADDING STOCK TO COREMODEL.PORTFOLIO TO BE SAVED LATER
-        //[((Coremodel*)(myModel)).portfolio addStocksObject:thestock];// the stock is now in the portfolio
-        //SAVE COREMODEL TO STACKMOB
-        
-        [self.managedObjectContext saveOnSuccess:^{
-            NSLog(@"Stocks updated successfully!");
-        } onFailure:^(NSError *error) {
-            NSLog(@"There was an error! %@", error);
-        }];
-    } onFailure:^(NSError *error) {
-        NSLog(@"Error fetching: %@", error);
-    }];
-}
-
-//takes JSON string of stock data, parses and updates the data to be saved into stackmob
-- (void) updatePrices : (NSString *) jsonString
-{
-    
-}
-
 - (IBAction)logoutButtonClicked:(id)sender {
     //delete token info
     [FBSession.activeSession closeAndClearTokenInformation];
-    
 }
 
 - (void)loginViewFetchedUserInfo:(FBLoginView *)loginView
