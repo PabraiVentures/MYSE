@@ -49,54 +49,54 @@
 
 -(void) addLargestHoldings
 {
-    
-    //sort by largest stock value
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"totalValue" ascending:NO] ;
-    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-    NSArray *sortedArray;
-    sortedArray = [self.userModel.modelPort.stocks sortedArrayUsingDescriptors:sortDescriptors];
-    
-    //need to take care of removing stocks and having less stocks then last time on page!!!!!!!
-    
-    //replace current array with sorted array
-    self.userModel.modelPort.stocks = [NSMutableArray arrayWithArray:sortedArray];
-    
-    if([self.userModel.modelPort.stocks count] > 0)
-    {
-        int counter = 0;
-        int position = 80;
-        while (counter < 4 && counter < [self.userModel.modelPort.stocks count]) {
-            [self buildLargestStockButtons: counter++ andPos:position];
-            position += 50;
-        }
-    }
-    
+//    
+//    //sort by largest stock value
+//    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"totalValue" ascending:NO] ;
+//    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+//    NSArray *sortedArray;
+//    sortedArray = [self.userModel.modelPort.stocks sortedArrayUsingDescriptors:sortDescriptors];
+//    
+//    //need to take care of removing stocks and having less stocks then last time on page!!!!!!!
+//    
+//    //replace current array with sorted array
+//    self.userModel.modelPort.stocks = [NSMutableArray arrayWithArray:sortedArray];
+//    
+//    if([self.userModel.modelPort.stocks count] > 0)
+//    {
+//        int counter = 0;
+//        int position = 80;
+//        while (counter < 4 && counter < [self.userModel.modelPort.stocks count]) {
+//            [self buildLargestStockButtons: counter++ andPos:position];
+//            position += 50;
+//        }
+//    }
+//    
 }
 
 -(void) buildLargestStockButtons: (int) index andPos: (int) pos
 {
-    UIButton *buttonL = [UIButton buttonWithType:UIButtonTypeCustom];
-    buttonL.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    buttonL.titleLabel.textAlignment = NSTextAlignmentLeft;
-    buttonL.layer.borderWidth = 0.5f;
-    buttonL.layer.cornerRadius = 10.0f;
-    UIColor* c = [UIColor colorWithHue:.53 saturation:.85 brightness:.75 alpha:1];
-    
-    buttonL.backgroundColor = c;
-
-    
-    NSString *leftTitle=[NSString stringWithFormat:@"%@            $%.2f", [((CoreStock*)([self.userModel.modelPort.stocks objectAtIndex:index])) symbol],
-                         [((CoreStock*)([self.userModel.modelPort.stocks objectAtIndex:index])).totalvalue doubleValue]];
-    
-    
-    buttonL.titleLabel.font = [UIFont systemFontOfSize:14];
-    [buttonL addTarget:self
-                action:@selector(BS)
-      forControlEvents:UIControlEventTouchDown];
-    [buttonL setTitle:leftTitle forState:UIControlStateNormal];
-    buttonL.frame = CGRectMake(10.0, pos, 300.0, 45.0);
-    buttonL.enabled=false;
-    [self.scrollView addSubview:buttonL];
+//    UIButton *buttonL = [UIButton buttonWithType:UIButtonTypeCustom];
+//    buttonL.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+//    buttonL.titleLabel.textAlignment = NSTextAlignmentLeft;
+//    buttonL.layer.borderWidth = 0.5f;
+//    buttonL.layer.cornerRadius = 10.0f;
+//    UIColor* c = [UIColor colorWithHue:.53 saturation:.85 brightness:.75 alpha:1];
+//    
+//    buttonL.backgroundColor = c;
+//
+//    
+//    NSString *leftTitle=[NSString stringWithFormat:@"%@            $%.2f", [((CoreStock*)([self.userModel.modelPort.stocks objectAtIndex:index])) symbol],
+//                         [((CoreStock*)([self.userModel.modelPort.stocks objectAtIndex:index])).totalvalue doubleValue]];
+//    
+//    
+//    buttonL.titleLabel.font = [UIFont systemFontOfSize:14];
+//    [buttonL addTarget:self
+//                action:@selector(BS)
+//      forControlEvents:UIControlEventTouchDown];
+//    [buttonL setTitle:leftTitle forState:UIControlStateNormal];
+//    buttonL.frame = CGRectMake(10.0, pos, 300.0, 45.0);
+//    buttonL.enabled=false;
+//    [self.scrollView addSubview:buttonL];
 }
 
 

@@ -28,4 +28,6 @@
 
 -(double) calcValue;
 
++(void) makeNewModelWithFBID:(NSString*)userID;
+
 @end

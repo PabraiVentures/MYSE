@@ -11,16 +11,16 @@
 
 @implementation CoreStock
 
-@synthesize amount;
-@synthesize buyprice;
-@synthesize closeprice;
-@synthesize currentprice;
-@synthesize name;
-@synthesize openprice;
-@synthesize sellprice;
-@synthesize stock_id;
-@synthesize symbol;
-@synthesize totalvalue;
+@dynamic amount;
+@dynamic buyprice;
+@dynamic closeprice;
+@dynamic currentprice;
+@dynamic name;
+@dynamic openprice;
+@dynamic sellprice;
+@dynamic stock_id;
+@dynamic symbol;
+@dynamic totalvalue;
 
 
 +(CoreStock*) initWithSymbol: (NSString *) theSymbol AndPrice: (double) thePrice AndAmount: (int) theAmount
@@ -41,5 +41,14 @@
     
     theStock.buyprice=[NSNumber numberWithFloat: thePrice];
     return theStock;
+
+}
+-(id)init{
+   return [super init];
+    
+}
+-(void)setSymbol:(NSString *)symbol{
+    self.symbol=symbol;
+    return;
 }
 @end

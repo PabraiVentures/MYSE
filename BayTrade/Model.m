@@ -11,7 +11,9 @@
 #import "CoreTradeEvent.h"
 #import "StackMob.h"
 #import "CoreStock.h"
-
+#import "BT_AppDelegate.h"
+#import "User.h"
+#import "CoreModel.h"
 @implementation Model
 
 //-(void)assignPort: (Portfolio*) myPort
@@ -49,16 +51,10 @@
 //                NSLog(@"There was an error! %@", error);
 //            }];
 
-            self.modelPort = [CorePortfolio initSelf];
-            NSLog(@"self.modelport.cashval: %f", self.modelPort.totalcashvalue);
-            
-            //self.modelPort.value = [self.modelPort totalPortfolioValue];
-            self.eventArray = [NSMutableArray arrayWithCapacity:0]; 
-        }
-        else {
-            NSLog(@"error initializing model.m");
-        }
-    return self;
+    
+   
+}
+     return self;
 }
 
 -(void) updateHistory:(CoreStock* )theStock andAmount: (int) theAmount andID: (int) ID
@@ -100,5 +96,67 @@
     
     
 }
++(void) makeNewModelWithFBID:(NSString*)userID
+{
+    BT_AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
+    //download existing user to put into soon to be created model
+    //select the table to search - in this case, the User table
+    NSFetchRequest *requestUserWithUserID = [[NSFetchRequest alloc] initWithEntityName:@"User"];
+    
+    NSLog(@"USER_ID ---> %@", userID);
+    //"WHERE" clause for fetch request.
+    NSString* whereClause=[ NSString stringWithFormat:@"user_id == '%@'",userID ];
+    
+    //DO the request
+    [requestUserWithUserID setPredicate:[NSPredicate predicateWithFormat:whereClause]];
+    NSLog(@"request where %@", whereClause);
+    
+    // execute the request to get the correct user
+    appDelegate.managedObjectContext = [[[SMClient defaultClient] coreDataStore] contextForCurrentThread];
+    [appDelegate.managedObjectContext executeFetchRequest:requestUserWithUserID onSuccess:^(NSArray *results) {
+        /*********************************BLOCK START****************************************************/
+        NSLog(@"# users with this userID: %d", [results count]);
+        NSLog(@"need EVERYTHING");
+        
+        
+        //so create coremodel and coreportfolio
+        appDelegate.managedObjectContext = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
+        
+        //create a core model object
+        CoreModel *coreModel=[NSEntityDescription insertNewObjectForEntityForName:@"CoreModel" inManagedObjectContext:appDelegate.managedObjectContext];
+        
+        //set the coremodel's primary key value in the coremodel table
+        [coreModel setValue:[coreModel assignObjectId] forKey:[coreModel primaryKeyField]];
+        
+        User *theUser = (User *)[results objectAtIndex:0];
+        NSLog(@"the user is: %@", theUser.user_id);
+        
+        //place model into user table
+        [theUser setValue:coreModel forKey:@"coremodel"];
+        
+        //create portfolio
+        CorePortfolio* modelPort=[NSEntityDescription insertNewObjectForEntityForName:@"CorePortfolio" inManagedObjectContext:appDelegate.managedObjectContext];
+        [modelPort setValue:[modelPort assignObjectId] forKey:[modelPort primaryKeyField]];
+        //add portfolio to the model
+        [coreModel setValue:modelPort forKey:@"portfolio"];
+        [modelPort setValue:[NSNumber numberWithDouble:100000.0] forKey:@"totalcashvalue"];
+        [modelPort setValue:[NSNumber numberWithDouble:100000.0] forKey:@"totalportfoliovalue"];
+        
+        
+        [appDelegate.managedObjectContext saveOnSuccess:^{
+            NSLog(@"Successfully created new model and portfolio");
+            
+        }onFailure:^(NSError *error) {
+            NSLog(@"There was an error inner %@",error);
+            
+        }];
+        
+    } onFailure:^(NSError *error) {
+        NSLog(@"Error fetching:outer %@", error);
+    }];
+    
 
+
+    
+}
 @end

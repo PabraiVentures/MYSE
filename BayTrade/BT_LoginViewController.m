@@ -14,6 +14,7 @@
 #import <CoreData/CoreData.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import "BT_AppDelegate.h"
+#import "Model.h"
 @interface BT_LoginViewController ()
 
 @end
@@ -126,68 +127,7 @@
 NSLog(@"end of update view");
 }
 
-//Creates a new model in StackMob for the new user based on FbUserID
-- (void)makeNewModel : (BT_AppDelegate *) appDelegate andResult : (NSDictionary *) result
-{
-    NSLog(@"******%@", result);
-    //download existing user to put into soon to be created model
-    NSString *userID = [NSString stringWithFormat:@"%@",[result valueForKey:@"user_id"]];
-    //select the table to search - in this case, the User table
-    NSFetchRequest *requestUserWithUserID = [[NSFetchRequest alloc] initWithEntityName:@"User"];
-    
-    NSLog(@"USER_ID ---> %@", userID);
-    //"WHERE" clause for fetch request.
-    NSString* whereClause=[ NSString stringWithFormat:@"user_id == '%@'",userID ];
-    
-    //DO the request
-    [requestUserWithUserID setPredicate:[NSPredicate predicateWithFormat:whereClause]];
-    NSLog(@"request where %@", whereClause);
-    
-    // execute the request to get the correct user
-    appDelegate.managedObjectContext = [[[SMClient defaultClient] coreDataStore] contextForCurrentThread];
-    [appDelegate.managedObjectContext executeFetchRequest:requestUserWithUserID onSuccess:^(NSArray *results) {
-        /*********************************BLOCK START****************************************************/
-        NSLog(@"# users with this userID: %d", [results count]);
-        NSLog(@"need EVERYTHING");
-        
-        
-        //so create coremodel and coreportfolio
-        appDelegate.managedObjectContext = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
-        
-        //create a core model object
-        NSManagedObject* coremodel=[NSEntityDescription insertNewObjectForEntityForName:@"CoreModel" inManagedObjectContext:appDelegate.managedObjectContext];
-        
-        //set the coremodel's primary key value in the coremodel table
-        [coremodel setValue:[coremodel assignObjectId] forKey:[coremodel primaryKeyField]];
-        
-        User *theUser = (User *)[results objectAtIndex:0];
-        NSLog(@"the user is: %@", theUser.user_id);
-        
-        //place model into user table
-        [theUser setValue:coremodel forKey:@"coremodel"];
-        
-        //create portfolio
-        NSManagedObject* coreportfolio=[NSEntityDescription insertNewObjectForEntityForName:@"CorePortfolio" inManagedObjectContext:appDelegate.managedObjectContext];
-        [coreportfolio setValue:[coreportfolio assignObjectId] forKey:[coreportfolio primaryKeyField]];
-        //add portfolio to the model
-        [coremodel setValue:coreportfolio forKey:@"portfolio"];
-        [coreportfolio setValue:[NSNumber numberWithDouble:100000.0] forKey:@"totalcashvalue"];
-        [coreportfolio setValue:[NSNumber numberWithDouble:100000.0] forKey:@"totalportfoliovalue"];
-        
-        
-        [appDelegate.managedObjectContext saveOnSuccess:^{
-            NSLog(@"Successfully created new model and portfolio");
-            
-        }onFailure:^(NSError *error) {
-            NSLog(@"There was an error inner %@",error);
-            
-        }];
-        
-    } onFailure:^(NSError *error) {
-        NSLog(@"Error fetching:outer %@", error);
-    }];
-    
-}
+
 
 - (void)viewDidUnload
 {
@@ -202,6 +142,7 @@ NSLog(@"end of update view");
 {
     NSUserDefaults  *defaults=[NSUserDefaults standardUserDefaults];
     [defaults setObject:[result valueForKey:@"user_id"] forKey:@"userID"];
+    
     [defaults synchronize];
 }
 
@@ -224,8 +165,9 @@ NSLog(@"end of update view");
         NSLog(@"Results: %@", results);
         if([results count] == 0)
         {
-            NSLog(@"model exists?: %d", [results count]);
-            [self makeNewModel:appDelegate andResult:result];
+            NSLog(@"model  doesnt exist");
+           [Model  makeNewModelWithFBID:   [[NSUserDefaults standardUserDefaults] stringForKey:@"userID"]];
+ 
             NSLog(@"got past making model");
         }
         

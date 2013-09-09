@@ -11,17 +11,18 @@
 
 
 @implementation CorePortfolio
-
-@synthesize portfolio_id;
-@synthesize stocks;
-
-@synthesize owner;
+@dynamic portfolio_id;
+@dynamic stocks;
+@dynamic totalcashvalue;
+@dynamic totalportfoliovalue;
+@dynamic owner;
 
 + (CorePortfolio*)initSelf
 {
     CorePortfolio* thePortfolio = [[CorePortfolio alloc] init];
-    thePortfolio.stocks = [NSMutableArray arrayWithCapacity:10];
-    thePortfolio.totalcashvalue = 100000.0;
+    thePortfolio.stocks = [NSMutableSet set];
+    thePortfolio.totalcashvalue = [NSNumber numberWithFloat: 100000.0];
+    thePortfolio.totalportfoliovalue   =[NSNumber numberWithFloat:100000.0];
     NSLog(@"initSelf");
     return thePortfolio;
 }
@@ -31,7 +32,7 @@
     
     if (self = [super init])
     {
-        self.totalcashvalue = 100000.0;
+       // self.totalcashvalue = [NSNumber numberWithFloat: 100000.0];
         NSLog(@"calling coreportfolio init");
     }
     return self;
@@ -41,24 +42,13 @@
 {
     if (self = [super init])
     {
-        owner = @"Jamie";
-        [self.stocks addObject: theStock];
+        [self addStocks:[NSSet setWithObject: theStock ]];
         //self.totalvalue = [NSNumber numberWithDouble:[theStock crntPrice]];
     }
     return self;
 }
 
--(bool) addStocksObject:(CoreStock *)addedStock
-{
-    @try {
-        [self.stocks addObject:addedStock];
-        return true;
-    }
-    @catch (NSException *exception) {
-        NSLog(@"exception adding stock: %@", exception);
-        return false;
-    }
-}
+
 
 #pragma mark - Local Getter Methods
 
@@ -72,16 +62,7 @@
     return value;
 }
 
--(void)setTotalcashvalue:(double)totalcvalue
-{
-    NSLog(@"set totalcvalue from %f to %f", self.totalcashvalue, totalcvalue);
-    self.totalcashvalue = totalcvalue;
-}
 
--(double) totalcashvalue
-{
-    return self.totalcashvalue;
-}
 
 -(double) totalPortfolioValue
 {
@@ -90,7 +71,7 @@
 
 -(double)totalCashValue
 {
-    return self.totalcashvalue;
+    return self.totalcashvalue.doubleValue;
 }
 
 /**
