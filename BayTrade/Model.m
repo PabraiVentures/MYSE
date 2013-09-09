@@ -88,13 +88,19 @@
     tradeevent.actionid=[NSNumber numberWithInt:ID];
     
     /*****DONE CREATING TRADEEVENT INSIDE MANAGEDOBJECTCONTEXT*******/
-    
+
     
     
     //ADD TRADEEVENT TO COREMODEL TO BE SAVED
     [self.coreModel addTradeeventsObject:tradeevent];// tradevent is now part of the model
-    
-    
+    [moc deleteObject:theStock];
+
+    [moc saveOnSuccess:^{
+        NSLog(@"You updated the model object by selling a stock!");
+    } onFailure:^(NSError *error) {
+        NSLog(@"There was an error! %@", error);
+    }];
+
 }
 +(void) makeNewModelWithFBID:(NSString*)userID
 {
