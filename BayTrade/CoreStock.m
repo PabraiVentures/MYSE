@@ -18,7 +18,7 @@
 @dynamic name;
 @dynamic openprice;
 @dynamic sellprice;
-@dynamic corestock_id;
+//@dynamic corestock_id;
 @dynamic symbol;
 @dynamic totalvalue;
 
@@ -36,7 +36,8 @@
     theStock.amount = [NSNumber numberWithFloat: theAmount];
     // theStock.totalValue = theAmount * theOpen;
     
-    
+    [theStock setValue:[theStock assignObjectId] forKey:[theStock primaryKeyField]];
+
     theStock.buyprice=[NSNumber numberWithFloat: thePrice];
     return theStock;
 
