@@ -7,7 +7,7 @@
 //
 
 #import "CoreStock.h"
-
+#import "StackMob.h"
 
 @implementation CoreStock
 
@@ -25,8 +25,7 @@
 
 +(CoreStock*) initWithSymbol: (NSString *) theSymbol AndPrice: (double) thePrice AndAmount: (int) theAmount
 {
-    CoreStock *theStock=[[CoreStock alloc] init];
-    
+    CoreStock *theStock=[NSEntityDescription insertNewObjectForEntityForName:@"CoreStock" inManagedObjectContext:[[[SMClient defaultClient]coreDataStore] contextForCurrentThread]];    
     //initialize variables
     
     theStock.symbol = theSymbol;
@@ -44,7 +43,7 @@
 
 }
 -(id)init{
-   return [super init];
+   return     [NSEntityDescription insertNewObjectForEntityForName:@"CoreStock" inManagedObjectContext:[[[SMClient defaultClient]coreDataStore] contextForCurrentThread]];    ;
     
 }
 -(void)setSymbol:(NSString *)symbol{
