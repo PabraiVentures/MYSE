@@ -27,10 +27,6 @@
 
 @interface CorePortfolio (CoreDataGeneratedAccessors)
 
-//-(double)totalStockValue;
-//-(double)totalCashValue;
-
-
 - (void)addStocksObject:(CoreStock *)value;
 - (void)removeStocksObject:(CoreStock *)value;
 - (void)addStocks:(NSSet *)values;

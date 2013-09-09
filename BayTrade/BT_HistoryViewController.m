@@ -114,7 +114,7 @@
         action = @"Bought";
     }
 
-    NSString *actionDetail = [NSString stringWithFormat:@"\n%@ %@ shares of %@\nTrade Value: $%@ x %@ = %.2f", action, event.tradeamount, [event.ticker uppercaseString], event.tradeprice, event.tradeamount, doMath];
+    NSString *actionDetail = [NSString stringWithFormat:@"\n%@ %@ shares of %@\nTrade Value: $%.2f x %@ = $%.2f", action, event.tradeamount, [event.ticker uppercaseString], [event.tradeprice doubleValue], event.tradeamount, doMath];
     
     cell.textLabel.text = [self timeString:event.time withAction:action];
     cell.detailTextLabel.text = actionDetail;

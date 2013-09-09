@@ -43,11 +43,12 @@
 
 }
 -(id)init{
-   CoreStock* thestock=    [NSEntityDescription insertNewObjectForEntityForName:@"CoreStock" inManagedObjectContext:[[[SMClient defaultClient]coreDataStore] contextForCurrentThread]];
+   CoreStock* thestock = [NSEntityDescription insertNewObjectForEntityForName:@"CoreStock" inManagedObjectContext:[[[SMClient defaultClient]coreDataStore] contextForCurrentThread]];
     [thestock setValue:[thestock assignObjectId] forKey:[thestock primaryKeyField]];
 
     return thestock;
 }
+
 -(void)setSymbol:(NSString *)symbol{
     self.symbol=symbol;
     return;

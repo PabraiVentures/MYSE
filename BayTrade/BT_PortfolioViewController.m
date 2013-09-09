@@ -35,6 +35,7 @@
 {
     [super viewDidLoad];
     self.userModel=((BT_TabBarController*)(self.tabBarController)).userModel;
+    self.stocks = [self.userModel.modelPort.stocks allObjects];
 }
 
 - (void)didReceiveMemoryWarning
@@ -59,23 +60,28 @@
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//    if (cell == nil) {
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-//    }
-//    cell.textLabel.backgroundColor = [UIColor clearColor];
-//    cell.detailTextLabel.backgroundColor = [UIColor clearColor];
-//    cell.detailTextLabel.numberOfLines = 5;
-//    
-//    CoreStock *stock = [self.userModel.coreModel.portfolio.stocks objectAtIndex:indexPath.row];
-//    
-//    double value = [stock.currentprice doubleValue] * [stock.amount doubleValue];
-//    
-//    NSString *actionDetail = [NSString stringWithFormat:@"Purchase Share Price: %.2f\nCurrent Share Price: %.2f\nCurrent Value: %.2f", [stock.buyprice doubleValue], [stock.currentprice doubleValue], value];
-//    
-//    cell.textLabel.text = [NSString stringWithFormat:@"%i shares of %@", [stock.amount intValue], [stock.symbol uppercaseString]];
-//    cell.detailTextLabel.text = actionDetail;
-//    
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    }
+    cell.textLabel.backgroundColor = [UIColor clearColor];
+    cell.detailTextLabel.backgroundColor = [UIColor clearColor];
+    cell.detailTextLabel.numberOfLines = 5;
+    //userModel.coreModel.portfolio.stocks objectAtIndex:indexPath.row
+    CoreStock *stock = [self.stocks objectAtIndex: indexPath.row];
+    
+    double value = [stock.currentprice doubleValue] * [stock.amount doubleValue];
+    
+    NSString *actionDetail = [NSString stringWithFormat:@"Purchase Share Price: %.2f\nCurrent Share Price: %.2f\nCurrent Value: %.2f", [stock.buyprice doubleValue], [stock.currentprice doubleValue], value];
+    
+    cell.textLabel.text = [NSString stringWithFormat:@"%i shares of %@", [stock.amount intValue], [stock.symbol uppercaseString]];
+    cell.detailTextLabel.text = actionDetail;
+    
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 80;
 }
 
 @end

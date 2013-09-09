@@ -13,5 +13,6 @@
 
 @property (nonatomic,strong) Model* userModel;
 @property (nonatomic, retain) IBOutlet UITableView *stockTable;
+@property (nonatomic, retain) NSArray *stocks;
 
 @end
