@@ -38,8 +38,6 @@
 {
     [FBProfilePictureView class]; //to make prof pic nice/right size
     
-
-    
     //SM Client Initialization
     // Override point for customization after application launch.
     // Assuming your variable is declared SMClient *client;
@@ -125,8 +123,6 @@
     NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"themodel" withExtension:@"momd"];
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return _managedObjectModel;
-    
-    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

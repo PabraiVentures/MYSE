@@ -31,9 +31,8 @@
         
         NSData *jsonData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:query] encoding:NSUTF8StringEncoding error:nil] dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *results = jsonData ? [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil] : nil;
-        NSDictionary *quoteEntry = nil;
         NSLog(@"query results: %@", results);
-        quoteEntry = [results valueForKeyPath:@"query.results.quote"];
+        NSDictionary *quoteEntry = [results valueForKeyPath:@"query.results.quote"];
         return quoteEntry;
     }
     return quotes;

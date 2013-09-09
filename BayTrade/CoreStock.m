@@ -22,7 +22,6 @@
 @dynamic symbol;
 @dynamic totalvalue;
 
-
 +(CoreStock*) initWithSymbol: (NSString *) theSymbol AndPrice: (double) thePrice AndAmount: (int) theAmount
 {
     CoreStock *theStock=[NSEntityDescription insertNewObjectForEntityForName:@"CoreStock" inManagedObjectContext:[[[SMClient defaultClient]coreDataStore] contextForCurrentThread]];    

@@ -58,8 +58,6 @@
     [self updateValue];
 }
 
-
-
 - (void) dismissKeyboard {
     [self.amountField resignFirstResponder];
     [self.symbolField resignFirstResponder];
@@ -72,7 +70,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 //assigns self.userModel.coreModel to the StackMob coreModel
 //AND updates the display
@@ -203,7 +200,6 @@
                 double cashMoney =  self.userModel.coreModel.portfolio.totalcashvalue.doubleValue - (price * amount);
                 self.userModel.coreModel.portfolio.totalcashvalue = [NSNumber numberWithFloat: cashMoney];
                 NSMutableArray *amountAndPrice = [self accountForPrevOwnedStock:buyingSymbol andInt: amount andPrice:price];
-                
                 
                 /***CREATE CORESTOCK TO BE PLACED INTO COREMODEL.PORTFOLIO******/
                 CoreStock* thestock=[NSEntityDescription insertNewObjectForEntityForName:@"CoreStock" inManagedObjectContext:self.managedObjectContext];
