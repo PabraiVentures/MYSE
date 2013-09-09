@@ -19,7 +19,7 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSNumber * openprice;
 @property (nonatomic, retain) NSNumber * sellprice;
-@property (nonatomic, retain) NSString * stock_id;
+@property (nonatomic, retain) NSString * corestock_id;
 @property (nonatomic, retain) NSString * symbol;
 @property (nonatomic, retain) NSNumber * totalvalue;
 

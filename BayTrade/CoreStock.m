@@ -18,7 +18,7 @@
 @dynamic name;
 @dynamic openprice;
 @dynamic sellprice;
-@dynamic stock_id;
+@dynamic corestock_id;
 @dynamic symbol;
 @dynamic totalvalue;
 
@@ -43,8 +43,10 @@
 
 }
 -(id)init{
-   return     [NSEntityDescription insertNewObjectForEntityForName:@"CoreStock" inManagedObjectContext:[[[SMClient defaultClient]coreDataStore] contextForCurrentThread]];    ;
-    
+   CoreStock* thestock=    [NSEntityDescription insertNewObjectForEntityForName:@"CoreStock" inManagedObjectContext:[[[SMClient defaultClient]coreDataStore] contextForCurrentThread]];
+    [thestock setValue:[thestock assignObjectId] forKey:[thestock primaryKeyField]];
+
+    return thestock;
 }
 -(void)setSymbol:(NSString *)symbol{
     self.symbol=symbol;
