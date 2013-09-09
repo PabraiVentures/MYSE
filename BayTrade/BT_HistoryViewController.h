@@ -7,10 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Model.h"
+#import "Cache.h"
 #import "BT_TabBarController.h"
 #import "BT_HistoryViewController.h"
-#import "BT_TradeEvent.h"
 #import <QuartzCore/QuartzCore.h>
 #import "CoreModel.h"
 #import "CoreStock.h"
@@ -23,7 +22,7 @@
 }
 
 @property (strong, nonatomic) IBOutlet UITableView *historyTable;
-@property (weak, nonatomic) Model* userModel;
+@property (weak, nonatomic) Cache* userModel;
 @property (weak,nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end

@@ -16,14 +16,8 @@
     <entity name="CoreStock" syncable="YES">
         <attribute name="amount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="buyprice" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="closeprice" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="corestock_id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="currentprice" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="openprice" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sellprice" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="symbol" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="totalvalue" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <relationship name="portfolio" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="CorePortfolio" inverseName="stocks" inverseEntity="CorePortfolio" syncable="YES"/>
     </entity>
     <entity name="CoreTradeEvent" syncable="YES">
@@ -42,7 +36,7 @@
     <elements>
         <element name="CoreModel" positionX="-56" positionY="3" width="128" height="105"/>
         <element name="CorePortfolio" positionX="259" positionY="-30" width="128" height="120"/>
-        <element name="CoreStock" positionX="0" positionY="-243" width="128" height="210"/>
+        <element name="CoreStock" positionX="0" positionY="-243" width="128" height="120"/>
         <element name="CoreTradeEvent" positionX="-227" positionY="-141" width="128" height="150"/>
         <element name="User" positionX="241" positionY="-162" width="128" height="75"/>
     </elements>

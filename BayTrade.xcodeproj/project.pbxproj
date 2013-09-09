@@ -21,7 +21,6 @@
 		9307A2F817A44D2D00E647DF /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 9307A2F317A44D2D00E647DF /* home.png */; };
 		931713F417A3792200B7D377 /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 931713F317A3792200B7D377 /* Controller.m */; };
 		931713F717A382DF00B7D377 /* BT_HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 931713F617A382DF00B7D377 /* BT_HistoryViewController.m */; };
-		93A82DBB17A3746E00787732 /* BT_TradeEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A82DBA17A3746E00787732 /* BT_TradeEvent.m */; };
 		93C7138F17A3FCBC00258C6A /* themodel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 93C7138D17A3FCBC00258C6A /* themodel.xcdatamodeld */; };
 		93D5A0C217A3C6FF00ECA5D8 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 93D5A08B17A3C6FF00ECA5D8 /* CHANGELOG.md */; };
 		93D5A0C317A3C6FF00ECA5D8 /* libstackmob-v2.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93D5A0C117A3C6FF00ECA5D8 /* libstackmob-v2.0.0.a */; };
@@ -52,7 +51,7 @@
 		93E19FB517A36420000D60B5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 93E19FB317A36420000D60B5 /* InfoPlist.strings */; };
 		93E19FB817A36420000D60B5 /* BayTradeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E19FB717A36420000D60B5 /* BayTradeTests.m */; };
 		93E19FC317A36492000D60B5 /* BT_TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E19FC217A36492000D60B5 /* BT_TabBarController.m */; };
-		93E19FCB17A365E9000D60B5 /* Model.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E19FC817A365E8000D60B5 /* Model.m */; };
+		93E19FCB17A365E9000D60B5 /* Cache.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E19FC817A365E8000D60B5 /* Cache.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,8 +85,6 @@
 		931713F317A3792200B7D377 /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
 		931713F517A382DF00B7D377 /* BT_HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BT_HistoryViewController.h; sourceTree = "<group>"; };
 		931713F617A382DF00B7D377 /* BT_HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BT_HistoryViewController.m; sourceTree = "<group>"; };
-		93A82DB917A3746E00787732 /* BT_TradeEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BT_TradeEvent.h; sourceTree = "<group>"; };
-		93A82DBA17A3746E00787732 /* BT_TradeEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BT_TradeEvent.m; sourceTree = "<group>"; };
 		93C7138E17A3FCBC00258C6A /* themodel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = themodel.xcdatamodel; sourceTree = "<group>"; };
 		93D5A08B17A3C6FF00ECA5D8 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG.md; sourceTree = "<group>"; };
 		93D5A08D17A3C6FF00ECA5D8 /* AFHTTPClient+StackMob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPClient+StackMob.h"; sourceTree = "<group>"; };
@@ -180,8 +177,8 @@
 		93E19FB717A36420000D60B5 /* BayTradeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BayTradeTests.m; sourceTree = "<group>"; };
 		93E19FC117A36492000D60B5 /* BT_TabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BT_TabBarController.h; sourceTree = "<group>"; };
 		93E19FC217A36492000D60B5 /* BT_TabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BT_TabBarController.m; sourceTree = "<group>"; };
-		93E19FC717A365E8000D60B5 /* Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
-		93E19FC817A365E8000D60B5 /* Model.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Model.m; sourceTree = "<group>"; };
+		93E19FC717A365E8000D60B5 /* Cache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cache.h; sourceTree = "<group>"; };
+		93E19FC817A365E8000D60B5 /* Cache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cache.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,14 +252,12 @@
 		525122A317D7759100A8782B /* Objects */ = {
 			isa = PBXGroup;
 			children = (
-				93E19FC717A365E8000D60B5 /* Model.h */,
-				93E19FC817A365E8000D60B5 /* Model.m */,
+				93E19FC717A365E8000D60B5 /* Cache.h */,
+				93E19FC817A365E8000D60B5 /* Cache.m */,
 				93DD2C5F17A3E3AB00B3FE71 /* CoreModel.h */,
 				93DD2C6017A3E3AB00B3FE71 /* CoreModel.m */,
 				93DD2C5C17A3E39600B3FE71 /* CorePortfolio.h */,
 				93DD2C5D17A3E39600B3FE71 /* CorePortfolio.m */,
-				93A82DB917A3746E00787732 /* BT_TradeEvent.h */,
-				93A82DBA17A3746E00787732 /* BT_TradeEvent.m */,
 				93DD2C5917A3E38300B3FE71 /* CoreStock.h */,
 				93DD2C5A17A3E38300B3FE71 /* CoreStock.m */,
 				93DD2C5617A3E35900B3FE71 /* CoreTradeEvent.h */,
@@ -558,8 +553,7 @@
 				93E19F9817A36420000D60B5 /* BT_HomeViewController.m in Sources */,
 				93E19F9F17A36420000D60B5 /* BT_TradeViewController.m in Sources */,
 				93E19FC317A36492000D60B5 /* BT_TabBarController.m in Sources */,
-				93E19FCB17A365E9000D60B5 /* Model.m in Sources */,
-				93A82DBB17A3746E00787732 /* BT_TradeEvent.m in Sources */,
+				93E19FCB17A365E9000D60B5 /* Cache.m in Sources */,
 				931713F417A3792200B7D377 /* Controller.m in Sources */,
 				931713F717A382DF00B7D377 /* BT_HistoryViewController.m in Sources */,
 				93DD2C5817A3E35900B3FE71 /* CoreTradeEvent.m in Sources */,

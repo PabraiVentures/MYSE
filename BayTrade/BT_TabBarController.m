@@ -30,7 +30,7 @@
 {
     [super viewDidLoad];
    
-    self.userModel = [[Model alloc] init];
+    self.userModel = [[Cache alloc] init];
     NSUserDefaults  *defaults=[NSUserDefaults standardUserDefaults];
     self.userModel.userID = [defaults objectForKey:@"userID"];
 }

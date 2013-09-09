@@ -12,7 +12,8 @@
 #import "CoreModel.h"
 #import "CoreStock.h"
 #import "CorePortfolio.h"
-#import "Model.h"
+#import "Cache.h"
+#import "Controller.h"
 
 @interface BT_PortfolioViewController ()
 
@@ -67,11 +68,12 @@
     cell.detailTextLabel.backgroundColor = [UIColor clearColor];
     cell.detailTextLabel.numberOfLines = 5;
     //userModel.coreModel.portfolio.stocks objectAtIndex:indexPath.row
+    
     CoreStock *stock = [self.stocks objectAtIndex: indexPath.row];
+    NSLog(@"stock = %@", stock);
+    double value = [[Controller currentPriceForSymbol:stock.symbol] doubleValue] * [stock.amount doubleValue];
     
-    double value = [stock.currentprice doubleValue] * [stock.amount doubleValue];
-    
-    NSString *actionDetail = [NSString stringWithFormat:@"Purchase Share Price: %.2f\nCurrent Share Price: %.2f\nCurrent Value: %.2f", [stock.buyprice doubleValue], [stock.currentprice doubleValue], value];
+    NSString *actionDetail = [NSString stringWithFormat:@"Purchase Share Price: $%.2f\nCurrent Share Price: $%.2f\nCurrent Value: $%.2f", [stock.buyprice doubleValue], [[Controller currentPriceForSymbol:stock.symbol] doubleValue], value];
     
     cell.textLabel.text = [NSString stringWithFormat:@"%i shares of %@", [stock.amount intValue], [stock.symbol uppercaseString]];
     cell.detailTextLabel.text = actionDetail;

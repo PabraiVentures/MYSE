@@ -14,7 +14,7 @@
 #import <CoreData/CoreData.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import "BT_AppDelegate.h"
-#import "Model.h"
+#import "Cache.h"
 @interface BT_LoginViewController ()
 
 @end
@@ -166,7 +166,7 @@ NSLog(@"end of update view");
         if([results count] == 0)
         {
             NSLog(@"model  doesnt exist");
-           [Model  makeNewModelWithFBID:   [[NSUserDefaults standardUserDefaults] stringForKey:@"userID"]];
+           [Cache  makeNewModelWithFBID:   [[NSUserDefaults standardUserDefaults] stringForKey:@"userID"]];
  
             NSLog(@"got past making model");
         }

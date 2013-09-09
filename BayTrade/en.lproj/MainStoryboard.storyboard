@@ -187,7 +187,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="SellButtonClicked:" destination="3" eventType="touchUpInside" id="PbV-fm-TpP"/>
+                                    <action selector="sellButtonClicked:" destination="3" eventType="touchUpInside" id="Jax-cQ-fcP"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bix-lG-DJw">
@@ -349,6 +349,51 @@
         <image name="login_unpressed.png" width="150" height="22"/>
         <image name="wallpaper.jpg" width="1024" height="1024"/>
     </resources>
+    <classes>
+        <class className="BT_HistoryViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BT_HistoryViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="historyTable" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="BT_HomeViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BT_HomeViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+            </relationships>
+        </class>
+        <class className="BT_LoginViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BT_LoginViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="loginButtonPressed:"/>
+                <relationship kind="outlet" name="loginButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="statusText" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="BT_PortfolioViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BT_PortfolioViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="stockTable" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="BT_TabBarController" superclassName="UITabBarController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BT_TabBarController.h"/>
+        </class>
+        <class className="BT_TradeViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BT_TradeViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="buyButtonClicked:"/>
+                <relationship kind="action" name="logoutButtonClicked:"/>
+                <relationship kind="action" name="sellButtonClicked:"/>
+                <relationship kind="outlet" name="amountField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="cashDisplay" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="investorName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="profilePic" candidateClass="FBProfilePictureView"/>
+                <relationship kind="outlet" name="symbolField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="valueDisplay" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

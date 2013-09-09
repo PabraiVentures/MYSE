@@ -6,27 +6,23 @@
 //  Copyright (c) 2013 Jamie Tahirkheli. All rights reserved.
 //
 
-#import "Model.h"
-#import "BT_TradeEvent.h"
+#import "Cache.h"
 #import "CoreTradeEvent.h"
 #import "StackMob.h"
 #import "CoreStock.h"
 #import "BT_AppDelegate.h"
 #import "User.h"
 #import "CoreModel.h"
-@implementation Model
 
-//-(void)assignPort: (Portfolio*) myPort
-//{
-//   self.modelPort = myPort;
-//}
+@implementation Cache
+
 @synthesize userID;
 @synthesize coreModel;
+
 -(id) init
 {
     NSLog(@"initializing model.m");
-        if(self = [super init])
-        {
+    if(self = [super init]) {
 //            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CorePortfolio"];
 //            
 //            // query for coreportfolio for THIS user
@@ -50,23 +46,12 @@
 //            } onFailure:^(NSError *error) {
 //                NSLog(@"There was an error! %@", error);
 //            }];
-
-    
-   
-}
-     return self;
+    }
+    return self;
 }
 
 -(void) updateHistory:(CoreStock* )theStock andAmount: (int) theAmount andID: (int) ID
 {
-    //create a tradeEvent
-    //add to self.eventArray
-    BT_TradeEvent* tradeEvent = [[BT_TradeEvent alloc] init];
-    tradeEvent.ticker = [theStock symbol];
-    tradeEvent.tradePrice = theStock.openprice.doubleValue;//change to purchase price
-    tradeEvent.tradeAmount = theAmount;
-    tradeEvent.actionID = ID;
-    
     NSManagedObjectContext *moc = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
     /****create tradeevent and put it into managedObjectContext (so it can be saved later), THEN fill it up with its data****/
     CoreTradeEvent* tradeevent=[NSEntityDescription insertNewObjectForEntityForName:@"CoreTradeEvent" inManagedObjectContext:moc];
@@ -83,14 +68,12 @@
     dateString = [formatter stringFromDate:[NSDate date]];
     tradeevent.time=dateString;
     
-    tradeevent.tradeamount=[NSNumber numberWithInt:theAmount];
-    tradeevent.tradeprice=[NSNumber numberWithDouble:theStock.openprice.doubleValue];
-    tradeevent.actionid=[NSNumber numberWithInt:ID];
+    tradeevent.tradeamount = [NSNumber numberWithInt:theAmount];
+    tradeevent.tradeprice = [NSNumber numberWithDouble:theStock.buyprice.doubleValue]; //TODO is this ok?
+    tradeevent.actionid = [NSNumber numberWithInt:ID];
     
     /*****DONE CREATING TRADEEVENT INSIDE MANAGEDOBJECTCONTEXT*******/
 
-    
-    
     //ADD TRADEEVENT TO COREMODEL TO BE SAVED
     [self.coreModel addTradeeventsObject:tradeevent];// tradevent is now part of the model
     [moc deleteObject:theStock];
@@ -102,6 +85,7 @@
     }];
 
 }
+
 +(void) makeNewModelWithFBID:(NSString*)userID
 {
     BT_AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
@@ -160,9 +144,6 @@
     } onFailure:^(NSError *error) {
         NSLog(@"Error fetching:outer %@", error);
     }];
-    
-
-
-    
 }
+
 @end

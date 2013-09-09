@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Model.h"
+#import "Cache.h"
 #import <FacebookSDK/FacebookSDK.h>
 
 @interface BT_TradeViewController : UIViewController <FBLoginViewDelegate>
-@property (nonatomic, strong) Model *userModel;
+@property (nonatomic, strong) Cache *userModel;
 @property (weak, nonatomic) IBOutlet UILabel *valueDisplay;
 @property (weak, nonatomic) IBOutlet UILabel *cashDisplay;
 @property (weak, nonatomic) IBOutlet UITextField *symbolField;

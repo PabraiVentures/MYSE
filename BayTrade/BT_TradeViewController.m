@@ -10,7 +10,7 @@
 #import "BT_TabBarController.h"
 #import "BT_AppDelegate.h"
 #import "Controller.h"
-#import "Model.h"
+#import "Cache.h"
 #import "StackMob.h"
 #import <CoreData/CoreData.h>
 #import "CoreModel.h"
@@ -136,7 +136,7 @@
     if([self.symbolField.text length] > 0) buyingSymbol = self.symbolField.text;
     else buyingSymbol = NULL;
     int amount;
-    int amountForHistory = 0;
+    int amountForHistory;
     if([self.amountField.text length] > 0) amount = [self.amountField.text intValue];
     else amount = 0;
     amountForHistory = amount;
@@ -166,21 +166,16 @@
                                                        delegate:self cancelButtonTitle:@"Got it"
                                               otherButtonTitles: nil];
         [alert show];
-        
     }
     else
     {
         NSLog(@"beginning else");
         double totalPrice = price * amount;
-        //double debugPrice = self.userModel.coreModel.portfolio.cashvalue.doubleValue;
-        //if you can buy the stock
+        NSLog(@"totalPrice: %f", totalPrice);
         NSLog(@"totalcashvalue: %@", self.userModel.modelPort.totalcashvalue);
-        NSLog(@"totalcashvalue in modelport: %@", self.userModel.modelPort.totalcashvalue);
         
         if (totalPrice <= self.userModel.modelPort.totalcashvalue.doubleValue)
         {
-            self.userModel.modelPort.totalcashvalue = [NSNumber numberWithFloat: self.userModel.modelPort.totalcashvalue.doubleValue - totalPrice];
-            
             //get the model, update and send back to stackmob
             NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CoreModel"];
             // query for coremodel for THIS user
@@ -195,10 +190,9 @@
                 self.userModel.coreModel= (CoreModel* ) myModel;
                 [self.userModel updateHistory:[CoreStock initWithSymbol:buyingSymbol AndPrice:price AndAmount:amount] andAmount: amountForHistory andID:1];
                 
-                
-                //subtract money from purchase
+                //subtract trade value from totalcashvalue
                 double cashMoney =  self.userModel.coreModel.portfolio.totalcashvalue.doubleValue - (price * amount);
-                self.userModel.coreModel.portfolio.totalcashvalue = [NSNumber numberWithFloat: cashMoney];
+                self.userModel.coreModel.portfolio.totalcashvalue = [NSNumber numberWithDouble: cashMoney];
                 NSMutableArray *amountAndPrice = [self accountForPrevOwnedStock:buyingSymbol andInt: amount andPrice:price];
                 
                 /***CREATE CORESTOCK TO BE PLACED INTO COREMODEL.PORTFOLIO******/
@@ -239,7 +233,7 @@
         }
         for(CoreStock *s in self.userModel.modelPort.stocks)
         {
-            NSLog(@"%@ : $%.2f\tamount:%i\n", s.symbol, s.openprice.doubleValue, s.amount.intValue);
+            NSLog(@"%@ : $%.2f\tamount:%i\n", s.symbol, s.buyprice.doubleValue, s.amount.intValue);
         }
     }
     NSLog(@"ending buybuttonclicked");
@@ -250,7 +244,7 @@
 /************************SELLING**************************/
 /************************SELLING**************************/
 
-- (IBAction)SellButtonClicked:(id)sender
+- (IBAction)sellButtonClicked:(id)sender
 {
     //assign self.userModel.coreModel to the StackMob coreModel
     [self setCoreModel];
@@ -397,7 +391,7 @@
             CoreStock *hStock = [[CoreStock alloc] init];
             [hStock setAmount: theAmountToSell];
             hStock.symbol = symbol;
-            hStock.openprice = [NSNumber numberWithDouble: sellPrice];
+            //hStock.openprice = [NSNumber numberWithDouble: sellPrice];
             /***** CREATE LOCAL STOCK TO SAVE IN HISTORY *****/
             
             [self.userModel updateHistory:hStock andAmount: theAmountToSell.intValue andID:0];
@@ -529,15 +523,6 @@
                 if ([sym isEqual: stock.symbol])
                 {
                     NSLog(@"added symbol %@ = %@", sym, stock.symbol);
-                    NSString *curPrice = [((NSMutableDictionary *)[dictArray objectAtIndex:j]) objectForKey:@"BidRealTime"];
-                    
-                    NSString *opPrice = [((NSMutableDictionary *)[dictArray objectAtIndex:j]) objectForKey:@"Open"];
-                    
-                    stock.currentprice = [NSNumber numberWithDouble:curPrice.doubleValue];
-                    stock.openprice = [NSNumber numberWithDouble:opPrice.doubleValue];
-                    int amount = stock.amount.intValue;
-                    double totalValue = curPrice.doubleValue * amount;
-                    stock.totalvalue = [NSNumber numberWithDouble:totalValue];
                     break;
                 }
             }
@@ -589,4 +574,5 @@
     }
     return YES;
 }
+
 @end

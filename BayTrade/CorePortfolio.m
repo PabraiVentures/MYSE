@@ -8,6 +8,7 @@
 
 #import "CorePortfolio.h"
 #import "CoreStock.h"
+#import "Controller.h"
 
 
 @implementation CorePortfolio
@@ -42,8 +43,7 @@
 {
     if (self = [super init])
     {
-        [self addStocks:[NSSet setWithObject: theStock ]];
-        //self.totalvalue = [NSNumber numberWithDouble:[theStock crntPrice]];
+        [self addStocks:[NSSet setWithObject: theStock]];
     }
     return self;
 }
@@ -57,7 +57,7 @@
     double value = 0.0;
     for (CoreStock *s in self.stocks)
     {
-        value += ([s.openprice doubleValue] * [s.amount doubleValue]);
+        value += ([[Controller currentPriceForSymbol:s.symbol] doubleValue] * [s.amount doubleValue]);
     }
     return value;
 }
@@ -89,10 +89,11 @@
     {
         if ([s.symbol isEqual: symbol])
         {
-            foundStock = [CoreStock initWithSymbol:s.symbol AndPrice:[s.openprice doubleValue] AndAmount:[s.amount intValue]];
+            foundStock = s; //TODO is this ok?
             break;
         }
     }
     return foundStock;
 }
+
 @end

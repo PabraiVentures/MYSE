@@ -8,19 +8,20 @@
 
 #import "CoreStock.h"
 #import "StackMob.h"
+#import "Controller.h"
 
 @implementation CoreStock
 
 @dynamic amount;
 @dynamic buyprice;
-@dynamic closeprice;
-@dynamic currentprice;
-@dynamic name;
-@dynamic openprice;
-@dynamic sellprice;
+//@dynamic closeprice;
+//@dynamic currentprice;
+//@dynamic name;
+//@dynamic openprice;
+//@dynamic sellprice;
 //@dynamic corestock_id;
 @dynamic symbol;
-@dynamic totalvalue;
+//@dynamic totalvalue;
 
 +(CoreStock*) initWithSymbol: (NSString *) theSymbol AndPrice: (double) thePrice AndAmount: (int) theAmount
 {
@@ -28,11 +29,11 @@
     //initialize variables
     
     theStock.symbol = theSymbol;
-    theStock.openprice = [NSNumber numberWithFloat: thePrice];//replace with method to get open price.
+//    theStock.openprice = [NSNumber numberWithFloat: thePrice];//replace with method to get open price.
     theStock.buyprice = [NSNumber numberWithFloat: 0.00];    //replace with method to get buy price.
-    theStock.sellprice = [NSNumber numberWithFloat: 0.00];   //replace with method to get sell price.
-    theStock.closeprice = [NSNumber numberWithFloat: 0.00];  //replace with method to get close price.
-    theStock.currentprice = [NSNumber numberWithFloat: 0.00];   //replace with method to get current price.
+//    theStock.sellprice = [NSNumber numberWithFloat: 0.00];   //replace with method to get sell price.
+//    theStock.closeprice = [NSNumber numberWithFloat: 0.00];  //replace with method to get close price.
+//    theStock.currentprice = [NSNumber numberWithFloat: 0.00];   //replace with method to get current price.
     theStock.amount = [NSNumber numberWithFloat: theAmount];
     // theStock.totalValue = theAmount * theOpen;
     
@@ -42,6 +43,7 @@
     return theStock;
 
 }
+
 -(id)init{
    CoreStock* thestock = [NSEntityDescription insertNewObjectForEntityForName:@"CoreStock" inManagedObjectContext:[[[SMClient defaultClient]coreDataStore] contextForCurrentThread]];
     [thestock setValue:[thestock assignObjectId] forKey:[thestock primaryKeyField]];
@@ -53,4 +55,5 @@
     self.symbol=symbol;
     return;
 }
+
 @end

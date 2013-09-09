@@ -14,14 +14,16 @@
 
 @property (nonatomic, retain) NSNumber * amount;
 @property (nonatomic, retain) NSNumber * buyprice;
-@property (nonatomic, retain) NSNumber * closeprice;
-@property (nonatomic, retain) NSNumber * currentprice;
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSNumber * openprice;
-@property (nonatomic, retain) NSNumber * sellprice;
+//@property (nonatomic, retain) NSNumber * closeprice;
+//@property (nonatomic, retain) NSNumber * currentprice;
+//@property (nonatomic, retain) NSString * name;
+//@property (nonatomic, retain) NSNumber * openprice;
+//@property (nonatomic, retain) NSNumber * sellprice;
 //@property (nonatomic, retain) NSString * corestock_id;
 @property (nonatomic, retain) NSString * symbol;
-@property (nonatomic, retain) NSNumber * totalvalue;
+//@property (nonatomic, retain) NSNumber * totalvalue;
+
+//-(NSNumber*)currentPrice;
 
 +(CoreStock*) initWithSymbol: (NSString *) theSymbol AndPrice: (double) thePrice AndAmount: (int) theAmount;
 

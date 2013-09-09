@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Model.h"
+#import "Cache.h"
 
 @interface BT_HomeViewController : UIViewController
-@property (nonatomic,strong) Model* userModel;
+@property (nonatomic,strong) Cache* userModel;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 

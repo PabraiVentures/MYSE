@@ -38,5 +38,11 @@
     return quotes;
 }
 
++ (NSNumber*) currentPriceForSymbol: (NSString*) symbol
+{
+    NSDictionary *quote = [Controller fetchQuotesFor:[NSArray arrayWithObject:symbol]];
+    return quote[@"Open"];
+}
+
 
 @end

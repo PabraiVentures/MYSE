@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Model.h"
+#import "Cache.h"
 
 @interface BT_PortfolioViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic,strong) Model* userModel;
+@property (nonatomic,strong) Cache* userModel;
 @property (nonatomic, retain) IBOutlet UITableView *stockTable;
 @property (nonatomic, retain) NSArray *stocks;
 

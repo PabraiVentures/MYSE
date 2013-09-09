@@ -8,8 +8,7 @@
 #import "BT_TabBarController.h"
 #import "BT_HomeViewController.h"
 #import "BT_TabBarController.h"
-#import "Model.h"
-#import "BT_TradeEvent.h"
+#import "Cache.h"
 #import <QuartzCore/QuartzCore.h>
 #import "CoreStock.h"
 

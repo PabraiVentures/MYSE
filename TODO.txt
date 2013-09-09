@@ -3,14 +3,19 @@
 (_)clean up all network-related functions
 (X)clean up updateOwnedStocks function
 (_)figure out why we need to use setCoreModel function so many times
-(_)portfolio - view controller
-(_)portfolio - table
-(_)portfolio - display value value
+(X)portfolio - view controller
+(X)portfolio - table
+(X)portfolio - display current value
 (_)portfolio table cell - buy/sell option
-(_)universal methods for retrieving /syncing owned stocks
+(X)universal methods for retrieving / syncing owned stocks
 (X)merge Portfolio.m into CorePortfolio.m
-(_)merge Stock.m into CoreStock.m
-(_)merge TradeEvent with CoreTradeEvent
-(_)history tab - convert scrollview to uitableviewcontroller
-(_)fix login loop error
-(_)fix totalcashamount error
+(X)merge Stock.m into CoreStock.m
+(X)merge TradeEvent with CoreTradeEvent
+(X)history tab - convert scrollview to uitableviewcontroller
+(X)fix login loop error
+(X)fix totalcashamount error
+(X)FIX THE DAMN TRADE VIEW CONTROLLER
+(X)remove prices from corestock
+(X)add real-time current price getter methods to controller
+(X)refactor model.m
+(X)set sell trade price
