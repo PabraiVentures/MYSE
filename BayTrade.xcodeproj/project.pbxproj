@@ -73,8 +73,8 @@
 		7D06431B17BAE70800889177 /* BT_LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BT_LoginViewController.h; sourceTree = "<group>"; };
 		7D06431C17BAE70800889177 /* BT_LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BT_LoginViewController.m; sourceTree = "<group>"; };
 		7DF8F95417BC5CC7005553A1 /* BT_AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BT_AppDelegate.h; sourceTree = "<group>"; };
-		7DF8F95517BC7F91005553A1 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		7DF8F95617BC7F91005553A1 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		7DF8F95517BC7F91005553A1 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = ../User.h; sourceTree = "<group>"; };
+		7DF8F95617BC7F91005553A1 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = ../User.m; sourceTree = "<group>"; };
 		9307A2ED17A43E6B00E647DF /* wallpaper.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wallpaper.jpg; sourceTree = "<group>"; };
 		9307A2EF17A44D2D00E647DF /* arrow-big-12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-big-12.png"; sourceTree = "<group>"; };
 		9307A2F017A44D2D00E647DF /* bar-chart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bar-chart.png"; sourceTree = "<group>"; };
@@ -252,6 +252,8 @@
 		525122A317D7759100A8782B /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				7DF8F95517BC7F91005553A1 /* User.h */,
+				7DF8F95617BC7F91005553A1 /* User.m */,
 				93E19FC717A365E8000D60B5 /* Cache.h */,
 				93E19FC817A365E8000D60B5 /* Cache.m */,
 				93DD2C5F17A3E3AB00B3FE71 /* CoreModel.h */,
@@ -346,8 +348,6 @@
 			isa = PBXGroup;
 			children = (
 				93C7138D17A3FCBC00258C6A /* themodel.xcdatamodeld */,
-				7DF8F95517BC7F91005553A1 /* User.h */,
-				7DF8F95617BC7F91005553A1 /* User.m */,
 				93E19F8117A36420000D60B5 /* BayTrade */,
 				93E19FB017A36420000D60B5 /* BayTradeTests */,
 				93E19F7A17A36420000D60B5 /* Frameworks */,

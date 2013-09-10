@@ -17,6 +17,7 @@
 #import "CoreStock.h"
 #import "CorePortfolio.h"
 #import <FacebookSDK/FacebookSDK.h>
+
 @interface BT_TradeViewController ()
 
 @end
@@ -48,7 +49,8 @@
     
     [self.view addGestureRecognizer:tap];
     
-    [self setCoreModel];
+    NSLog(@"tradeviewcontroller did load");
+    [self performSelector:@selector(setCoreModel) withObject:nil afterDelay:0.5];
 }
 
 - (void) dismissKeyboard {
@@ -56,7 +58,6 @@
     [self.symbolField resignFirstResponder];
     [self setCoreModel];
 }
-
 
 - (void) didReceiveMemoryWarning
 {
@@ -88,11 +89,10 @@
         }
         @catch (NSException *exception) {
             [self.valueDisplay setText:@"100000.00"];
-            [self.cashDisplay setText:@"100000.00"];
+            [self.cashDisplay  setText:@"100000.00"];
             self.userCache.coreModel.portfolio.totalcashvalue = [NSNumber numberWithFloat: 100000.0];
             needsUpdate = NO;
         }
-        
         if(needsUpdate)
         {
             [self updateBuyPower];
@@ -138,7 +138,6 @@
     return data;
 }
 
-
 - (CoreStock*) checkForStockInPortfolio: (NSString *) symbol andInt : (int *) amount
 {
     for(CoreStock* s in self.userCache.coreModel.portfolio.stocks)
@@ -147,7 +146,6 @@
         {
             *amount += s.amount.intValue;
             return s;
-            break;
         }
     }
     return nil;
@@ -202,6 +200,7 @@
 
 - (IBAction) buyButtonClicked:(id)sender
 {
+    [self setCoreModel];
     NSString *buyingSymbol;
     if([self.symbolField.text length] > 0) buyingSymbol = self.symbolField.text;
     NSLog(@"buying symbol: %@", buyingSymbol);
@@ -238,7 +237,8 @@
         [alert show];
     }
     else {
-        if (totalPrice <= [self.userCache.coreModel.portfolio.totalcashvalue doubleValue])
+        NSLog(@"totalcashval: %@", self.userCache.coreModel.portfolio.totalcashvalue);
+        if (totalPrice <= self.userCache.coreModel.portfolio.totalcashvalue.doubleValue)
         {
             NSString *confirmationString = [NSString stringWithFormat:@"Are you sure you'd like to buy %i shares of %@ for %.2f?", amount, buyingSymbol, totalPrice];
             

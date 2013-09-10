@@ -71,10 +71,6 @@
                                                          NSError *error) {
             token = session.accessTokenData.accessToken;
             NSLog(@"opening appdelegate session");
-            NSLog(@"local session: %@", session);
-            // and here we make sure to update our UX according to the new session state
-            //[self performSelector:@selector(updateView) withObject:nil afterDelay:0.5];
-            //NSLog(@"After Updateview");
         }];
     }
 }
@@ -88,7 +84,6 @@
             //download StackMob user object and see if it has a model
             //save user_id to defaults plist
             [self saveDefaultUser:result];
-            
             [self searchForUser:result];
             
             // valid account UI is shown whenever the session is open
