@@ -22,6 +22,8 @@
 
 @implementation BT_PortfolioViewController
 
+@synthesize currentPrices;
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -36,6 +38,7 @@
     [super viewDidLoad];
     self.userCache=((BT_TabBarController*)(self.tabBarController)).userModel;
     self.stocks = [self.userCache.coreModel.portfolio.stocks allObjects];
+    [self calculateCurrentPrices];
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget: self action: @selector(refreshControlRequest) forControlEvents: UIControlEventValueChanged];
@@ -45,18 +48,25 @@
 
 -(void)refreshControlRequest
 {
-    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-    [fmt setDateFormat:@"MMM d, h:mm:ss a"];
-    NSString *lastUpdated = [NSString stringWithFormat:@"Last updated on %@", [fmt stringFromDate:[NSDate date]]];
-    [[self refreshControl] setAttributedTitle: [[NSAttributedString alloc] initWithString:lastUpdated]];
-    
-    [self.tableView reloadData];
-    [self.refreshControl endRefreshing];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        // (...code to get new data here...)
+        [self calculateCurrentPrices];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //any UI refresh
+            NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+            [fmt setDateFormat:@"MMM d, h:mm:ss a"];
+            NSString *lastUpdated = [NSString stringWithFormat:@"Last updated on %@", [fmt stringFromDate:[NSDate date]]];
+            [[self refreshControl] setAttributedTitle: [[NSAttributedString alloc] initWithString:lastUpdated]];
+            [self.tableView reloadData];
+            [self.refreshControl endRefreshing];
+        });
+    });
 }
 
 -(void) viewWillAppear:(BOOL)animated
 {
     self.stocks = [self.userCache.coreModel.portfolio.stocks allObjects];
+    [self calculateCurrentPrices];
     [self.tableView reloadData];
 }
 
@@ -91,7 +101,7 @@
     cell.detailTextLabel.numberOfLines = 5;
     
     CoreStock *stock = [self.stocks objectAtIndex: indexPath.row];
-    double value = [[Controller currentPriceForSymbol:stock.symbol] doubleValue] * [stock.amount doubleValue];
+    double value = [[currentPrices objectAtIndex:indexPath.row] doubleValue] * [stock.amount doubleValue];
     
     NSString *actionDetail = [NSString stringWithFormat:@"Purchase Share Price: $%.2f\nCurrent Share Price: $%.2f\nCurrent Value: $%.2f", [stock.buyprice doubleValue], [[Controller currentPriceForSymbol:stock.symbol] doubleValue], value];
     
@@ -101,19 +111,20 @@
     return cell;
 }
 
+-(void)calculateCurrentPrices
+{
+    currentPrices = [[NSMutableArray alloc] init];
+    for (CoreStock *stock in self.stocks) {
+        [currentPrices addObject:[Controller currentPriceForSymbol:stock.symbol]];
+    }
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 80;
 }
 
 #pragma mark - Table view delegate
-
-//-(void)tableView:(UITableView*)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    NSLog(@"begin will select");
-//    //[(BT_AppDelegate*)[[UIApplication sharedApplication] delegate] setSelectedPortfolioStock:[self.stocks objectAtIndex: indexPath.row]];
-//    NSLog(@"end will select");
-//}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

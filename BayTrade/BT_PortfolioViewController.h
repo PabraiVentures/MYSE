@@ -13,6 +13,7 @@
 
 @property (nonatomic,strong) Cache* userCache;
 @property (nonatomic, retain) NSArray *stocks;
+@property (nonatomic, retain) NSMutableArray *currentPrices;
 //@property (nonatomic, retain) UIRefreshControl *refreshControl;
 
 -(void)refreshControlRequest;

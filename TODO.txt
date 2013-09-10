@@ -26,12 +26,14 @@
 (X)portfolio detail view
 (_)history detail view
 (_)symbol lookup in trade view controller
-(_)homeviewcontroller - name
+(_)symbol lookup detail view controller
+(X)homeviewcontroller - name
 (_)homeviewcontroller - picture
 (_)homeviewcontroller - change in ranking today
-(_)homeviewcontroller - ticker scrolling view
+(X)homeviewcontroller - ticker scrolling view
 (_)homeviewcontroller - total stocks value
-(_)homeviewcontroller - stocks you own the most of
+(_)homeviewcontroller - ticker shows stocks you own the most of
 (_)homeviewcontroller - account performance over time
 (_)merge cache with coremodel.m
 (X)remove redundant setCoreModel calls
+(_)tiles for owned stocks

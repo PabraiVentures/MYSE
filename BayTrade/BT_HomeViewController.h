@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "Cache.h"
+#import "BT_TickerView.h"
 
 @interface BT_HomeViewController : UIViewController
 @property (nonatomic,strong) Cache* userCache;
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (nonatomic, strong) IBOutlet BT_TickerView *tickerView;
+//@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UILabel *welcomeLabel;
 
 @end

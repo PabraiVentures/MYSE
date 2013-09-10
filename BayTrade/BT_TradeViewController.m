@@ -88,6 +88,7 @@
             [self.valueDisplay setText:@"100000.00"];
             [self.cashDisplay  setText:@"100000.00"];
             self.userCache.coreModel.portfolio.totalcashvalue = [NSNumber numberWithFloat: 100000.0];
+            [self setCoreModel];
             needsUpdate = NO;
         }
         if(needsUpdate)
@@ -180,6 +181,8 @@
     self.loggedInUser = user;
     NSString *userName = [NSString stringWithFormat:@"%@'s Trading Floor", user.first_name];
     self.investorName.text = userName;
+    [[NSUserDefaults standardUserDefaults] setObject:user.first_name forKey:@"Name"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (BOOL) textFieldShouldReturn: (UITextField *)theTextField
