@@ -46,7 +46,7 @@
     [self.coreModel addTradeeventsObject:tradeevent];// tradevent is now part of the model
     [moc deleteObject:theStock];
     [moc saveOnSuccess:^{
-        NSLog(@"You updated the model object by selling a stock!");
+        NSLog(@"You added a trade event by trading a stock!");
     } onFailure:^(NSError *error) {
         NSLog(@"There was an error! %@", error);
     }];

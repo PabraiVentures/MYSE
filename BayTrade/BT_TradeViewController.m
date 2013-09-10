@@ -243,7 +243,7 @@
             [buyConfirmation show];
         }
         else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not enough cash!" message:[NSString stringWithFormat:@"You don't have enough money to buy %i shares of %@ at %f.", amount, buyingSymbol, price] delegate:nil cancelButtonTitle:@"Got it" otherButtonTitles: nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not enough cash!" message:[NSString stringWithFormat:@"You don't have enough money to buy %i shares of %@ at %.2f.", amount, buyingSymbol, price] delegate:nil cancelButtonTitle:@"Got it" otherButtonTitles: nil];
             [alert show];
         }
     }
