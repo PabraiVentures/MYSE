@@ -16,4 +16,5 @@
 -(NSString*)primaryKeyField{
     return @"user_id";
 }
+
 @end

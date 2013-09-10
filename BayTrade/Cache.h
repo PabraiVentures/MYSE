@@ -15,9 +15,8 @@
 
 @interface Cache : NSObject
 
-@property (nonatomic, retain) CorePortfolio *modelPort;
 @property (nonatomic, retain) NSMutableArray* eventArray;
-@property (nonatomic,retain) NSString* userID;
+@property (nonatomic, retain) NSString* userID;
 @property (nonatomic, retain) CoreModel* coreModel;
 
 -(void) updateHistory:(CoreStock*)theStock andAmount: (int) theAmount andID: (int) ID;

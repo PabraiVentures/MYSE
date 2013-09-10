@@ -1,6 +1,6 @@
 (_)encapsulate NSLogs in if-debug statements
 (_)encapsulate all networks functions in try/catch
-(_)clean up all network-related functions
+(X)clean up all network-related functions
 (X)clean up updateOwnedStocks function
 (_)figure out why we need to use setCoreModel function so many times
 (X)portfolio - view controller
@@ -20,6 +20,17 @@
 (X)refactor model.m
 (X)set sell trade price
 (_)refresh portfolio table
-(_)confirm purchase with user first
+(X)confirm purchase with user first
 (_)confirm sale with user first
-(_)ios7 capabilities
+(_)iOS 7 capabilities
+(_)portfolio detail view
+(_)history detail view
+(_)symbol lookup in trade view controller
+(_)homeviewcontroller - name
+(_)homeviewcontroller - picture
+(_)homeviewcontroller - change in ranking today
+(_)homeviewcontroller - ticker scrolling view
+(_)homeviewcontroller - total stocks value
+(_)homeviewcontroller - stocks you own the most of
+(_)homeviewcontroller - account performance over time
+(_)merge cache with coremodel.m

@@ -15,5 +15,4 @@
 @property (nonatomic, retain) NSString * user_id;
 @property (nonatomic, retain) NSManagedObject *coremodel;
 
-
 @end

@@ -35,13 +35,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.userModel=((BT_TabBarController*)(self.tabBarController)).userModel;
-    self.stocks = [self.userModel.modelPort.stocks allObjects];
+    self.userCache=((BT_TabBarController*)(self.tabBarController)).userModel;
+    self.stocks = [self.userCache.coreModel.portfolio.stocks allObjects];
 }
 
 -(void) viewWillAppear:(BOOL)animated
 {
-    self.stocks = [self.userModel.modelPort.stocks allObjects];
+    self.stocks = [self.userCache.coreModel.portfolio.stocks allObjects];
     [stockTable reloadData];
 }
 
@@ -59,7 +59,7 @@
 
 -(int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.userModel.coreModel.portfolio.stocks count];
+    return [self.userCache.coreModel.portfolio.stocks count];
 }
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -73,7 +73,6 @@
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.detailTextLabel.backgroundColor = [UIColor clearColor];
     cell.detailTextLabel.numberOfLines = 5;
-    //userModel.coreModel.portfolio.stocks objectAtIndex:indexPath.row
     
     CoreStock *stock = [self.stocks objectAtIndex: indexPath.row];
     NSLog(@"stock = %@", stock);

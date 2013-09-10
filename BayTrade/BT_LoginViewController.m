@@ -9,12 +9,11 @@
 #import "BT_LoginViewController.h"
 #import "BT_AppDelegate.h"
 #import "StackMob.h"
-#import "StackMobPush.h"
-#import "User.h"
 #import <CoreData/CoreData.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import "BT_AppDelegate.h"
 #import "Cache.h"
+
 @interface BT_LoginViewController ()
 
 @end
@@ -22,6 +21,7 @@
 @implementation BT_LoginViewController
 
 @synthesize loginButton;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -29,7 +29,6 @@
     if (!FBSession.activeSession.isOpen) {
         // create a fresh session object
         FBSession.activeSession = [[FBSession alloc] init];
-        
         // if we don't have a cached token, a call to open here would cause UX for login to
         // occur; we don't want that to happen unless the user clicks the login button, and so
         // we check here to make sure we have a token before calling open
@@ -38,7 +37,6 @@
             [FBSession.activeSession openWithCompletionHandler:^(FBSession *session,
                                                              FBSessionState status,
                                                              NSError *error) {
-                // we recurse here, in order to update buttons and labels
                 [self updateView];
             }];
         }
@@ -48,12 +46,6 @@
     }
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (IBAction)loginButtonPressed:(id)sender {
     NSLog(@"button pressed");
     // get the app delegate so that we can access the session property
@@ -61,10 +53,6 @@
     
     // this button's job is to flip-flop the session from open to closed
     if (FBSession.activeSession.isOpen) {
-        // if a user logs out explicitly, we delete any cached token information, and next
-        // time they run the applicaiton they will be presented with log in UX again; most
-        // users will simply close the app or switch away, without logging out; this will
-        // cause the implicit cached-token login to occur on next launch of the application
         [FBSession.activeSession closeAndClearTokenInformation];
         NSLog(@"1");
         
@@ -91,24 +79,17 @@
     }
 }
 
-// FBSample logic
 // main helper method to update the UI to reflect the current state of the session.
 - (void)updateView {
-    NSLog(@"inside UpdateView");
-    // get the app delegate, so that we can reference the session property
-    BT_AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
     if (FBSession.activeSession.isOpen) {
-        NSLog(@"appdelegate session is open");
         //Gets FacebookID and creates a StackMob user if needed
-        NSLog(@"token: %@", FBSession.activeSession.accessTokenData.accessToken);
         [[SMClient defaultClient] loginWithFacebookToken:FBSession.activeSession.accessTokenData.accessToken createUserIfNeeded:YES usernameForCreate:nil onSuccess:^(NSDictionary *result) {
-            NSLog(@"Logged in with StackMob. \nData: %@",[result valueForKey:@"user_id"]);
+            NSLog(@"Logged in with StackMob.");
             //download StackMob user object and see if it has a model
             //save user_id to defaults plist
-            [self saveToDefaultsPlist: result];
+            [self saveDefaultUser:result];
             
-            /************SEARCH MODELS FOR THIS USER***************/
-            [self searchModelsForUser:result andDelegate:appDelegate];
+            [self searchForUser:result];
             
             // valid account UI is shown whenever the session is open
             [self.loginButton setTitle:@"Log out" forState:UIControlStateNormal];
@@ -124,56 +105,52 @@
         [self.loginButton setTitle:@"Log in" forState:UIControlStateNormal];
         [self.statusText setText:@"Login to create a link to fetch account data"];
     }
-NSLog(@"end of update view");
-}
-
-
-
-- (void)viewDidUnload
-{
-    self.loginButton = nil;
-    self.statusText = nil;
-    
-    [super viewDidUnload];
 }
 
 //Saves user_id to defaults plist
-- (void)saveToDefaultsPlist: (NSDictionary *) result
+- (void)saveDefaultUser: (NSDictionary *) model
 {
     NSUserDefaults  *defaults=[NSUserDefaults standardUserDefaults];
-    [defaults setObject:[result valueForKey:@"user_id"] forKey:@"userID"];
-    
+    [defaults setObject:[model valueForKey:@"user_id"] forKey:@"userID"];
     [defaults synchronize];
 }
 
 //Creates string from FbID to search coremodel table on StackMob for the right user's model
--(void) searchModelsForUser : (NSDictionary *) result andDelegate : (BT_AppDelegate* ) appDelegate
+-(void) searchForUser: (NSDictionary *) user
 {
-    NSString *userID = [NSString stringWithFormat:@"%@",[result valueForKey:@"user_id"]];
+    BT_AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
+    NSString *userID = [NSString stringWithFormat:@"%@",[user valueForKey:@"user_id"]];
     NSFetchRequest *requestModelByUserID = [[NSFetchRequest alloc] initWithEntityName:@"CoreModel"];
     //search string for users with the model's userID
-    NSString* userWithUserID=[ NSString stringWithFormat:@"user == '%@'",userID ];
+    NSString* userWithUserID = [NSString stringWithFormat:@"user == '%@'",userID ];
     
     [requestModelByUserID setPredicate:[NSPredicate predicateWithFormat:userWithUserID]];
-    NSLog(@"%@", userWithUserID);
     
-    // execute the request
     appDelegate.managedObjectContext = [[[SMClient defaultClient] coreDataStore] contextForCurrentThread];
+    
     [appDelegate.managedObjectContext executeFetchRequest:requestModelByUserID onSuccess:^(NSArray *results) {
-        
-        NSLog(@"Number of Results: %d",[results count]);
-        NSLog(@"Results: %@", results);
         if([results count] == 0)
         {
-            NSLog(@"model  doesnt exist");
-           [Cache  makeNewModelWithFBID:   [[NSUserDefaults standardUserDefaults] stringForKey:@"userID"]];
- 
-            NSLog(@"got past making model");
+            NSLog(@"model for user %@ doesnt exist; creating new model", userID);
+            [Cache  makeNewModelWithFBID:[[NSUserDefaults standardUserDefaults] stringForKey:@"userID"]];
+            NSLog(@"created new model");
         }
-        
+        else {
+            NSLog(@"found %i model(s) on SM that match %@!", [results count], userID);
+        }
     } onFailure:^(NSError *error) {
         NSLog(@"Error fetching: %@", error);
     }];
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
 }
 
 @end

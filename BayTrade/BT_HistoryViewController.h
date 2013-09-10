@@ -22,7 +22,7 @@
 }
 
 @property (strong, nonatomic) IBOutlet UITableView *historyTable;
-@property (weak, nonatomic) Cache* userModel;
+@property (weak, nonatomic) Cache* userCache;
 @property (weak,nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end

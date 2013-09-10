@@ -21,36 +21,13 @@
 
 -(id) init
 {
-    NSLog(@"initializing model.m");
     if(self = [super init]) {
-//            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CorePortfolio"];
-//            
-//            // query for coreportfolio for THIS user
-//            //NSString* corePortfolioRequest=[NSString stringWithFormat:@"user == '%@'",self.userID];
-//            //[fetchRequest setPredicate:[NSPredicate predicateWithFormat:corePortfolioRequest]];
-//            NSManagedObjectContext *managedObjectContext = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
-//            
-//            // execute the request
-//            [managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {
-//                NSLog(@"model.m results: %@",results);
-//                
-//                @try {
-//                    NSManagedObject* myPortfolio=[results objectAtIndex:0];
-//                    self.modelPort = (CorePortfolio *) myPortfolio;
-//                    NSLog(@"succeeded!");
-//                }
-//                @catch (NSException *exception) {
-//                    NSLog(@"error in model.m: %@", exception);
-//                }
-//                
-//            } onFailure:^(NSError *error) {
-//                NSLog(@"There was an error! %@", error);
-//            }];
+        
     }
     return self;
 }
 
--(void) updateHistory:(CoreStock* )theStock andAmount: (int) theAmount andID: (int) ID
+-(void) updateHistory:(CoreStock*)theStock andAmount: (int) theAmount andID: (int) ID
 {
     NSManagedObjectContext *moc = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
     /****create tradeevent and put it into managedObjectContext (so it can be saved later), THEN fill it up with its data****/
@@ -83,7 +60,6 @@
     } onFailure:^(NSError *error) {
         NSLog(@"There was an error! %@", error);
     }];
-
 }
 
 +(void) makeNewModelWithFBID:(NSString*)userID
@@ -106,9 +82,6 @@
     [appDelegate.managedObjectContext executeFetchRequest:requestUserWithUserID onSuccess:^(NSArray *results) {
         /*********************************BLOCK START****************************************************/
         NSLog(@"# users with this userID: %d", [results count]);
-        NSLog(@"need EVERYTHING");
-        
-        
         //so create coremodel and coreportfolio
         appDelegate.managedObjectContext = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
         
@@ -128,21 +101,19 @@
         CorePortfolio* modelPort=[NSEntityDescription insertNewObjectForEntityForName:@"CorePortfolio" inManagedObjectContext:appDelegate.managedObjectContext];
         [modelPort setValue:[modelPort assignObjectId] forKey:[modelPort primaryKeyField]];
         //add portfolio to the model
-        [coreModel setValue:modelPort forKey:@"portfolio"];
         [modelPort setValue:[NSNumber numberWithDouble:100000.0] forKey:@"totalcashvalue"];
         [modelPort setValue:[NSNumber numberWithDouble:100000.0] forKey:@"totalportfoliovalue"];
         
+        [coreModel setValue:modelPort forKey:@"portfolio"];
         
         [appDelegate.managedObjectContext saveOnSuccess:^{
             NSLog(@"Successfully created new model and portfolio");
             
         }onFailure:^(NSError *error) {
-            NSLog(@"There was an error inner %@",error);
-            
+            NSLog(@"Inner fetch error: %@",error);
         }];
-        
     } onFailure:^(NSError *error) {
-        NSLog(@"Error fetching:outer %@", error);
+        NSLog(@"Error fetching: %@", error);
     }];
 }
 

@@ -11,7 +11,7 @@
 
 @interface BT_PortfolioViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic,strong) Cache* userModel;
+@property (nonatomic,strong) Cache* userCache;
 @property (nonatomic, retain) IBOutlet UITableView *stockTable;
 @property (nonatomic, retain) NSArray *stocks;
 

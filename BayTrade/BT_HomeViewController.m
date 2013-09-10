@@ -17,13 +17,13 @@
 @end
 
 @implementation BT_HomeViewController
-@synthesize userModel;
+@synthesize userCache;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     //Take the TabBarControllers model
-    self.userModel=((BT_TabBarController*)(self.tabBarController)).userModel;
+    self.userCache=((BT_TabBarController*)(self.tabBarController)).userModel;
 }
 
 - (void)didReceiveMemoryWarning

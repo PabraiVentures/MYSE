@@ -30,7 +30,7 @@
     [super viewDidLoad];
     //get the object context to work with stackmob data
     self.managedObjectContext = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
-    self.userModel=((BT_TabBarController*)(self.tabBarController)).userModel;
+    self.userCache=((BT_TabBarController*)(self.tabBarController)).userModel;
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,7 +48,7 @@
     //get the trade events for this user
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CoreTradeEvent"];
     // query for tradeevents for THIS user
-    NSString* getRightEvents=[ NSString stringWithFormat:@"sm_owner == 'user/%@'",self.userModel.userID ];
+    NSString* getRightEvents=[ NSString stringWithFormat:@"sm_owner == 'user/%@'",self.userCache.userID ];
     [fetchRequest setPredicate:[NSPredicate predicateWithFormat:getRightEvents]];
     
     /**********START CODE BLOCK FOR REQUEST ACTION************/

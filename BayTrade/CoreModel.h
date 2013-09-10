@@ -27,5 +27,4 @@
 - (void)addTradeevents:(NSSet *)values;
 - (void)removeTradeevents:(NSSet *)values;
 
-
 @end

@@ -14,27 +14,24 @@
  This method takes an array of stock symbols and returns data for each of them in a dictionary.
  */
 + (NSDictionary *)fetchQuotesFor:(NSArray *)tickers {
-    NSMutableDictionary *quotes=nil;
+    @try {
+    NSMutableString *query = [NSMutableString stringWithString: QUOTE_QUERY_PREFIX];
     
-    if (tickers && [tickers count] > 0) {
-        NSMutableString *query = [[NSMutableString alloc] init];
-        [query appendString:QUOTE_QUERY_PREFIX];
-        
-        for (int i = 0; i < [tickers count]; i++) {
-            NSString *ticker = [tickers objectAtIndex:i];
-            [query appendFormat:@"%%22%@%%22", ticker];
-            if (i != [tickers count] - 1) [query appendString:@"%2C"];
-        }
-        
-        [query appendString:QUOTE_QUERY_SUFFIX];
-        
+    for (int i = 0; i < [tickers count]; i++) {
+        NSString *ticker = [tickers objectAtIndex:i];
+        [query appendString:[NSString stringWithFormat:@"%%22%@%%22", ticker]];
+        if (i != [tickers count] - 1) [query appendString:@"%2C"];
+    }
+    [query appendString:QUOTE_QUERY_SUFFIX];
         NSData *jsonData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:query] encoding:NSUTF8StringEncoding error:nil] dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *results = jsonData ? [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil] : nil;
-        NSLog(@"query results: %@", results);
-        NSDictionary *quoteEntry = [results valueForKeyPath:@"query.results.quote"];
-        return quoteEntry;
+        return [results valueForKeyPath:@"query.results.quote"];
     }
-    return quotes;
+    @catch (NSException *exception) {
+        UIAlertView *quoteRetrievalAlert = [[UIAlertView alloc] initWithTitle:@"Error!" message:[ NSString stringWithFormat:@"Could not retrieve stock quote. Please try again later. Exception: %@", exception] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil];
+        [quoteRetrievalAlert show];
+        return nil;
+    }
 }
 
 + (NSNumber*) currentPriceForSymbol: (NSString*) symbol

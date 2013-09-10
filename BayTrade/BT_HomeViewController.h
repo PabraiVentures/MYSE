@@ -10,7 +10,7 @@
 #import "Cache.h"
 
 @interface BT_HomeViewController : UIViewController
-@property (nonatomic,strong) Cache* userModel;
+@property (nonatomic,strong) Cache* userCache;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 
