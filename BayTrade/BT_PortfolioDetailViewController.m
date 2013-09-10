@@ -45,20 +45,15 @@
 -(void)setDetailLabelText
 {
     CoreStock *detailStock = [(BT_AppDelegate*)[[UIApplication sharedApplication] delegate] selectedPortfolioStock];
-    NSLog(@"detailstock: %@", detailStock);
     NSDictionary *data;
     @try {
         data = [Controller fetchQuotesFor:[NSArray arrayWithObject: detailStock.symbol]];
     }
     @catch (NSException *exception) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Uh Oh!"
-                                                        message:@"Can't get data!"
-                                                       delegate:self cancelButtonTitle:@"Okay."
-                                              otherButtonTitles: nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Uh Oh!" message:[NSString stringWithFormat:@"Can't get data! Error: %@", exception] delegate:self cancelButtonTitle:@"Okay."otherButtonTitles: nil];
         [alert show];
-        return;
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
-    NSLog(@"data: %@", data);
     NSString *myStockPrice = data[@"LastTradePriceOnly"];
     NSString *openPrice = data[@"Open"];
     
