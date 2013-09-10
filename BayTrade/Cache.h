@@ -19,7 +19,7 @@
 @property (nonatomic, retain) NSString* userID;
 @property (nonatomic, retain) CoreModel* coreModel;
 
--(void) updateHistory:(CoreStock*)theStock andAmount: (int) theAmount andID: (int) ID;
+-(void) addTradeEventFromStock:(CoreStock*) theStock withActionID: (int) actionID;
 
 +(void) makeNewModelWithFBID:(NSString*)userID;
 

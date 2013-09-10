@@ -12,6 +12,9 @@
 
 @interface BT_TradeViewController : UIViewController <FBLoginViewDelegate, UIAlertViewDelegate> {
     double reservedBuyPrice;
+    double reservedSalePrice;
+    NSString *saleSymbol;
+    CoreStock *matchedSaleStock;
 }
 
 @property (weak, nonatomic) NSManagedObjectContext *managedObjectContext;

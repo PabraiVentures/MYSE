@@ -75,7 +75,6 @@
     cell.detailTextLabel.numberOfLines = 5;
     
     CoreStock *stock = [self.stocks objectAtIndex: indexPath.row];
-    NSLog(@"stock = %@", stock);
     double value = [[Controller currentPriceForSymbol:stock.symbol] doubleValue] * [stock.amount doubleValue];
     
     NSString *actionDetail = [NSString stringWithFormat:@"Purchase Share Price: $%.2f\nCurrent Share Price: $%.2f\nCurrent Value: $%.2f", [stock.buyprice doubleValue], [[Controller currentPriceForSymbol:stock.symbol] doubleValue], value];

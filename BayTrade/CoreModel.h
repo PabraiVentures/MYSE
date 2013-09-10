@@ -18,6 +18,7 @@
 @property (nonatomic, retain) NSString * model_id;
 @property (nonatomic, retain) CorePortfolio *portfolio;
 @property (nonatomic, retain) NSSet *tradeevents;
+
 @end
 
 @interface CoreModel (CoreDataGeneratedAccessors)

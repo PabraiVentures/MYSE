@@ -16,15 +16,4 @@
 @synthesize portfolio;
 @synthesize tradeevents;
 
-//-(id) init
-//{
-//    if(self = [super init])
-//    {
-//        self.portfolio = [[CorePortfolio alloc] init];
-//        //self.modelPort.value = [self.modelPort totalPortfolioValue];
-//        self.eventArray = [NSMutableArray arrayWithCapacity:0];
-//    }
-//    return self;
-//}
-
 @end

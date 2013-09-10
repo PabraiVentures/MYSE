@@ -39,7 +39,6 @@
     loginview.delegate = self;
     
     [self.view addSubview:loginview];
-    
     [loginview sizeToFit];
     
     //get the object context to work with stackmob data
@@ -48,15 +47,13 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     
     [self.view addGestureRecognizer:tap];
-    
-    NSLog(@"tradeviewcontroller did load");
     [self performSelector:@selector(setCoreModel) withObject:nil afterDelay:0.5];
 }
 
-- (void) dismissKeyboard {
+- (void) dismissKeyboard
+{
     [self.amountField resignFirstResponder];
     [self.symbolField resignFirstResponder];
-    [self setCoreModel];
 }
 
 - (void) didReceiveMemoryWarning
@@ -133,7 +130,6 @@
 - (NSDictionary *) callFetchQuotes: (NSString*) stockSymbol
 {
     NSArray *stock = [NSArray arrayWithObjects: stockSymbol, nil];
-    NSLog(@"stock array: %@", stock);
     NSDictionary *data = [Controller fetchQuotesFor:stock];
     return data;
 }
@@ -200,7 +196,7 @@
 
 - (IBAction) buyButtonClicked:(id)sender
 {
-    [self setCoreModel];
+    //[self setCoreModel];
     NSString *buyingSymbol;
     if([self.symbolField.text length] > 0) buyingSymbol = self.symbolField.text;
     NSLog(@"buying symbol: %@", buyingSymbol);
@@ -230,10 +226,7 @@
     //if the symbol didn't get results...
     if(myStockPrice == NULL || amount == 0)
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hold up!"
-                                                        message:@"Invalid symbol or amount"
-                                                       delegate:self cancelButtonTitle:@"Got it"
-                                              otherButtonTitles: nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hold up!" message:@"Invalid symbol or amount" delegate:self cancelButtonTitle:@"Got it" otherButtonTitles: nil];
         [alert show];
     }
     else {
@@ -257,7 +250,7 @@
 {
     NSLog(@"beginning buy");
     //assign self.userModel.coreModel to the StackMob coreModel
-    [self setCoreModel];
+    //[self setCoreModel];
     NSString *buyingSymbol = self.symbolField.text;
     int amount = [self.amountField.text intValue];
     double price = reservedBuyPrice;
@@ -273,8 +266,8 @@
     /**********START CODE BLOCK FOR REQUEST ACTION************/
     [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {
         NSManagedObject* myModel=[results objectAtIndex:0];
-        self.userCache.coreModel = (CoreModel* ) myModel;
-        [self.userCache updateHistory:[CoreStock initWithSymbol:buyingSymbol AndPrice:price AndAmount:amount] andAmount: amount andID:1];
+        self.userCache.coreModel = (CoreModel*) myModel;
+        [self.userCache addTradeEventFromStock:[CoreStock initWithSymbol:buyingSymbol AndPrice:price AndAmount:amount] withActionID: 1];
         
         //subtract trade value from totalcashvalue
         double cashMoney =  self.userCache.coreModel.portfolio.totalcashvalue.doubleValue - (price * amount);
@@ -284,15 +277,14 @@
         /***CREATE CORESTOCK TO BE PLACED INTO COREMODEL.PORTFOLIO******/
         CoreStock* thestock=[NSEntityDescription insertNewObjectForEntityForName:@"CoreStock" inManagedObjectContext:self.managedObjectContext];
         thestock.amount = [amountAndPrice objectAtIndex:0];
-        thestock.buyprice=[amountAndPrice objectAtIndex:1];
-        thestock.symbol=buyingSymbol;
+        thestock.buyprice = [amountAndPrice objectAtIndex:1];
+        thestock.symbol = buyingSymbol;
         [thestock setValue:[thestock assignObjectId] forKey:[thestock primaryKeyField]];
         /***DONE CREATING CORESTOCK TO BE PLACED INTO COREMODEL.PORTFOLIO******/
         
         //ADDING STOCK TO COREMODEL.PORTFOLIO TO BE SAVED LATER
         [((CoreModel*)(myModel)).portfolio addStocksObject:thestock];// the stock is now in the portfolio
         //SAVE COREMODEL TO STACKMOB
-        
         [self.managedObjectContext saveOnSuccess:^{
             NSLog(@"You updated the model object with a new stock buy!");
         } onFailure:^(NSError *error) {
@@ -302,7 +294,9 @@
         NSLog(@"Error fetching: %@", error);
     }];
     
-    [self setCoreModel];
+    //[self setCoreModel];
+    [self updateBuyPower];
+    [self updateValue];
     for(CoreStock *s in self.userCache.coreModel.portfolio.stocks)
     {
         NSLog(@"%@ : $%.2f\tamount:%i\n", s.symbol, s.buyprice.doubleValue, s.amount.intValue);
@@ -315,9 +309,9 @@
     if (alertView.tag == 0 && buttonIndex != 0){
         [self buy];
     }
-//    else if (alertView.tag == 1 && buttonIndex !=0) {
-//        [self sell];
-//    }
+    else if (alertView.tag == 1 && buttonIndex !=0) {
+        [self sell];
+    }
 }
 
 /************************SELLING**************************/
@@ -325,78 +319,90 @@
 - (IBAction)sellButtonClicked:(id)sender
 {
     //assign self.userModel.coreModel to the StackMob coreModel
-    [self setCoreModel];
+    //[self setCoreModel];
     
-    NSString *sellingSymbol;
-    if([self.symbolField.text length] > 0)
-        sellingSymbol = self.symbolField.text;
-    else sellingSymbol = NULL;
-    
-    NSInteger sellingAmount;
+    NSInteger amount;
     if([self.amountField.text length] > 0)
-        sellingAmount = [self.amountField.text intValue];
-    else
-        sellingAmount = 0;
+        amount = [self.amountField.text intValue];
+    else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Must Enter Amount" message:@"Please make sure you have entered an amount." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil];
+        [alert show];
+        return;
+    }
     
-    [self sellIfCan:sellingSymbol andInt:sellingAmount];
-    [self setCoreModel];
+    NSString *symbol;
+    if([self.symbolField.text length] > 0)
+        symbol = self.symbolField.text;
+    else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Must Enter Symbol" message:@"Please make sure you have entered a symbol." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil];
+        [alert show];
+        return;
+    }
+    
+    //makes sure enough of stock is available
+    for(CoreStock* stock in self.userCache.coreModel.portfolio.stocks) {
+        if ([symbol caseInsensitiveCompare:stock.symbol] == NSOrderedSame) {
+            if (stock.amount.intValue < amount) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Nice try!" message:@"You don't own enought of this stock." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                [alert show];
+                return;
+            }
+            else {
+                if (amount <= 0) {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Amount" message:@"Please enter a valid amount." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil];
+                    [alert show];
+                    return;
+                }
+                NSDictionary *stockData = [self callFetchQuotes:symbol];
+                NSString *myStockPrice = stockData[@"LastTradePriceOnly"];
+                reservedSalePrice = [myStockPrice doubleValue];
+                
+                if (reservedSalePrice <= 0) {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Fetching Quote" message:@"The symbol you requested returned an invalid quote. Please try again." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil];
+                    [alert show];
+                    return;
+                }
+                double totalPrice = reservedSalePrice * amount;
+                NSString *confirmationString = [NSString stringWithFormat:@"Are you sure you'd like to sell %i shares of %@ for $%.2f?", amount, symbol, totalPrice];
+                
+                UIAlertView *sellConfirmation = [[UIAlertView alloc] initWithTitle:@"Confirm Trade" message:confirmationString delegate:self cancelButtonTitle:@"Nevermind" otherButtonTitles:@"Confirm Trade", nil];
+                sellConfirmation.tag = 1;
+                [sellConfirmation show];
+                matchedSaleStock = stock;
+                return;
+            }
+        }
+    }
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Matching Stock" message:@"No stock was found in your portfolio with the symbol you provided. Please try again." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil];
+    [alert show];
 }
 
-/**
- * Returns purchase price of one stock and changed value of "amount" for later calulations
- */
-- (BOOL) sellIfCan: (NSString *) symbol andInt: (int) amount
+- (void) sell
 {
-    for(CoreStock* stock in self.userCache.coreModel.portfolio.stocks)
+    int amount = [self.amountField.text intValue];
+    //if selling all, just delete stock from portfolio, THEN completely delete stock
+    if(matchedSaleStock.amount.intValue == amount)
     {
-        if ([symbol isEqual: stock.symbol])
-        {
-            NSLog(@"The stock amount is %@", stock.amount);
-            if(stock.amount.intValue < amount)
-            {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Nice try!" message:@"You don't own enought of this stock" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                [alert show];
-                return NO;//<-might cause errors
-            }
-            
-            //if selling all, just delete stock from portfolio, THEN completely delete stock
-            else if(stock.amount.intValue == amount)
-            {
-                [self.userCache.coreModel.portfolio removeStocksObject:stock];
-                [self.managedObjectContext deleteObject:stock];
-            }
-            else //only selling a portion of your chosen stock
-            {
-                //edit # of shares
-                stock.amount = [NSNumber numberWithInt:(stock.amount.intValue - amount)];
-            }
-            NSDictionary *sellData = [self callFetchQuotes:symbol];
-            
-            NSString *myStockPrice = sellData[@"LastTradePriceOnly"];
-            double sellPrice = [myStockPrice doubleValue];
-            
-            self.userCache.coreModel.portfolio.totalcashvalue = [NSNumber numberWithFloat: (self.userCache.coreModel.portfolio.totalcashvalue.doubleValue+sellPrice * amount)];
-            
-            /***** CREATE LOCAL STOCK TO SAVE IN HISTORY *****/
-            CoreStock *hStock = [[CoreStock alloc] init];
-            [hStock setAmount: [NSNumber numberWithInt:amount]];
-            hStock.symbol = symbol;
-            
-            [self.userCache updateHistory:hStock andAmount: amount andID:0];
-            
-            //SAVE COREMODEL TO STACKMOB
-            [self.managedObjectContext saveOnSuccess:^{
-                NSLog(@"Updated model by selling stock!");
-            } onFailure:^(NSError *error) {
-                NSLog(@"There was an error! %@", error);
-            }];
-            return YES;
-        }//if
+        [self.userCache.coreModel.portfolio removeStocksObject:matchedSaleStock];
+        [self.managedObjectContext deleteObject:matchedSaleStock];
     }
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Nice try!" message:@"You don't own enought of this stock" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [alert show];
+    else //only selling a portion of your chosen stock
+    {
+        matchedSaleStock.amount = [NSNumber numberWithInt:(matchedSaleStock.amount.intValue - amount)];
+    }
     
-    return NO;
+    self.userCache.coreModel.portfolio.totalcashvalue = [NSNumber numberWithDouble: (self.userCache.coreModel.portfolio.totalcashvalue.doubleValue+ reservedSalePrice * amount)];
+    
+    [self.userCache addTradeEventFromStock:[CoreStock initWithSymbol:matchedSaleStock.symbol AndPrice:reservedSalePrice AndAmount:amount] withActionID: 0];
+    
+    //SAVE COREMODEL TO STACKMOB
+    [self.managedObjectContext saveOnSuccess:^{
+        NSLog(@"Updated model by selling stock!");
+    } onFailure:^(NSError *error) {
+        NSLog(@"There was an error! %@", error);
+    }];
+    [self updateBuyPower];
+    [self updateValue];
 }
 
 @end

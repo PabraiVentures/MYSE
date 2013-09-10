@@ -27,34 +27,24 @@
     return self;
 }
 
--(void) updateHistory:(CoreStock*)theStock andAmount: (int) theAmount andID: (int) ID
+-(void) addTradeEventFromStock:(CoreStock*) theStock withActionID: (int) actionID
 {
     NSManagedObjectContext *moc = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
-    /****create tradeevent and put it into managedObjectContext (so it can be saved later), THEN fill it up with its data****/
     CoreTradeEvent* tradeevent=[NSEntityDescription insertNewObjectForEntityForName:@"CoreTradeEvent" inManagedObjectContext:moc];
     tradeevent.ticker=theStock.symbol;
     [tradeevent setValue:[tradeevent assignObjectId] forKey:[tradeevent primaryKeyField]];
     
-    //get the time as a string
-    NSDateFormatter *formatter;
-    NSString        *dateString;
-    
-    formatter = [[NSDateFormatter alloc] init];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"MM-dd-yyyy HH:mm"];
     
-    dateString = [formatter stringFromDate:[NSDate date]];
-    tradeevent.time=dateString;
+    tradeevent.time = [formatter stringFromDate:[NSDate date]];
+    tradeevent.tradeamount = theStock.amount;
+    tradeevent.tradeprice = theStock.buyprice;
+    tradeevent.actionid = [NSNumber numberWithInt:actionID];
     
-    tradeevent.tradeamount = [NSNumber numberWithInt:theAmount];
-    tradeevent.tradeprice = [NSNumber numberWithDouble:theStock.buyprice.doubleValue]; //TODO is this ok?
-    tradeevent.actionid = [NSNumber numberWithInt:ID];
-    
-    /*****DONE CREATING TRADEEVENT INSIDE MANAGEDOBJECTCONTEXT*******/
-
     //ADD TRADEEVENT TO COREMODEL TO BE SAVED
     [self.coreModel addTradeeventsObject:tradeevent];// tradevent is now part of the model
     [moc deleteObject:theStock];
-
     [moc saveOnSuccess:^{
         NSLog(@"You updated the model object by selling a stock!");
     } onFailure:^(NSError *error) {

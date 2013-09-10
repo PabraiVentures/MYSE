@@ -48,7 +48,7 @@
     //get the trade events for this user
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CoreTradeEvent"];
     // query for tradeevents for THIS user
-    NSString* getRightEvents=[ NSString stringWithFormat:@"sm_owner == 'user/%@'",self.userCache.userID ];
+    NSString* getRightEvents=[NSString stringWithFormat:@"sm_owner == 'user/%@'",self.userCache.userID ];
     [fetchRequest setPredicate:[NSPredicate predicateWithFormat:getRightEvents]];
     
     /**********START CODE BLOCK FOR REQUEST ACTION************/
@@ -60,10 +60,6 @@
             NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:NO] ;
             NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
             events = [tradeEvents sortedArrayUsingDescriptors:sortDescriptors];
-            //Use Sorted array to visualize data
-            for (CoreTradeEvent *event in events) {
-                NSLog(@"At %@ you %@ %@ amount: %@ price: %@", event.time, (event.actionid.intValue > 0)? @"bought" : @"sold" ,event.ticker, event.tradeamount, event.tradeprice);
-            }
             [historyTable reloadData];
         }
     } onFailure:^(NSError *error) {
@@ -130,11 +126,9 @@
 -(NSString*) timeString: (NSString*) tradeDate withAction: (NSString*) action
 {
     NSString *time;
-    NSLog(@"time: %@", tradeDate);
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MM-dd-yyyy HH:mm"];
     NSDate *date = [dateFormatter dateFromString:tradeDate];
-    NSLog(@"date: %@", date);
     
     int seconds = -(int)[date timeIntervalSinceNow];
     int hours = seconds/3600;
@@ -142,6 +136,7 @@
     if (hours < 24) {
         time = [NSString stringWithFormat:@"%@ %i hours ago", action, hours];
         if (minutes < 60) time = [NSString stringWithFormat:@"%@ %i minutes ago", action, minutes];
+        if (minutes < 1) time = [NSString stringWithFormat:@"%@ just now", action];
     }
     else {
         NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];

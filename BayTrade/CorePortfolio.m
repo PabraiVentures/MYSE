@@ -33,7 +33,6 @@
     
     if (self = [super init])
     {
-       // self.totalcashvalue = [NSNumber numberWithFloat: 100000.0];
         NSLog(@"calling coreportfolio init");
     }
     return self;
@@ -48,8 +47,6 @@
     return self;
 }
 
-
-
 #pragma mark - Local Getter Methods
 
 -(double) totalStockValue
@@ -61,8 +58,6 @@
     }
     return value;
 }
-
-
 
 -(double) totalPortfolioValue
 {

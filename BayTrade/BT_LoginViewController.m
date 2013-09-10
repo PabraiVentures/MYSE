@@ -95,7 +95,7 @@
             NSLog(@"Error in UpdateView: %@", error);
         }];
     } else {
-        NSLog(@"appdelegate session isn't open");
+        NSLog(@"fbsession session isn't open");
         // login-needed account UI is shown whenever the session is closed
         [self.loginButton setTitle:@"Log in" forState:UIControlStateNormal];
         [self.statusText setText:@"Login to create a link to fetch account data"];

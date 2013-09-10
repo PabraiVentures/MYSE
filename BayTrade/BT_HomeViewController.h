@@ -13,5 +13,4 @@
 @property (nonatomic,strong) Cache* userCache;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
-
 @end
