@@ -1,8 +1,8 @@
 //
-//  BT_PortfolioViewController.m
+//  BT_PortViewController.m
 //  BayTrade
 //
-//  Created by John Luttig on 9/5/13.
+//  Created by John Luttig on 9/9/13.
 //  Copyright (c) 2013 byteNsell. All rights reserved.
 //
 
@@ -14,6 +14,7 @@
 #import "CorePortfolio.h"
 #import "Cache.h"
 #import "Controller.h"
+#import "BT_AppDelegate.h"
 
 @interface BT_PortfolioViewController ()
 
@@ -21,13 +22,11 @@
 
 @implementation BT_PortfolioViewController
 
-@synthesize stockTable;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithStyle:(UITableViewStyle)style
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+        [(BT_AppDelegate*)[[UIApplication sharedApplication] delegate] setPortfolioView:self];
     }
     return self;
 }
@@ -37,20 +36,37 @@
     [super viewDidLoad];
     self.userCache=((BT_TabBarController*)(self.tabBarController)).userModel;
     self.stocks = [self.userCache.coreModel.portfolio.stocks allObjects];
+    
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget: self action: @selector(refreshControlRequest) forControlEvents: UIControlEventValueChanged];
+    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to refresh"];
+    [self setRefreshControl:refreshControl];
+}
+
+-(void)refreshControlRequest
+{
+    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+    [fmt setDateFormat:@"MMM d, h:mm:ss a"];
+    NSString *lastUpdated = [NSString stringWithFormat:@"Last updated on %@", [fmt stringFromDate:[NSDate date]]];
+    [[self refreshControl] setAttributedTitle: [[NSAttributedString alloc] initWithString:lastUpdated]];
+    
+    [self.tableView reloadData];
+    [self.refreshControl endRefreshing];
 }
 
 -(void) viewWillAppear:(BOOL)animated
 {
     self.stocks = [self.userCache.coreModel.portfolio.stocks allObjects];
-    [stockTable reloadData];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table View Methods
+#pragma mark - Table view data source
 
 -(int)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -88,6 +104,21 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 80;
+}
+
+#pragma mark - Table view delegate
+
+//-(void)tableView:(UITableView*)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    NSLog(@"begin will select");
+//    //[(BT_AppDelegate*)[[UIApplication sharedApplication] delegate] setSelectedPortfolioStock:[self.stocks objectAtIndex: indexPath.row]];
+//    NSLog(@"end will select");
+//}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [(BT_AppDelegate*)[[UIApplication sharedApplication] delegate] setSelectedPortfolioStock:[self.stocks objectAtIndex: indexPath.row]];
+    //TODO go to detail view
 }
 
 @end

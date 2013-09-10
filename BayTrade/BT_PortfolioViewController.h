@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "Cache.h"
 
-@interface BT_PortfolioViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface BT_PortfolioViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic,strong) Cache* userCache;
-@property (nonatomic, retain) IBOutlet UITableView *stockTable;
 @property (nonatomic, retain) NSArray *stocks;
+//@property (nonatomic, retain) UIRefreshControl *refreshControl;
+
+-(void)refreshControlRequest;
 
 @end

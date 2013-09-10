@@ -23,7 +23,7 @@
 
 @implementation BT_AppDelegate
 @synthesize managedObjectModel=_managedObjectModel;
-@synthesize loginView;
+@synthesize loginView, selectedPortfolioStock, portfolioView;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

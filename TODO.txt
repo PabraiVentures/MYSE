@@ -1,4 +1,4 @@
-(_)encapsulate NSLogs in if-debug statements
+(X)clean up NSLogs
 (X)encapsulate all networks functions in try/catch
 (X)clean up all network-related functions
 (X)clean up updateOwnedStocks function
@@ -19,11 +19,11 @@
 (X)add real-time current price getter methods to controller
 (X)refactor model.m
 (X)set sell trade price
-(_)pull to refresh portfolio table
+(X)pull to refresh portfolio table
 (X)confirm purchase with user first
 (X)confirm sale with user first
 (_)iOS 7 capabilities
-(_)portfolio detail view
+(X)portfolio detail view
 (_)history detail view
 (_)symbol lookup in trade view controller
 (_)homeviewcontroller - name
