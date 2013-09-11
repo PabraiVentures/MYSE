@@ -8,6 +8,8 @@
     </entity>
     <entity name="CorePortfolio" representedClassName="CorePortfolio" syncable="YES">
         <attribute name="coreportfolio_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="portfoliohistory" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="ranking" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="totalcashvalue" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="totalportfoliovalue" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <relationship name="model" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="CoreModel" inverseName="portfolio" inverseEntity="CoreModel" syncable="YES"/>
@@ -35,7 +37,7 @@
     </entity>
     <elements>
         <element name="CoreModel" positionX="-56" positionY="3" width="128" height="105"/>
-        <element name="CorePortfolio" positionX="259" positionY="-30" width="128" height="120"/>
+        <element name="CorePortfolio" positionX="259" positionY="-30" width="128" height="150"/>
         <element name="CoreStock" positionX="0" positionY="-243" width="128" height="120"/>
         <element name="CoreTradeEvent" positionX="-227" positionY="-141" width="128" height="150"/>
         <element name="User" positionX="241" positionY="-162" width="128" height="75"/>

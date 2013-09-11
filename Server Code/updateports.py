@@ -81,21 +81,31 @@ try:
 	client=BaseClient("api.mob1.stackmob.com","ef598654-95fb-4ecd-8f13-9309f2fcad0f", "9ac9ecaa-21eb-4ef2-8ddc-10ce40ca67e4")
 	w=client._execute(0,"GET","coreportfolio",None)
 	u= w.read()
-	j=json.loads(u)
+	portfolios=json.loads(u)
 	print "--------------"
-	print j
+	print portfolios
 	print ""
-	for port in j:
+        rankings={}#key=porfolioID, value= totalportfoliovalue
+        
+	for port in portfolios:
 		#for each portfolio
+        #calculate the current portfoliov value
 		total=port['totalcashvalue']
 		for stock in port['stocks']:
 			total=total+ float(Pyql().lookup([stock['symbol']])[0]['LastTradePriceOnly']) *stock['amount']
-		
-		body={"totalportfoliovalue":total}
-		string1="coreportfolio/"+port['coreportfolio_id']
-		client._execute(1,"PUT",string1,body)
+			body={"totalportfoliovalue":total}
+			rankings[port['coreportfolio_id']]=total #add data into rankings
+			string1="coreportfolio/"+port['coreportfolio_id']
+			client._execute(1,"PUT",string1,body).read()
+            #now the totalportfoliovalues have been updated
 
-	
-except e:
+except :
 	raise
-
+sortedrankings=sorted(rankings)
+print sortedrankings
+rank=1
+for i in sortedrankings:
+	body={"ranking":rank}
+	string1="coreportfolio/"+i
+	client._execute(1,"PUT",string1,body).read()
+	rank=rank+1

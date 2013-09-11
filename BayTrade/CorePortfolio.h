@@ -20,6 +20,8 @@
 @property (nonatomic,retain) NSNumber *totalportfoliovalue;
 @property (nonatomic, retain) NSString *coreportfolio_id;
 @property (nonatomic, retain) NSMutableSet *stocks;
+@property (nonatomic,retain) NSString* portfoliohistory;
+@property (nonatomic,retain) NSNumber* ranking;
 
 -(double)totalPortfolioValue;
 

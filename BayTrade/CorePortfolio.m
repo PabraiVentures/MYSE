@@ -17,6 +17,8 @@
 @dynamic totalcashvalue;
 @dynamic totalportfoliovalue;
 @dynamic owner;
+@dynamic ranking;
+@dynamic portfoliohistory;
 
 + (CorePortfolio*)initSelf
 {
