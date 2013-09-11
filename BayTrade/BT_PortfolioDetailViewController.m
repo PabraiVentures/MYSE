@@ -63,6 +63,11 @@
     NSString *detailString = [NSString stringWithFormat:@"Symbol: %@\n\nLast Trade Price: %.2f\n\nOpen Price: %.2f", detailStock.symbol, lastPrice, open];
     
     [detailLabel setText:detailString];
+    
+    NSString *fullURL = [NSString stringWithFormat: @"http://chart.finance.yahoo.com/z?s=%@&t=6m&q=l&l=on&z=s&p=m50,m200", detailStock.symbol ];
+    NSURL *url = [NSURL URLWithString:fullURL];
+    NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
+    [_webChart loadRequest:requestObj];
 }
 
 @end

@@ -11,6 +11,7 @@
 @interface BT_PortfolioDetailViewController : UIViewController
 
 @property (nonatomic, retain) IBOutlet UILabel *detailLabel;
+@property (strong, nonatomic) IBOutlet UIWebView *webChart;
 
 -(IBAction)back:(id)sender;
 
