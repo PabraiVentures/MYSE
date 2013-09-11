@@ -93,11 +93,11 @@ try:
 		total=port['totalcashvalue']
 		for stock in port['stocks']:
 			total=total+ float(Pyql().lookup([stock['symbol']])[0]['LastTradePriceOnly']) *stock['amount']
-			body={"totalportfoliovalue":total}
-			rankings[port['coreportfolio_id']]=total #add data into rankings
-			string1="coreportfolio/"+port['coreportfolio_id']
-			client._execute(1,"PUT",string1,body).read()
-            #now the totalportfoliovalues have been updated
+		body={"totalportfoliovalue":total}
+		rankings[port['coreportfolio_id']]=total #add data into rankings
+		string1="coreportfolio/"+port['coreportfolio_id']
+		client._execute(1,"PUT",string1,body).read()
+        #now the totalportfoliovalues have been updated
 
 except :
 	raise
