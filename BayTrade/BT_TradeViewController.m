@@ -48,6 +48,9 @@
     
     [self.view addGestureRecognizer:tap];
     [self performSelector:@selector(setCoreModel) withObject:nil afterDelay:0.5];
+    
+    self.autocompleteSymbols = [[NSMutableArray alloc] initWithObjects:@"AAPL", @"GOOG", @"CSCO", @"IBM", @"YHOO", @"A",@"F", nil];
+    self.autocompleteSuggestions = [[NSMutableArray alloc] init];
 }
 
 - (void) dismissKeyboard
@@ -407,5 +410,67 @@
     [self updateBuyPower];
     [self updateValue];
 }
+
+#pragma mark AutoComplete methods
+
+- (void)searchAutocompleteEntriesWithSubstring:(NSString *)substring {
+    
+    // Put anything that starts with this substring into the autocompleteSuggestions array
+    // The items in this array is what will show up in the table view
+    [self.autocompleteSuggestions removeAllObjects];
+    for(NSString *curString in self.autocompleteSymbols) {
+        NSRange substringRange = [curString rangeOfString:substring];
+        if (substringRange.location == 0) {
+            [self.autocompleteSuggestions addObject:curString];
+        }
+    }
+    [self.autocompleteTableView reloadData];
+}
+
+#pragma mark UITextFieldDelegate methods
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    self.autocompleteTableView.hidden = NO;
+    
+    NSString *substring = [NSString stringWithString:textField.text];
+    substring = [substring stringByReplacingCharactersInRange:range withString:string];
+    [self searchAutocompleteEntriesWithSubstring:substring];
+    return YES;
+}
+
+#pragma mark UITableViewDataSource methods
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger) section {
+    return self.autocompleteSymbols.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewCell *cell = nil;
+    static NSString *AutoCompleteRowIdentifier = @"AutoCompleteRowIdentifier";
+    cell = [tableView dequeueReusableCellWithIdentifier:AutoCompleteRowIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc]
+                 initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AutoCompleteRowIdentifier];
+    }
+    
+    cell.textLabel.text = [self.autocompleteSuggestions objectAtIndex:indexPath.row];
+    return cell;
+}
+
+#pragma mark UITableViewDelegate methods
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
+    self.symbolField.text = selectedCell.textLabel.text;
+   
+    
+}
+
+
+
+
+
 
 @end
