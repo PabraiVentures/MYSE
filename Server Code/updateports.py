@@ -5,6 +5,7 @@ import httplib
 import json
 import sys
 import urllib2
+import time
 class BaseClient:
 	
 	def __init__(self, baseURL, key, secret):
@@ -93,8 +94,15 @@ try:
 		total=port['totalcashvalue']
 		for stock in port['stocks']:
 			total=total+ float(Pyql().lookup([stock['symbol']])[0]['LastTradePriceOnly']) *stock['amount']
-		body={"totalportfoliovalue":total}
+		if ('portfoliohistory' not in port):
+			port['portfoliohistory']="{}"
+		hist=json.loads(port['portfoliohistory'])
+		hist[time.strftime('%m-%d-%Y')]=total
+		histjson=json.dumps(hist)
+		body={"totalportfoliovalue":total , "portfoliohistory":histjson}
+		
 		rankings[port['coreportfolio_id']]=total #add data into rankings
+		
 		string1="coreportfolio/"+port['coreportfolio_id']
 		client._execute(1,"PUT",string1,body).read()
         #now the totalportfoliovalues have been updated
