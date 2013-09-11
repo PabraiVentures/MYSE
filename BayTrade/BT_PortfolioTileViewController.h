@@ -15,6 +15,7 @@
 @property (nonatomic, retain) NSArray *stocks;
 @property (nonatomic, retain) NSMutableArray *currentPrices;
 @property (nonatomic, retain) IBOutlet UICollectionView *tileView;
-@property (nonatomic, retain) IBOutlet UILabel *detailLabel;
+@property (nonatomic, retain) IBOutlet UITextView *detailLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *chartImage;
 
 @end

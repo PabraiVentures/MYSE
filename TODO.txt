@@ -1,12 +1,10 @@
-(_)encapsulate NSLogs in if-debug statements
 (_)encapsulate all networks functions in try/catch
 (X)clean up all network-related functions
 (X)clean up updateOwnedStocks function
-(_)figure out why we need to use setCoreModel function so many times
+(X)figure out why we need to use setCoreModel function so many times
 (X)portfolio - view controller
 (X)portfolio - table
 (X)portfolio - display current value
-(_)portfolio table cell - buy/sell option
 (X)universal methods for retrieving / syncing owned stocks
 (X)merge Portfolio.m into CorePortfolio.m
 (X)merge Stock.m into CoreStock.m
@@ -19,17 +17,16 @@
 (X)add real-time current price getter methods to controller
 (X)refactor model.m
 (X)set sell trade price
-(_)refresh portfolio table
 (X)confirm purchase with user first
-(_)confirm sale with user first
+(X)confirm sale with user first
 (_)iOS 7 capabilities
-(_)portfolio detail view
+(X)portfolio detail view
 (_)history detail view
 (_)symbol lookup in trade view controller
-(_)homeviewcontroller - name
+(X)homeviewcontroller - name
 (_)homeviewcontroller - picture
 (_)homeviewcontroller - change in ranking today
-(_)homeviewcontroller - ticker scrolling view
+(X)homeviewcontroller - ticker scrolling view
 (_)homeviewcontroller - total stocks value
 (_)homeviewcontroller - stocks you own the most of
 (_)homeviewcontroller - account performance over time
@@ -39,5 +36,8 @@
 (X)portfolio view - merge detail view into portfolio subview
 (_)portfolio view - asynchronous to avoid lag
 (_)portfolio view - refresh tiles
+(_)portfolio detail view - buy/sell option
 (X)fix - buying power updated for last trade
 (_)rankings server code
+(_)load all data upon app open before loading any views
+(_)failsafe for all YQL calls

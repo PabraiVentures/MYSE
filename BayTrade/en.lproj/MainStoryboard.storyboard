@@ -52,7 +52,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="8VU-WF-Iod">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="448"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="499"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -275,20 +275,25 @@
                                     <outlet property="delegate" destination="rbI-4P-XCH" id="4GW-sR-8oh"/>
                                 </connections>
                             </collectionView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Buy a stock to see its details here!" lineBreakMode="tailTruncation" numberOfLines="11" baselineAdjustment="alignBaselines" minimumFontSize="10" id="A20-1o-d09">
-                                <rect key="frame" x="20" y="174" width="280" height="325"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Buy a stock to see its details here!" id="0La-0Q-hpo">
+                                <rect key="frame" x="20" y="122" width="280" height="181"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="5S9-v2-nGr">
+                                <rect key="frame" x="0.0" y="311" width="320" height="188"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Portfolio" image="briefcase.png" id="KJY-w0-cJ4"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="detailLabel" destination="A20-1o-d09" id="s7n-t4-wnI"/>
+                        <outlet property="chartImage" destination="5S9-v2-nGr" id="qBH-Kl-FWu"/>
+                        <outlet property="detailLabel" destination="0La-0Q-hpo" id="NCv-XJ-IsU"/>
                         <outlet property="tileView" destination="346-8t-XV9" id="Dv0-FO-p99"/>
                     </connections>
                 </viewController>
@@ -422,7 +427,8 @@
         <class className="BT_PortfolioTileViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BT_PortfolioTileViewController.h"/>
             <relationships>
-                <relationship kind="outlet" name="detailLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="chartImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="detailLabel" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="tileView" candidateClass="UICollectionView"/>
             </relationships>
         </class>

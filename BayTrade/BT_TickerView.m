@@ -113,7 +113,18 @@ static UIFont *detailFont = nil;
         NSArray *stock = [NSArray arrayWithObjects: ticker, nil];
         NSDictionary *realtimeData = [Controller fetchQuotesFor:stock];
         bool isUp = FALSE;
-        double changeInPercent = ([realtimeData[@"LastTradePriceOnly"] doubleValue] / [realtimeData[@"Open"] doubleValue] - 1.0) * 100.0;
+        double lastPrice, openPrice;
+        
+        @try {
+            lastPrice = [realtimeData[@"LastTradePriceOnly"] doubleValue];
+            openPrice = [realtimeData[@"Open"] doubleValue];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"error fetching YQL quotes.");
+            lastPrice = -1.0;
+            openPrice = -1.0;
+        }
+        double changeInPercent = (lastPrice / openPrice - 1.0) * 100.0;
         
         if (changeInPercent >= 0) isUp = TRUE;
         [example setObject:[NSNumber numberWithBool:isUp] forKey:@"Positive"];

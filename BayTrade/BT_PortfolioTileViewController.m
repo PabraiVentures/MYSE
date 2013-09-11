@@ -19,7 +19,7 @@
 
 @implementation BT_PortfolioTileViewController
 
-@synthesize tileView, userCache, stocks, currentPrices, detailLabel;
+@synthesize tileView, userCache, stocks, currentPrices, detailLabel, chartImage;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -60,7 +60,19 @@
 
 -(UIColor *) colorForIndex: (int)index
 {
-    double pctChange = [[[self.currentPrices objectAtIndex:index] objectForKey:@"LastTradePriceOnly"] doubleValue] / [[[self.currentPrices objectAtIndex:index] objectForKey:@"Open"] doubleValue] - 1.0;
+    double tradePrice;
+    double openPrice;
+    
+    @try {
+        tradePrice = [[[self.currentPrices objectAtIndex:index] objectForKey:@"LastTradePriceOnly"] doubleValue];
+        openPrice = [[[self.currentPrices objectAtIndex:index] objectForKey:@"Open"] doubleValue];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"error fetching YQL quotes");
+        tradePrice = -1.0;
+        openPrice = -1.0;
+    }
+    double pctChange =  tradePrice/openPrice - 1.0;
     
     if (pctChange < 0) {
         if (pctChange < -0.05) {
@@ -133,14 +145,37 @@
     NSString *myStockPrice = data[@"LastTradePriceOnly"];
     NSString *openPrice = data[@"Open"];
     
-    double lastPrice = [myStockPrice    doubleValue];
-    double      open = [openPrice       doubleValue];
+    double lastPrice;
+    double open;
+    
+    @try {
+        lastPrice = [myStockPrice doubleValue];
+        open = [openPrice doubleValue];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"error fetching prices from YQL");
+        lastPrice = -1.0;
+        open = -1.0;
+    }
     int       amount = [detailStock.amount intValue];
     double  buyPrice = [detailStock.buyprice doubleValue];
     
     NSString *detailString = [NSString stringWithFormat:@"Symbol: %@\n\nAmount Owned: %i\n\nBuy Price: %.2f\nTotal Purchase Value: %.2f\n\nLast Trade Price: %.2f\nTotal Current Value: %.2f\n\nOpen Price: %.2f", detailStock.symbol, amount, buyPrice, buyPrice*amount, lastPrice, lastPrice*amount, open];
     
     [detailLabel setText:detailString];
+    [detailLabel setContentOffset:CGPointMake(0, 0) animated:YES];
+    
+    NSString *fullURL = [NSString stringWithFormat: @"http://chart.finance.yahoo.com/z?s=%@&t=6m&q=l&l=on&z=s&p=m50,m200", detailStock.symbol];
+    NSURL *url = [NSURL URLWithString:fullURL];
+    
+    @try {
+        UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
+        
+        [chartImage setImage:image];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"couldn't find chart for symbol.");
+    }
 }
 
 /**code from old portfolio view that may be used for refresh function**/
