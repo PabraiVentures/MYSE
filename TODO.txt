@@ -41,3 +41,4 @@
 (_)rankings server code
 (_)load all data upon app open before loading any views
 (_)failsafe for all YQL calls
+(_)open price N/A workaround
