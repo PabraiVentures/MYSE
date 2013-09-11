@@ -78,17 +78,14 @@
  */
 - (CoreStock *) findStock: (NSString *) symbol
 {
-    CoreStock *foundStock;
-    
     for(CoreStock *s in self.stocks)
     {
-        if ([s.symbol isEqual: symbol])
+        if ([s.symbol caseInsensitiveCompare: symbol] == NSOrderedSame)
         {
-            foundStock = s; //TODO is this ok?
-            break;
+            return s;
         }
     }
-    return foundStock;
+    return nil;
 }
 
 @end

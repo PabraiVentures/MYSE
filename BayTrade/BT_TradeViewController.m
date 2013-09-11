@@ -157,7 +157,7 @@
     
     for(CoreStock* stock in self.userCache.coreModel.portfolio.stocks)
     {
-        if ([symbol isEqual: stock.symbol])
+        if ([symbol caseInsensitiveCompare: stock.symbol] == NSOrderedSame)
         {
             double newvalue =  price * amount + (stock.amount.intValue * stock.buyprice.doubleValue);
             NSNumber *newAmount = [NSNumber numberWithInt:(amount + stock.amount.intValue)];
@@ -201,7 +201,7 @@
 {
     //[self setCoreModel];
     NSString *buyingSymbol;
-    if([self.symbolField.text length] > 0) buyingSymbol = self.symbolField.text;
+    if([self.symbolField.text length] > 0) buyingSymbol = [self.symbolField.text uppercaseString];
     NSLog(@"buying symbol: %@", buyingSymbol);
     int amount;
     int amountForHistory;
@@ -236,7 +236,7 @@
         NSLog(@"totalcashval: %@", self.userCache.coreModel.portfolio.totalcashvalue);
         if (totalPrice <= self.userCache.coreModel.portfolio.totalcashvalue.doubleValue)
         {
-            NSString *confirmationString = [NSString stringWithFormat:@"Are you sure you'd like to buy %i shares of %@ for %.2f?", amount, buyingSymbol, totalPrice];
+            NSString *confirmationString = [NSString stringWithFormat:@"Are you sure you'd like to buy %i shares of %@ for $%.2f?", amount, buyingSymbol, totalPrice];
             
             UIAlertView *buyConfirmation = [[UIAlertView alloc] initWithTitle:@"Confirm Trade" message:confirmationString delegate:self cancelButtonTitle:@"Nevermind" otherButtonTitles:@"Confirm Trade", nil];
             buyConfirmation.tag = 0;
@@ -254,7 +254,7 @@
     NSLog(@"beginning buy");
     //assign self.userModel.coreModel to the StackMob coreModel
     //[self setCoreModel];
-    NSString *buyingSymbol = self.symbolField.text;
+    NSString *buyingSymbol = [self.symbolField.text uppercaseString];
     int amount = [self.amountField.text intValue];
     double price = reservedBuyPrice;
     
@@ -297,7 +297,7 @@
         NSLog(@"Error fetching: %@", error);
     }];
     
-    //[self setCoreModel];
+    [self setCoreModel];
     [self updateBuyPower];
     [self updateValue];
     for(CoreStock *s in self.userCache.coreModel.portfolio.stocks)
@@ -335,7 +335,7 @@
     
     NSString *symbol;
     if([self.symbolField.text length] > 0)
-        symbol = self.symbolField.text;
+        symbol = [self.symbolField.text uppercaseString];
     else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Must Enter Symbol" message:@"Please make sure you have entered a symbol." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil];
         [alert show];

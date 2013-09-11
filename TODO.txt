@@ -36,4 +36,8 @@
 (_)homeviewcontroller - account performance over time
 (_)merge cache with coremodel.m
 (X)remove redundant setCoreModel calls
-(_)tiles for owned stocks
+(X)portfolio view - collection view
+(X)portfolio view - merge detail view into portfolio subview
+(_)portfolio view - asynchronous to avoid lag
+(_)portfolio view - refresh tiles
+(X)fix - buying power updated for last trade

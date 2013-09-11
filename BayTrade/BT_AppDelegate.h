@@ -10,7 +10,6 @@
 #import <CoreData/CoreData.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import "BT_LoginViewController.h"
-#import "BT_PortfolioViewController.h"
 #import "CoreStock.h"
 
 @class SMCoreDataStore;
@@ -23,7 +22,6 @@
 @property (strong, nonatomic) SMCoreDataStore *coreDataStore;
 @property (strong, nonatomic) SMClient *client;
 @property (strong, nonatomic) BT_LoginViewController *loginView;
-@property (strong, nonatomic) BT_PortfolioViewController *portfolioView;
 
 @property (strong, nonatomic) CoreStock *selectedPortfolioStock;
 

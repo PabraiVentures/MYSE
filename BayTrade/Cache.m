@@ -31,7 +31,7 @@
 {
     NSManagedObjectContext *moc = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
     CoreTradeEvent* tradeevent=[NSEntityDescription insertNewObjectForEntityForName:@"CoreTradeEvent" inManagedObjectContext:moc];
-    tradeevent.ticker=theStock.symbol;
+    tradeevent.ticker = [theStock.symbol uppercaseString];
     [tradeevent setValue:[tradeevent assignObjectId] forKey:[tradeevent primaryKeyField]];
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
