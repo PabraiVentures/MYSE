@@ -1,8 +1,8 @@
-(X)clean up NSLogs
-(X)encapsulate all networks functions in try/catch
+(_)encapsulate NSLogs in if-debug statements
+(_)encapsulate all networks functions in try/catch
 (X)clean up all network-related functions
 (X)clean up updateOwnedStocks function
-(X)figure out why we need to use setCoreModel function so many times
+(_)figure out why we need to use setCoreModel function so many times
 (X)portfolio - view controller
 (X)portfolio - table
 (X)portfolio - display current value
@@ -19,21 +19,19 @@
 (X)add real-time current price getter methods to controller
 (X)refactor model.m
 (X)set sell trade price
-(X)pull to refresh portfolio table
+(_)refresh portfolio table
 (X)confirm purchase with user first
-(X)confirm sale with user first
+(_)confirm sale with user first
 (_)iOS 7 capabilities
-(X)portfolio detail view
+(_)portfolio detail view
 (_)history detail view
 (_)symbol lookup in trade view controller
-(_)symbol lookup detail view controller
-(X)homeviewcontroller - name
+(_)homeviewcontroller - name
 (_)homeviewcontroller - picture
 (_)homeviewcontroller - change in ranking today
-(X)homeviewcontroller - ticker scrolling view
+(_)homeviewcontroller - ticker scrolling view
 (_)homeviewcontroller - total stocks value
-(_)homeviewcontroller - ticker shows stocks you own the most of
+(_)homeviewcontroller - stocks you own the most of
 (_)homeviewcontroller - account performance over time
 (_)merge cache with coremodel.m
-(X)remove redundant setCoreModel calls
-(_)tiles for owned stocks
+(_)finish rankings
