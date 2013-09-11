@@ -706,12 +706,51 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "BayTrade/BT_TradeViewController.m"
-         timestampString = "400543764.553534"
+         timestampString = "400569019.792647"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "312"
-         endingLineNumber = "312"
-         landmarkName = "-alertView:clickedButtonAtIndex:"
+         startingLineNumber = "433"
+         endingLineNumber = "433"
+         landmarkName = "-textField:shouldChangeCharactersInRange:replacementString:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "BayTrade/BT_TradeViewController.m"
+         timestampString = "400569019.792647"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "437"
+         endingLineNumber = "437"
+         landmarkName = "-textField:shouldChangeCharactersInRange:replacementString:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "BayTrade/BT_TradeViewController.m"
+         timestampString = "400569019.792647"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "427"
+         endingLineNumber = "427"
+         landmarkName = "-searchAutocompleteEntriesWithSubstring:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "BayTrade/BT_TradeViewController.m"
+         timestampString = "400569015.231941"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "423"
+         endingLineNumber = "423"
+         landmarkName = "-searchAutocompleteEntriesWithSubstring:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
