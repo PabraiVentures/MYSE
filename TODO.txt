@@ -34,13 +34,10 @@
 (_)homeviewcontroller - stocks you own the most of
 (_)homeviewcontroller - account performance over time
 (_)merge cache with coremodel.m
-<<<<<<< HEAD
 (X)remove redundant setCoreModel calls
 (X)portfolio view - collection view
 (X)portfolio view - merge detail view into portfolio subview
 (_)portfolio view - asynchronous to avoid lag
 (_)portfolio view - refresh tiles
 (X)fix - buying power updated for last trade
-=======
-(_)finish rankings
->>>>>>> a9c46adeb28b8458bb15286a73cef3aa6931452e
+(_)rankings server code
