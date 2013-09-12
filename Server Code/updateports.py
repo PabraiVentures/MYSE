@@ -86,8 +86,8 @@ try:
 	print "--------------"
 	print portfolios
 	print ""
-	rankings={}#key=porfolioID, value= totalportfoliovalue
-	histforport={}   
+        rankings={}#key=porfolioID, value= totalportfoliovalue
+        
 	for port in portfolios:
 		#for each portfolio
         #calculate the current portfoliov value
@@ -99,19 +99,8 @@ try:
 		hist=json.loads(port['portfoliohistory'])
 		hist[time.strftime('%m-%d-%Y')]=total
 		histjson=json.dumps(hist)
+		body={"totalportfoliovalue":total , "portfoliohistory":histjson}
 		
-		
-		body1={"value":total, "portfolio":port['coreportfolio_id'], "sm_owner":port['sm_owner']}
-		string2="coreportfoliohistory"
-		corehist= json.loads(client._execute(1,"POST",string2,body1).read())
-		
-		#build table of portf and portfhistory to link together later
-		#body={"totalportfoliovalue":total , "portfoliohistory":histjson}
-		body={"totalportfoliovalue":total}
-		histforport[ corehist[u'coreportfoliohistory_id']]=port['coreportfolio_id']
-		print corehist[u'coreportfoliohistory_id']
-		print "^^^^^^^"
-		print "^"
 		rankings[port['coreportfolio_id']]=total #add data into rankings
 		
 		string1="coreportfolio/"+port['coreportfolio_id']
@@ -128,8 +117,3 @@ for i in sortedrankings:
 	string1="coreportfolio/"+i
 	client._execute(1,"PUT",string1,body).read()
 	rank=rank+1
-	
-for keys in histforport:
-	body={"history":keys}
-	string="coreportfolio/"+histforport[keys]
-	client._execute(1,"PUT",string,body).read()
