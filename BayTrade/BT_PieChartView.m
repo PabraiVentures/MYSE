@@ -63,6 +63,9 @@
         
         CGFloat standardRadius = 100;
         CGFloat radius = standardRadius*relativePrice;
+        if (relativePrice > 1){
+            radius = standardRadius*(1+(log(relativePrice)/log(1.2)));//equation to slightly exaggerate positive gains for better visualization
+        }
 
         //draw arc
         //CGPoint center = CGPointMake(standardRadius+10,standardRadius+10);
