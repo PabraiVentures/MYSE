@@ -14,6 +14,7 @@
 		525122BA17DF9D7700A8782B /* greenArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 525122B817DF9D7700A8782B /* greenArrow.png */; };
 		525122BB17DF9D7700A8782B /* redArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 525122B917DF9D7700A8782B /* redArrow.png */; };
 		525122BE17E0227200A8782B /* BT_PortfolioTileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 525122BD17E0226F00A8782B /* BT_PortfolioTileViewController.m */; };
+		525122C117E16C3200A8782B /* BT_RankingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 525122C017E16C3000A8782B /* BT_RankingsViewController.m */; };
 		7D06431D17BAE70800889177 /* BT_LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D06431C17BAE70800889177 /* BT_LoginViewController.m */; };
 		7DF8F95717BC7F91005553A1 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DF8F95617BC7F91005553A1 /* User.m */; };
 		9307A2EE17A43E6B00E647DF /* wallpaper.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9307A2ED17A43E6B00E647DF /* wallpaper.jpg */; };
@@ -77,6 +78,8 @@
 		525122B917DF9D7700A8782B /* redArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redArrow.png; sourceTree = "<group>"; };
 		525122BC17E0226D00A8782B /* BT_PortfolioTileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BT_PortfolioTileViewController.h; sourceTree = "<group>"; };
 		525122BD17E0226F00A8782B /* BT_PortfolioTileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BT_PortfolioTileViewController.m; sourceTree = "<group>"; };
+		525122BF17E16C2F00A8782B /* BT_RankingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BT_RankingsViewController.h; sourceTree = "<group>"; };
+		525122C017E16C3000A8782B /* BT_RankingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BT_RankingsViewController.m; sourceTree = "<group>"; };
 		7D06431B17BAE70800889177 /* BT_LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BT_LoginViewController.h; sourceTree = "<group>"; };
 		7D06431C17BAE70800889177 /* BT_LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BT_LoginViewController.m; sourceTree = "<group>"; };
 		7DF8F95417BC5CC7005553A1 /* BT_AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BT_AppDelegate.h; sourceTree = "<group>"; };
@@ -248,6 +251,8 @@
 				93E19FC217A36492000D60B5 /* BT_TabBarController.m */,
 				93E19F9D17A36420000D60B5 /* BT_TradeViewController.h */,
 				93E19F9E17A36420000D60B5 /* BT_TradeViewController.m */,
+				525122BF17E16C2F00A8782B /* BT_RankingsViewController.h */,
+				525122C017E16C3000A8782B /* BT_RankingsViewController.m */,
 				7D06431B17BAE70800889177 /* BT_LoginViewController.h */,
 				7D06431C17BAE70800889177 /* BT_LoginViewController.m */,
 				93E19F9617A36420000D60B5 /* BT_HomeViewController.h */,
@@ -577,6 +582,7 @@
 				7D06431D17BAE70800889177 /* BT_LoginViewController.m in Sources */,
 				525122B717DF960900A8782B /* BT_TickerView.m in Sources */,
 				525122BE17E0227200A8782B /* BT_PortfolioTileViewController.m in Sources */,
+				525122C117E16C3200A8782B /* BT_RankingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
