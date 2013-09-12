@@ -42,3 +42,6 @@
 (_)load all data upon app open before loading any views
 (_)failsafe for all YQL calls
 (_)open price N/A workaround
+(_)show how much of stock you can buy
+(_)pie chart drawing
+(_)fb pics of friends on rankings
