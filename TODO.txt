@@ -28,7 +28,7 @@
 (_)homeviewcontroller - change in ranking today
 (X)homeviewcontroller - ticker scrolling view
 (_)homeviewcontroller - total stocks value
-(_)homeviewcontroller - stocks you own the most of
+(X)homeviewcontroller - stocks you own the most of
 (_)homeviewcontroller - account performance over time
 (_)merge cache with coremodel.m
 (X)remove redundant setCoreModel calls
@@ -41,4 +41,11 @@
 (_)rankings server code
 (_)load all data upon app open before loading any views
 (_)failsafe for all YQL calls
+<<<<<<< HEAD
 (_)open price N/A workaround
+=======
+(_)open price N/A workaround
+(_)show how much of stock you can buy
+(X)pie chart drawing
+(_)fb pics of friends on rankings
+>>>>>>> 6be720479c471eb031866f417d3949056d93fd82

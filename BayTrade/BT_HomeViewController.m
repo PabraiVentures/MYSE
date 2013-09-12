@@ -17,13 +17,18 @@
 @end
 
 @implementation BT_HomeViewController
-@synthesize userCache, welcomeLabel, tickerView;
+@synthesize userCache, welcomeLabel, tickerView, pieChart;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     //Take the TabBarController's model
     self.userCache=((BT_TabBarController*)(self.tabBarController)).userModel;
+    
+    [self.pieChart setUserCache:self.userCache];
+    [self.pieChart setStocks:[self.userCache.coreModel.portfolio.stocks allObjects]];
+    [self.pieChart calculateCurrentPrices];
+    [self.pieChart setNeedsDisplay];
     
     [self.tickerView loadTickerData];
     [self.tickerView reloadData];
