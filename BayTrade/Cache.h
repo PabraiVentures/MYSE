@@ -16,6 +16,7 @@
 @interface Cache : NSObject
 
 @property (nonatomic, retain) NSMutableArray* eventArray;
+@property (nonatomic, retain) NSMutableArray* tickerArray;
 @property (nonatomic, retain) NSString* userID;
 @property (nonatomic, retain) CoreModel* coreModel;
 

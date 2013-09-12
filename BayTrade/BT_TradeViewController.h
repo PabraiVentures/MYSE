@@ -29,7 +29,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *investorName;
 
 @property (nonatomic, retain) NSMutableArray *autocompleteSuggestions;
-@property (nonatomic, retain) NSMutableArray *autocompleteSymbols;
 @property (nonatomic, retain) UITableView *autocompleteTableView;
 
 - (IBAction)buyButtonClicked:(id)sender;

@@ -269,7 +269,7 @@
                                 </connections>
                             </collectionView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Buy a stock to see its details here!" id="0La-0Q-hpo">
-                                <rect key="frame" x="20" y="122" width="280" height="181"/>
+                                <rect key="frame" x="20" y="122" width="280" height="170"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
@@ -395,6 +395,66 @@
         <image name="login_unpressed.png" width="150" height="22"/>
         <image name="wallpaper.jpg" width="1024" height="1024"/>
     </resources>
+    <classes>
+        <class className="BT_HistoryViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BT_HistoryViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="historyTable" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="BT_HomeViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BT_HomeViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="tickerView" candidateClass="BT_TickerView"/>
+                <relationship kind="outlet" name="welcomeLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="BT_LoginViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BT_LoginViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="loginButtonPressed:"/>
+                <relationship kind="outlet" name="loginButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="statusText" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="BT_PortfolioTileViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BT_PortfolioTileViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="chartImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="detailLabel" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="tileView" candidateClass="UICollectionView"/>
+            </relationships>
+        </class>
+        <class className="BT_TabBarController" superclassName="UITabBarController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BT_TabBarController.h"/>
+        </class>
+        <class className="BT_TickerView" superclassName="UIScrollView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BT_TickerView.h"/>
+        </class>
+        <class className="BT_TradeViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BT_TradeViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="buyButtonClicked:"/>
+                <relationship kind="action" name="logoutButtonClicked:"/>
+                <relationship kind="action" name="sellButtonClicked:"/>
+                <relationship kind="outlet" name="amountField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="cashDisplay" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="investorName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="profilePic" candidateClass="FBProfilePictureView"/>
+                <relationship kind="outlet" name="symbolField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="valueDisplay" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="UICollectionReusableView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
+        </class>
+        <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
+        </class>
+        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

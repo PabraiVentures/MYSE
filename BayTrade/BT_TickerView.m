@@ -104,7 +104,8 @@ static UIFont *detailFont = nil;
     NSLog(@"loading ticker data");
     self.tickerItems = [[NSMutableArray alloc] init];
         
-    NSArray *tickers = [NSArray arrayWithObjects:@"AAPL", @"GOOG", @"MSFT", @"BA", @"F", nil];
+    NSMutableArray *tickers = [NSArray arrayWithObjects:@"AAPL", @"GOOG", @"MSFT", @"BA", @"F", nil];
+    //tickers addObjectsFromArray:
     
     for (NSString *ticker in tickers) {
         NSMutableDictionary *example = [[NSMutableDictionary alloc] init];

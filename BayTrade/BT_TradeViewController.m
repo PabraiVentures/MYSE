@@ -24,8 +24,14 @@
 
 @implementation BT_TradeViewController
 @synthesize managedObjectContext;
+@synthesize symbolField;
 @synthesize loggedInUser = _loggedInUser;
 @synthesize profilePic = _profilePic;
+
+
+
+@synthesize autocompleteSuggestions;
+@synthesize autocompleteTableView;
 
 - (void) viewDidLoad
 {
@@ -48,9 +54,17 @@
     
     [self.view addGestureRecognizer:tap];
     [self performSelector:@selector(setCoreModel) withObject:nil afterDelay:0.5];
-    
-    self.autocompleteSymbols = [[NSMutableArray alloc] initWithObjects:@"AAPL", @"GOOG", @"CSCO", @"IBM", @"YHOO", @"A",@"F", nil];
+        
+    //self.pastUrls = [[NSMutableArray alloc] initWithObjects:@"AAPL", @"GOOG", @"CSCO", @"IBM", @"YHOO", @"A",@"F", nil];
     self.autocompleteSuggestions = [[NSMutableArray alloc] init];
+    
+    autocompleteTableView = [[UITableView alloc] initWithFrame:CGRectMake(215, 100, 100, 120) style:UITableViewStylePlain];
+    autocompleteTableView.delegate = self;
+    autocompleteTableView.dataSource = self;
+    autocompleteTableView.scrollEnabled = YES;
+    autocompleteTableView.hidden = YES;
+    [self.view addSubview:autocompleteTableView];
+
 }
 
 - (void) dismissKeyboard
@@ -415,33 +429,40 @@
 
 - (void)searchAutocompleteEntriesWithSubstring:(NSString *)substring {
     
-    // Put anything that starts with this substring into the autocompleteSuggestions array
+    // Put anything that starts with this substring into the autocompleteUrls array
     // The items in this array is what will show up in the table view
-    [self.autocompleteSuggestions removeAllObjects];
-    for(NSString *curString in self.autocompleteSymbols) {
+    [autocompleteSuggestions removeAllObjects];
+    for(NSString *curString in self.userCache.tickerArray) {
         NSRange substringRange = [curString rangeOfString:substring];
         if (substringRange.location == 0) {
-            [self.autocompleteSuggestions addObject:curString];
+            [autocompleteSuggestions addObject:curString];
         }
     }
-    [self.autocompleteTableView reloadData];
+    [autocompleteTableView reloadData];
 }
 
 #pragma mark UITextFieldDelegate methods
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    self.autocompleteTableView.hidden = NO;
-    
-    NSString *substring = [NSString stringWithString:textField.text];
-    substring = [substring stringByReplacingCharactersInRange:range withString:string];
-    [self searchAutocompleteEntriesWithSubstring:substring];
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if(textField == symbolField)
+    {
+        autocompleteTableView.hidden = NO;
+        NSString *substring = [NSString stringWithString:textField.text];
+        substring = [substring stringByReplacingCharactersInRange:range withString:string];
+        [self searchAutocompleteEntriesWithSubstring:substring];
+        
+    }
+    else
+    {
+        autocompleteTableView.hidden = YES;
+    }
     return YES;
 }
 
 #pragma mark UITableViewDataSource methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger) section {
-    return self.autocompleteSymbols.count;
+    return autocompleteSuggestions.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -450,11 +471,10 @@
     static NSString *AutoCompleteRowIdentifier = @"AutoCompleteRowIdentifier";
     cell = [tableView dequeueReusableCellWithIdentifier:AutoCompleteRowIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc]
-                 initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AutoCompleteRowIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AutoCompleteRowIdentifier];
     }
     
-    cell.textLabel.text = [self.autocompleteSuggestions objectAtIndex:indexPath.row];
+    cell.textLabel.text = [autocompleteSuggestions objectAtIndex:indexPath.row];
     return cell;
 }
 
@@ -463,11 +483,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
-    self.symbolField.text = selectedCell.textLabel.text;
-   
+    symbolField.text = selectedCell.textLabel.text;
+    autocompleteTableView.hidden = YES;
     
-}
 
+}
 
 
 
