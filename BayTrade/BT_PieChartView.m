@@ -74,16 +74,24 @@
         [arc addArcWithCenter:center radius:radius startAngle:starttime endAngle:endtime clockwise:YES]; //add the arc
         [arc addLineToPoint:center]; //back to center
         
-        //CGFloat red =  (CGFloat)arc4random() / (CGFloat)RAND_MAX;
-        //CGFloat blue = (CGFloat)arc4random() / (CGFloat)RAND_MAX;
-        //CGFloat green = (CGFloat)arc4random() / (CGFloat)RAND_MAX;
-        
-        //UIColor *color = [UIColor colorWithRed:red green:green blue:blue alpha:1.0];
-        //[color set];
         UIColor *randomcolor = [UIColor numberedFlatColor:x];
         [randomcolor set];
         [arc fill];
     }
+    //rest is CASH
+    int radius = 100;
+    CGPoint center = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+    UIBezierPath *arc = [UIBezierPath bezierPath]; //empty path
+    [arc moveToPoint:center];
+    CGPoint next;
+    next.x = center.x + radius * cos(currentTime);
+    next.y = center.y + radius * sin(currentTime);
+    [arc addLineToPoint:next]; //go one end of arc
+    [arc addArcWithCenter:center radius:radius startAngle:currentTime endAngle:0 clockwise:YES]; //add the arc
+    [arc addLineToPoint:center]; //back to center
+    UIColor *randomcolor = [UIColor flatGreenColor];
+    [randomcolor set];
+    [arc fill];
 }
 
 @end

@@ -157,63 +157,60 @@
             color = [UIColor flatRedColor];
             break;
         case 1:
-            color = [UIColor flatGreenColor];
-            break;
-        case 2:
             color = [UIColor flatBlueColor];
             break;
-        case 3:
+        case 2:
             color = [UIColor flatTealColor];
             break;
-        case 4:
+        case 3:
             color = [UIColor flatPurpleColor];
             break;
-        case 5:
+        case 4:
             color = [UIColor flatYellowColor];
             break;
-        case 6:
+        case 5:
             color = [UIColor flatOrangeColor];
             break;
-        case 7:
+        case 6:
             color = [UIColor flatGrayColor];
             break;
-        case 8:
+        case 7:
             color = [UIColor flatWhiteColor];
             break;
-        case 9:
+        case 8:
             color = [UIColor flatBlackColor];
             break;
-        case 10:
+        case 9:
             color = [UIColor flatDarkRedColor];
             break;
-        case 11:
+        case 10:
             color = [UIColor flatDarkGreenColor];
             break;
-        case 12:
+        case 11:
             color = [UIColor flatDarkBlueColor];
             break;
-        case 13:
+        case 12:
             color = [UIColor flatDarkTealColor];
             break;
-        case 14:
+        case 13:
             color = [UIColor flatDarkPurpleColor];
             break;
-        case 15:
+        case 14:
             color = [UIColor flatDarkYellowColor];
             break;
-        case 16:
+        case 15:
             color = [UIColor flatDarkOrangeColor];
             break;
-        case 17:
+        case 16:
             color = [UIColor flatDarkGrayColor];
             break;
-        case 18:
+        case 17:
             color = [UIColor flatDarkWhiteColor];
             break;
-        case 19:
+        case 18:
             color = [UIColor flatDarkBlackColor];
             break;
-        case 20:
+        case 19:
         default:
             return [UIColor randomFlatColor];
             break;

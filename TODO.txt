@@ -47,3 +47,4 @@
 (_)open price N/A workaround (midnight issue)
 (_)portfolio ranking history accessible from iOS
 (_)new table of user_id and ranking
+(_)label pie chart

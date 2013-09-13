@@ -166,7 +166,7 @@
 -(void)setProgressStatus:(NSNumber*)percentDone
 {
     NSLog(@"changing indicator to %@", percentDone);
-    [progressIndicator setProgress:[percentDone floatValue]];
+    [progressIndicator setProgress:[percentDone floatValue] animated:YES];
 }
 
 @end
