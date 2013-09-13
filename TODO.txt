@@ -34,24 +34,16 @@
 (X)remove redundant setCoreModel calls
 (X)portfolio view - collection view
 (X)portfolio view - merge detail view into portfolio subview
-(_)portfolio view - asynchronous to avoid lag
+(X)portfolio view - asynchronous to avoid lag
 (_)portfolio view - refresh tiles
 (_)portfolio detail view - buy/sell option
 (X)fix - buying power updated for last trade
 (_)rankings server code
-(_)load all data upon app open before loading any views
+(X)splash screen - load all data upon app open before loading any views
 (_)failsafe for all YQL calls
-<<<<<<< HEAD
-<<<<<<< HEAD
-(_)open price N/A workaround
-=======
-(_)open price N/A workaround
 (_)show how much of stock you can buy
 (X)pie chart drawing
 (_)fb pics of friends on rankings
->>>>>>> 6be720479c471eb031866f417d3949056d93fd82
-=======
-(_)open price N/A workaround
+(_)open price N/A workaround (midnight issue)
 (_)portfolio ranking history accessible from iOS
 (_)new table of user_id and ranking
->>>>>>> parent of bdc8eb6... Revert "updateports/todo updated"
