@@ -9,7 +9,7 @@
 #import "BT_PortfolioTileViewController.h"
 #import "Controller.h"
 #import "CoreStock.h"
-#import "BT_TabBarController.h"
+#import "BT_AppDelegate.h"
 
 #define kTagSymbolLabel 50
 
@@ -37,7 +37,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    self.userCache=((BT_TabBarController*)(self.tabBarController)).userModel;
+    self.userCache=[((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) userCache];
     self.stocks = [self.userCache.coreModel.portfolio.stocks allObjects];
     [self calculateCurrentPrices];
     if (self.stocks.count >= 1)
@@ -52,10 +52,13 @@
 
 -(void)calculateCurrentPrices
 {
-    self.currentPrices = [[NSMutableArray alloc] init];
-    for (CoreStock *stock in self.stocks) {
-        [self.currentPrices addObject:[Controller fetchQuotesFor:[NSArray arrayWithObject:stock.symbol]]];
-    }
+    self.currentPrices = [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) currentStockPrices];
+
+    //remove once splash screen is complete
+//    self.currentPrices = [[NSMutableArray alloc] init];
+//    for (CoreStock *stock in self.stocks) {
+//        [self.currentPrices addObject:[Controller fetchQuotesFor:[NSArray arrayWithObject:stock.symbol]]];
+//    }
 }
 
 -(UIColor *) colorForIndex: (int)index

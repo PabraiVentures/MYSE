@@ -16,6 +16,9 @@
 		525122BE17E0227200A8782B /* BT_PortfolioTileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 525122BD17E0226F00A8782B /* BT_PortfolioTileViewController.m */; };
 		525122C117E16C3200A8782B /* BT_RankingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 525122C017E16C3000A8782B /* BT_RankingsViewController.m */; };
 		525122C417E1FD3F00A8782B /* BT_PieChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 525122C317E1FD3C00A8782B /* BT_PieChartView.m */; };
+		528E8BA317E379B7006E21FB /* UIColor+BTFlatColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 528E8BA217E379B7006E21FB /* UIColor+BTFlatColors.m */; };
+		528E8BA417E37BD2006E21FB /* UIColor+BTFlatColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 528E8BA217E379B7006E21FB /* UIColor+BTFlatColors.m */; };
+		52D23B9917E25031000B6335 /* BT_SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D23B9817E25031000B6335 /* BT_SplashViewController.m */; };
 		7D06431D17BAE70800889177 /* BT_LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D06431C17BAE70800889177 /* BT_LoginViewController.m */; };
 		7DF8F95717BC7F91005553A1 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DF8F95617BC7F91005553A1 /* User.m */; };
 		9307A2EE17A43E6B00E647DF /* wallpaper.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9307A2ED17A43E6B00E647DF /* wallpaper.jpg */; };
@@ -83,6 +86,10 @@
 		525122C017E16C3000A8782B /* BT_RankingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BT_RankingsViewController.m; sourceTree = "<group>"; };
 		525122C217E1FD3B00A8782B /* BT_PieChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BT_PieChartView.h; sourceTree = "<group>"; };
 		525122C317E1FD3C00A8782B /* BT_PieChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BT_PieChartView.m; sourceTree = "<group>"; };
+		528E8BA117E379B7006E21FB /* UIColor+BTFlatColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+BTFlatColors.h"; path = "BayTradeTests/UIColor+BTFlatColors.h"; sourceTree = SOURCE_ROOT; };
+		528E8BA217E379B7006E21FB /* UIColor+BTFlatColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+BTFlatColors.m"; path = "BayTradeTests/UIColor+BTFlatColors.m"; sourceTree = SOURCE_ROOT; };
+		52D23B9717E25031000B6335 /* BT_SplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BT_SplashViewController.h; sourceTree = "<group>"; };
+		52D23B9817E25031000B6335 /* BT_SplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BT_SplashViewController.m; sourceTree = "<group>"; };
 		7D06431B17BAE70800889177 /* BT_LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BT_LoginViewController.h; sourceTree = "<group>"; };
 		7D06431C17BAE70800889177 /* BT_LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BT_LoginViewController.m; sourceTree = "<group>"; };
 		7DF8F95417BC5CC7005553A1 /* BT_AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BT_AppDelegate.h; sourceTree = "<group>"; };
@@ -248,6 +255,8 @@
 		525122A217D7757300A8782B /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				52D23B9717E25031000B6335 /* BT_SplashViewController.h */,
+				52D23B9817E25031000B6335 /* BT_SplashViewController.m */,
 				525122BC17E0226D00A8782B /* BT_PortfolioTileViewController.h */,
 				525122BD17E0226F00A8782B /* BT_PortfolioTileViewController.m */,
 				93E19FC117A36492000D60B5 /* BT_TabBarController.h */,
@@ -422,6 +431,8 @@
 			isa = PBXGroup;
 			children = (
 				525122A117D7755500A8782B /* Images */,
+				528E8BA117E379B7006E21FB /* UIColor+BTFlatColors.h */,
+				528E8BA217E379B7006E21FB /* UIColor+BTFlatColors.m */,
 				93E19F8317A36420000D60B5 /* BayTrade-Info.plist */,
 				93E19F8417A36420000D60B5 /* InfoPlist.strings */,
 				93E19F8717A36420000D60B5 /* main.m */,
@@ -571,6 +582,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				528E8BA417E37BD2006E21FB /* UIColor+BTFlatColors.m in Sources */,
 				93E19F8817A36420000D60B5 /* main.m in Sources */,
 				93E19F8C17A36420000D60B5 /* BT_AppDelegate.m in Sources */,
 				93E19F9817A36420000D60B5 /* BT_HomeViewController.m in Sources */,
@@ -589,6 +601,7 @@
 				525122BE17E0227200A8782B /* BT_PortfolioTileViewController.m in Sources */,
 				525122C117E16C3200A8782B /* BT_RankingsViewController.m in Sources */,
 				525122C417E1FD3F00A8782B /* BT_PieChartView.m in Sources */,
+				52D23B9917E25031000B6335 /* BT_SplashViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -598,6 +611,7 @@
 			files = (
 				93E19FB817A36420000D60B5 /* BayTradeTests.m in Sources */,
 				7DF8F95717BC7F91005553A1 /* User.m in Sources */,
+				528E8BA317E379B7006E21FB /* UIColor+BTFlatColors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

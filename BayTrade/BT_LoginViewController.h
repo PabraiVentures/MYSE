@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
-@interface BT_LoginViewController : UIViewController {
+@interface BT_LoginViewController : UIViewController <UIAlertViewDelegate> {
     NSString *token;
 }
 

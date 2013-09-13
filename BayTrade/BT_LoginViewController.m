@@ -93,6 +93,8 @@
             
         } onFailure:^(NSError *error) {
             NSLog(@"Error in UpdateView: %@", error);
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Error" message:@"We could not connect to the internet. Please check your internet connection and try again later." delegate:self cancelButtonTitle:@"Exit" otherButtonTitles: nil];
+            [alert show];
         }];
     } else {
         NSLog(@"fbsession session isn't open");
@@ -100,6 +102,11 @@
         [self.loginButton setTitle:@"Log in" forState:UIControlStateNormal];
         [self.statusText setText:@"Login to create a link to fetch account data"];
     }
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    exit(5);
 }
 
 //Saves user_id to defaults plist

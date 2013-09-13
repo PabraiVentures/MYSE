@@ -8,6 +8,7 @@
 
 #import "BT_TickerView.h"
 #import "Controller.h"
+#import "BT_AppDelegate.h"
 #define kMaxWidth 200
 
 /**Single Stock View**/
@@ -99,39 +100,9 @@ static UIFont *detailFont = nil;
     self.showsVerticalScrollIndicator = NO;
 }
 
--(void) loadTickerData
+-(void)loadTickerData
 {
-    NSLog(@"loading ticker data");
-    self.tickerItems = [[NSMutableArray alloc] init];
-        
-    NSArray *tickers = [NSArray arrayWithObjects:@"AAPL", @"GOOG", @"MSFT", @"BA", @"F", nil];
-    
-    for (NSString *ticker in tickers) {
-        NSMutableDictionary *example = [[NSMutableDictionary alloc] init];
-        [example setObject:ticker forKey:@"Symbol"];
-        
-        NSArray *stock = [NSArray arrayWithObjects: ticker, nil];
-        NSDictionary *realtimeData = [Controller fetchQuotesFor:stock];
-        bool isUp = FALSE;
-        double lastPrice, openPrice;
-        
-        @try {
-            lastPrice = [realtimeData[@"LastTradePriceOnly"] doubleValue];
-            openPrice = [realtimeData[@"Open"] doubleValue];
-        }
-        @catch (NSException *exception) {
-            NSLog(@"error fetching YQL quotes.");
-            lastPrice = -1.0;
-            openPrice = -1.0;
-        }
-        double changeInPercent = (lastPrice / openPrice - 1.0) * 100.0;
-        
-        if (changeInPercent >= 0) isUp = TRUE;
-        [example setObject:[NSNumber numberWithBool:isUp] forKey:@"Positive"];
-        [example setObject:[NSNumber numberWithDouble:changeInPercent] forKey:@"PercentChange"];
-        [example setObject:realtimeData[@"LastTradePriceOnly"] forKey:@"CurrentPrice"];
-        [self.tickerItems addObject:example];
-    }
+    self.tickerItems = [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) tickerItems];
 }
 
 -(void) reloadData
@@ -197,7 +168,6 @@ static UIFont *detailFont = nil;
 
 - (int) numberOfItemsForTickerView
 {
-    NSLog(@"num items called");
     return [self.tickerItems count];
 }
 

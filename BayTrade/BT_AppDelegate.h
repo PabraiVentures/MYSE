@@ -11,6 +11,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "BT_LoginViewController.h"
 #import "CoreStock.h"
+#import "Cache.h"
 
 @class SMCoreDataStore;
 @class SMClient;
@@ -22,6 +23,9 @@
 @property (strong, nonatomic) SMCoreDataStore *coreDataStore;
 @property (strong, nonatomic) SMClient *client;
 @property (strong, nonatomic) BT_LoginViewController *loginView;
+@property (strong, nonatomic) Cache *userCache;
+@property (strong, nonatomic) NSMutableArray *currentStockPrices;
+@property (strong, nonatomic) NSMutableArray *tickerItems;
 
 @property (strong, nonatomic) CoreStock *selectedPortfolioStock;
 

@@ -5,12 +5,11 @@
 //  Created by Nathan Pabrai on 7/26/13.
 //  Copyright (c) 2013 byteNsell. All rights reserved.
 //
-#import "BT_TabBarController.h"
 #import "BT_HomeViewController.h"
-#import "BT_TabBarController.h"
 #import "Cache.h"
 #import <QuartzCore/QuartzCore.h>
 #import "CoreStock.h"
+#import "BT_AppDelegate.h"
 
 @interface BT_HomeViewController ()
 
@@ -23,7 +22,7 @@
 {
     [super viewDidLoad];
     //Take the TabBarController's model
-    self.userCache=((BT_TabBarController*)(self.tabBarController)).userModel;
+    self.userCache=[((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) userCache];
     
     [self.pieChart setUserCache:self.userCache];
     [self.pieChart setStocks:[self.userCache.coreModel.portfolio.stocks allObjects]];

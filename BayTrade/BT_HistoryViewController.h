@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "Cache.h"
-#import "BT_TabBarController.h"
 #import "BT_HistoryViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "CoreModel.h"

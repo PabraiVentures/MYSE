@@ -30,7 +30,7 @@
 - (void) viewDidLoad
 {
     [super viewDidLoad];
-    self.userCache=((BT_TabBarController*)(self.tabBarController)).userModel;
+    self.userCache=[((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) userCache];
     
     // Create Login View so that the app will be granted "status_update" permission. 
     FBLoginView *loginview = [[FBLoginView alloc] init];
@@ -47,7 +47,10 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     
     [self.view addGestureRecognizer:tap];
-    [self performSelector:@selector(setCoreModel) withObject:nil afterDelay:0.5];
+    
+    //[self performSelector:@selector(setCoreModel) withObject:nil afterDelay:0.5];
+    [self updateBuyPower];
+    [self updateValue];
     
     self.autocompleteSymbols = [[NSMutableArray alloc] initWithObjects:@"AAPL", @"GOOG", @"CSCO", @"IBM", @"YHOO", @"A",@"F", nil];
     self.autocompleteSuggestions = [[NSMutableArray alloc] init];
@@ -266,7 +269,7 @@
     //get the model, update and send back to stackmob
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CoreModel"];
     // query for coremodel for THIS user
-    NSString* getRightUser = [NSString stringWithFormat:@"user == '%@'",self.userCache.userID ];
+    NSString* getRightUser = [NSString stringWithFormat:@"user == '%@'",self.userCache.userID];
     [fetchRequest setPredicate:[NSPredicate predicateWithFormat:getRightUser]];
     
     /**********START CODE BLOCK FOR REQUEST ACTION************/
@@ -324,9 +327,6 @@
 
 - (IBAction)sellButtonClicked:(id)sender
 {
-    //assign self.userModel.coreModel to the StackMob coreModel
-    //[self setCoreModel];
-    
     NSInteger amount;
     if([self.amountField.text length] > 0)
         amount = [self.amountField.text intValue];
@@ -467,10 +467,5 @@
    
     
 }
-
-
-
-
-
 
 @end

@@ -8,6 +8,8 @@
 
 #import "BT_HistoryViewController.h"
 #import "CoreTradeEvent.h"
+#import "BT_AppDelegate.h"
+
 @interface BT_HistoryViewController ()
 
 @end
@@ -30,7 +32,7 @@
     [super viewDidLoad];
     //get the object context to work with stackmob data
     self.managedObjectContext = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
-    self.userCache=((BT_TabBarController*)(self.tabBarController)).userModel;
+    self.userCache=[((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) userCache];
 }
 
 - (void)didReceiveMemoryWarning

@@ -14,7 +14,6 @@
 @end
 
 @implementation BT_TabBarController
-@synthesize userModel;
 @synthesize managedObjectContext;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -29,9 +28,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.userModel = [[Cache alloc] init];
-    NSUserDefaults  *defaults=[NSUserDefaults standardUserDefaults];
-    self.userModel.userID = [defaults objectForKey:@"userID"];
+    //self.userModel = [[Cache alloc] init];
+    //NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    //self.userModel.userID = [defaults objectForKey:@"userID"];
 }
 
 @end

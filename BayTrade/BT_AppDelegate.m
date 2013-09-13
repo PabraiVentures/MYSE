@@ -33,6 +33,10 @@
     //STACKMOB CORE DATA STORE initialization
     self.coreDataStore = [self.client coreDataStoreWithManagedObjectModel:self.managedObjectModel];
     self.client.userPrimaryKeyField = @"user_id";
+    
+    self.userCache = [[Cache alloc] init]; //TODO should this be here?
+    self.userCache.userID = [[NSUserDefaults standardUserDefaults] objectForKey:@"userID"];
+    NSLog(@"did finish launching with options");
     return YES;
 }
 
