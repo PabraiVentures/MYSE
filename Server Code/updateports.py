@@ -110,8 +110,7 @@ try:
 		body={"totalportfoliovalue":total}
 		histforport[ corehist[u'coreportfoliohistory_id']]=port['coreportfolio_id']
 		print corehist[u'coreportfoliohistory_id']
-		print "^^^^^^^"
-		print "^"
+	
 		rankings[port['coreportfolio_id']]=total #add data into rankings
 		
 		string1="coreportfolio/"+port['coreportfolio_id']
@@ -129,7 +128,7 @@ for i in sortedrankings:
 	client._execute(1,"PUT",string1,body).read()
 	rank=rank+1
 	
-for keys in histforport:
-	body={"history":keys}
-	string="coreportfolio/"+histforport[keys]
-	client._execute(1,"PUT",string,body).read()
+#for keys in histforport:
+#	body={"history":keys}
+#	string="coreportfolio/"+histforport[keys]
+#	client._execute(1,"PUT",string,body).read()
