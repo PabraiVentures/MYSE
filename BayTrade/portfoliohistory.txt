@@ -1,7 +1,5 @@
 Use the following in any of the viewcontrollers containing the cache to download all the portfolio histories for a user:
 
-
-
 NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CorePortfolioHistory"];
 // query for coremodel for THIS user
 NSString* getRightHist = [NSString stringWithFormat:@"coreportfoliohistory_id == '%@'",self.userCache.userID];

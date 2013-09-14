@@ -30,7 +30,6 @@
     </entity>
     <entity name="CoreTradeEvent" syncable="YES">
         <attribute name="actionid" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="attribute" optional="YES" syncable="YES"/>
         <attribute name="coretradeevent_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="ticker" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="String" syncable="YES"/>
@@ -45,9 +44,9 @@
     <elements>
         <element name="CoreModel" positionX="-56" positionY="3" width="128" height="105"/>
         <element name="CorePortfolio" positionX="259" positionY="-30" width="128" height="150"/>
-        <element name="CoreStock" positionX="0" positionY="-243" width="128" height="120"/>
-        <element name="CoreTradeEvent" positionX="-227" positionY="-141" width="128" height="165"/>
-        <element name="User" positionX="241" positionY="-162" width="128" height="75"/>
         <element name="CorePortfolioHistory" positionX="160" positionY="192" width="128" height="105"/>
+        <element name="CoreStock" positionX="0" positionY="-243" width="128" height="120"/>
+        <element name="CoreTradeEvent" positionX="-227" positionY="-141" width="128" height="150"/>
+        <element name="User" positionX="241" positionY="-162" width="128" height="75"/>
     </elements>
 </model>

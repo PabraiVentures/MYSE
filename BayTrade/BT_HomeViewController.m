@@ -10,6 +10,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "CoreStock.h"
 #import "BT_AppDelegate.h"
+#import "StackMob.h"
+#import "CorePortfolioHistory.h"
 
 @interface BT_HomeViewController ()
 
@@ -41,7 +43,9 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    self.managedObjectContext = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
     [self loadWelcomeLabel];
+    [self loadChangeInRank];
 }
 
 -(void) loadWelcomeLabel
@@ -52,5 +56,21 @@
         [welcomeLabel setText: [NSString stringWithFormat: @"Welcome, %@!", userName]];
     }
 }
+
+//-(void) loadChangeInValue
+//{
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CorePortfolioHistory"];
+//    // query for coremodel for THIS user
+//    NSString* getRightHist = [NSString stringWithFormat:@"sm_owner == 'user/%@'",self.userCache.userID];
+//    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:getRightHist]];
+//    
+//    /**********START CODE BLOCK FOR REQUEST ACTION************/
+//    [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {
+//        CorePortfolioHistory *yesterdayHist = [results objectAtIndex:0];
+//        NSLog(@"results: %@", yesterdayHist);
+//    } onFailure:^(NSError *error) {
+//        NSLog(@"There was an error! %@", error);
+//    }];
+//}
 
 @end
