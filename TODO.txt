@@ -48,3 +48,4 @@
 (_)portfolio ranking history accessible from iOS
 (_)new table of user_id and ranking
 (_)label pie chart
+(_)graph account rank & portfolio value over time in homeview
