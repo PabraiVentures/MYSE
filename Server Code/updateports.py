@@ -108,7 +108,7 @@ try:
 		#build table of portf and portfhistory to link together later
 		#body={"totalportfoliovalue":total , "portfoliohistory":histjson}
 		body={"totalportfoliovalue":total}
-		histforport[ corehist[u'coreportfoliohistory_id']]=port['coreportfolio_id']
+		histforport[port['coreportfolio_id'] ]=corehist[u'coreportfoliohistory_id']
 		print corehist[u'coreportfoliohistory_id']
 	
 		rankings[port['coreportfolio_id']]=total #add data into rankings
@@ -122,13 +122,21 @@ except :
 sortedrankings=sorted(rankings)
 print sortedrankings
 rank=1
+
 for i in sortedrankings:
 	body={"ranking":rank}
 	string1="coreportfolio/"+i
 	client._execute(1,"PUT",string1,body).read()
+	rankings[i]=rank
 	rank=rank+1
-	
-#for keys in histforport:
-#	body={"history":keys}
-#	string="coreportfolio/"+histforport[keys]
-#	client._execute(1,"PUT",string,body).read()
+
+w=client._execute(0,"GET","coreportfolio",None)
+u= w.read()
+portfolios=json.loads(u)
+print "------rank--------"
+print ""
+for port in portfolios:
+	body={"ranking":rankings[port['coreportfolio_id']]}
+	string="coreportfoliohistory/"+histforport[port['coreportfolio_id']]
+	client._execute(1,"PUT",string,body).read()
+
