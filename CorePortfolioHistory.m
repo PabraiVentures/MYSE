@@ -15,5 +15,6 @@
 @dynamic value;
 @dynamic sm_owner;
 @dynamic createddate;
+@dynamic rank;
 
 @end

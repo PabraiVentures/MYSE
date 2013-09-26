@@ -16,5 +16,5 @@
 @property (nonatomic, retain) NSNumber * value;
 @property (nonatomic, retain) NSString * sm_owner;
 @property (nonatomic, retain) NSNumber * createddate;
-
+@property (nonatomic,retain) NSNumber *rank;
 @end

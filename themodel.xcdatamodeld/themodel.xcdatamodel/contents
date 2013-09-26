@@ -18,6 +18,7 @@
     <entity name="CorePortfolioHistory" representedClassName="CorePortfolioHistory" syncable="YES">
         <attribute name="coreportfoliohistory_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createddate" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="rank" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="sm_owner" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
     </entity>
@@ -44,7 +45,7 @@
     <elements>
         <element name="CoreModel" positionX="-56" positionY="3" width="128" height="105"/>
         <element name="CorePortfolio" positionX="259" positionY="-30" width="128" height="150"/>
-        <element name="CorePortfolioHistory" positionX="160" positionY="192" width="128" height="105"/>
+        <element name="CorePortfolioHistory" positionX="160" positionY="192" width="128" height="120"/>
         <element name="CoreStock" positionX="0" positionY="-243" width="128" height="120"/>
         <element name="CoreTradeEvent" positionX="-227" positionY="-141" width="128" height="150"/>
         <element name="User" positionX="241" positionY="-162" width="128" height="75"/>
