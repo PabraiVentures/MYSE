@@ -45,7 +45,7 @@
 {
     self.managedObjectContext = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
     [self loadWelcomeLabel];
-    [self loadChangeInRank];
+    //[self loadChangeInRank];
 }
 
 -(void) loadWelcomeLabel
