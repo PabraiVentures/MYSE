@@ -7,6 +7,8 @@
 //
 
 #import "BT_RankingsViewController.h"
+#import "StackMob.h"
+#import "CorePortfolioHistory.h"
 
 @interface BT_RankingsViewController ()
 
@@ -14,13 +16,13 @@
 
 @implementation BT_RankingsViewController
 
-@synthesize rankingsTable;
+@synthesize rankingsTable, loadedRankings;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        NSLog(@"initializing");
     }
     return self;
 }
@@ -28,7 +30,29 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    self.managedObjectContext = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
+    [self loadRankings];
+    NSLog(@"view did load");
+}
+
+-(void) loadRankings
+{
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CorePortfolioHistory"];
+    // query for coremodel for THIS user
+    NSString* getRightHist = [NSString stringWithFormat:@"ranking < %i", 20];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:getRightHist]];
+    loadedRankings = [[NSMutableArray alloc] init];
+    /**********START CODE BLOCK FOR REQUEST ACTION************/
+    [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {
+        //CorePortfolioHistory *yesterdayHist = [results objectAtIndex:0];
+        for (CorePortfolioHistory *rank in results) {
+            [loadedRankings addObject:rank];
+        }
+        NSLog(@"results: %@", loadedRankings);
+        [rankingsTable reloadData];
+    } onFailure:^(NSError *error) {
+        NSLog(@"There was an error! %@", error);
+    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,7 +70,7 @@
 
 -(int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return [loadedRankings count]; //TODO change
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -62,7 +86,9 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
-    
+    cell.textLabel.text = [[loadedRankings objectAtIndex:indexPath.row] sm_owner];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%i",[[[loadedRankings objectAtIndex:indexPath.row] ranking] intValue]];
+    NSLog(@"cell text: %@", cell.textLabel.text);
     //cell.textLabel.text = [self timeString:event.time withAction:action];
     //cell.detailTextLabel.text = actionDetail;
     

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12E55" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3396" systemVersion="12E55" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="CoreModel" syncable="YES">
         <attribute name="coremodel_id" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="portfolio" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="CorePortfolio" inverseName="model" inverseEntity="CorePortfolio" syncable="YES"/>
@@ -18,7 +18,7 @@
     <entity name="CorePortfolioHistory" representedClassName="CorePortfolioHistory" syncable="YES">
         <attribute name="coreportfoliohistory_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createddate" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="rank" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="ranking" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="sm_owner" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
     </entity>
@@ -43,11 +43,11 @@
         <relationship name="coremodel" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="CoreModel" inverseName="user" inverseEntity="CoreModel" syncable="YES"/>
     </entity>
     <elements>
-        <element name="CoreModel" positionX="-56" positionY="3" width="128" height="105"/>
-        <element name="CorePortfolio" positionX="259" positionY="-30" width="128" height="150"/>
-        <element name="CorePortfolioHistory" positionX="160" positionY="192" width="128" height="120"/>
-        <element name="CoreStock" positionX="0" positionY="-243" width="128" height="120"/>
-        <element name="CoreTradeEvent" positionX="-227" positionY="-141" width="128" height="150"/>
-        <element name="User" positionX="241" positionY="-162" width="128" height="75"/>
+        <element name="CoreModel" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="CorePortfolio" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="CorePortfolioHistory" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="CoreStock" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="CoreTradeEvent" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="User" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

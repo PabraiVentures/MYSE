@@ -11,5 +11,7 @@
 @interface BT_RankingsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, retain) IBOutlet UITableView *rankingsTable;
+@property (nonatomic, retain) NSMutableArray *loadedRankings;
+@property (weak, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end
