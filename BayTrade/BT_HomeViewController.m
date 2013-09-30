@@ -33,6 +33,7 @@
     
     [self.tickerView loadTickerData];
     [self.tickerView reloadData];
+    self.rankLabel.text=[NSString stringWithFormat:@"%@", self.userCache.coreModel.portfolio.ranking ];
 }
 
 - (void)didReceiveMemoryWarning

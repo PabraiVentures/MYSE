@@ -13,5 +13,7 @@
 @property (nonatomic, retain) IBOutlet UITableView *rankingsTable;
 @property (nonatomic, retain) NSMutableArray *loadedRankings;
 @property (weak, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *rankingSegment;
+
 
 @end

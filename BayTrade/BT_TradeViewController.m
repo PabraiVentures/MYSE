@@ -51,7 +51,6 @@
     //[self performSelector:@selector(setCoreModel) withObject:nil afterDelay:0.5];
     [self updateBuyPower];
     [self updateValue];
-    
     self.autocompleteSymbols = [[NSMutableArray alloc] initWithObjects:@"AAPL", @"GOOG", @"CSCO", @"IBM", @"YHOO", @"A",@"F", nil];
     self.autocompleteSuggestions = [[NSMutableArray alloc] init];
 }
@@ -212,6 +211,7 @@
     int amount;
     int amountForHistory;
     if([self.amountField.text length] > 0) amount = [self.amountField.text intValue];
+    else amount=0;
     amountForHistory = amount;
     NSDictionary *data;
     @try {

@@ -16,7 +16,7 @@
 
 @implementation BT_RankingsViewController
 
-@synthesize rankingsTable, loadedRankings;
+@synthesize rankingsTable, loadedRankings,rankingSegment;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
