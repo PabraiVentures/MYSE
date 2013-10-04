@@ -329,9 +329,12 @@
                                 <rect key="frame" x="57" y="20" width="206" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
-                                    <segment title="Global"/>
-                                    <segment title="Social"/>
+                                    <segment title="Friends"/>
+                                    <segment title="World"/>
                                 </segments>
+                                <connections>
+                                    <action selector="rankSegmentChanged:" destination="hI2-3J-iRe" eventType="valueChanged" id="0xJ-EN-ccz"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

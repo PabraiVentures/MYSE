@@ -184,6 +184,7 @@
 - (void)loginViewFetchedUserInfo:(FBLoginView *)loginView user:(id<FBGraphUser>)user {
     self.profilePic.profileID = user.id;
     self.loggedInUser = user;
+    NSLog(@"%@-----",user);
     NSString *userName = [NSString stringWithFormat:@"%@'s Trading Floor", user.first_name];
     self.investorName.text = userName;
     [[NSUserDefaults standardUserDefaults] setObject:user.first_name forKey:@"Name"];

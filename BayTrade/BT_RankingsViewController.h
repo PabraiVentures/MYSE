@@ -14,6 +14,7 @@
 @property (nonatomic, retain) NSMutableArray *loadedRankings;
 @property (weak, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *rankingSegment;
+- (IBAction)rankSegmentChanged:(id)sender;
 
 
 @end
