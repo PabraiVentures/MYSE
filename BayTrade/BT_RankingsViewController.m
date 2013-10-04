@@ -71,16 +71,16 @@
                  int i=0;
                  for (i=0;i<fetchedFriendData.count-1;i++){
                      // for each friend
-                    [predicateArray addObject: [( (NSDictionary*) [fetchedFriendData objectAtIndex:i] ) objectForKey:@"id"]];
+                    [predicateArray addObject: [NSString stringWithFormat: @"user/%@",[( (NSDictionary*) [fetchedFriendData objectAtIndex:i] ) objectForKey:@"id"]]];
                      //build predicate array
                  }
                  
                  //predicate is built
                  NSArray* hardArray=[NSArray arrayWithArray:predicateArray];
                  
-                 NSPredicate* cpredicate   =[  NSPredicate predicateWithFormat:@"user IN %@",hardArray];
+                 NSPredicate* cpredicate   =[  NSPredicate predicateWithFormat:@"sm_owner IN %@",hardArray];
                  
-                 NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CoreModel"];
+                 NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CorePortfolioHistory"];
                  // query for coremodel for THIS user
             
                  
@@ -89,11 +89,11 @@
                  /**********START CODE BLOCK FOR REQUEST ACTION************/
                  [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {
                      //CorePortfolioHistory *yesterdayHist = [results objectAtIndex:0];
-                   //  for (CorePortfolioHistory *rank in results) {
-                    //     [loadedRankings addObject:rank];
-                     //}
+                    for (CorePortfolioHistory *rank in results) {
+                         [loadedRankings addObject:rank];
+                     }
                      NSLog(@"results: %@", results);
-                  //   [rankingsTable reloadData];
+                     [rankingsTable reloadData];
                  } onFailure:^(NSError *error) {
                      NSLog(@"There was an error! %@", error);
                  }];
