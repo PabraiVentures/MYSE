@@ -49,3 +49,12 @@
 (_)new table of user_id and ranking
 (_)label pie chart
 (_)graph account rank & portfolio value over time in homeview
+
+FINAL STEPS
+(_)Good backgrounds
+(_)Finalize trade screen and put stock info on it
+(_)Finalize portfolio screen by adding info to tiles, reformatting detail text and 
+	allowing the user to pick the chart timescale
+(_)Get Tom to make MYSE logo
+(_)Finalize home screen with labels on the pie chart
+(_)Talk to the non dev team this week about progress and our demands of them
