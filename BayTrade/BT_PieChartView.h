@@ -15,7 +15,9 @@
 
 @property (nonatomic,strong) Cache* userCache;
 @property (nonatomic, retain) NSArray *stocks;
+@property (nonatomic, retain) NSMutableDictionary *stockColors;
 @property (nonatomic, retain) NSMutableArray *currentPrices;
+@property (nonatomic, retain) UIView *legendView;
 
 -(void)calculateCurrentPrices;
 

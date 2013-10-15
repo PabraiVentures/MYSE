@@ -14,10 +14,13 @@
 
 @implementation BT_PieChartView
 
+@synthesize stockColors, legendView;
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
+        //stockColors = [[NSMutableDictionary alloc] init];
         [self calculateCurrentPrices];
     }
     return self;
@@ -38,13 +41,29 @@
     totalPortfolioValue = self.userCache.coreModel.portfolio.totalportfoliovalue.doubleValue;
 }
 
+-(void)drawLegend
+{
+    legendView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width/2, self.frame.size.height)];
+    int legendHeight = legendView.frame.size.height;
+    int itemHeight = legendHeight / stockColors.count;
+    int currentHeight = 0;
+    for (NSString *key in stockColors) {
+        UIColor *color = stockColors[key];
+        UILabel *newLabel = [[UILabel alloc] init];
+        newLabel.textColor = color;
+        newLabel.text = key.lowercaseString;
+        newLabel.frame = CGRectMake(5, currentHeight, legendView.frame.size.width, itemHeight);
+        [legendView addSubview:newLabel];
+        currentHeight += itemHeight;
+    }
+    [self addSubview:legendView];
+}
 
-// Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
     CGFloat currentTime = 0;
-    
+    stockColors = [[NSMutableDictionary alloc] init];
     for (int x = 0; x < [self.stocks count]; x++) {
         CoreStock *stock = [self.stocks objectAtIndex:x];
         float currentPrice = [[[self.currentPrices objectAtIndex:x] objectForKey:@"LastTradePriceOnly"] floatValue];
@@ -57,14 +76,14 @@
         currentTime = endtime;
         CGFloat relativePrice = currentPrice/stock.buyprice.floatValue;
         
-        CGFloat standardRadius = 100;
+        CGFloat standardRadius = 70;
         CGFloat radius = standardRadius*relativePrice;
         if (relativePrice > 1){
             radius = standardRadius*(1+(log(relativePrice)/log(1.2)));//equation to slightly exaggerate positive gains for better visualization
         }
 
         //draw arc
-        CGPoint center = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+        CGPoint center = CGPointMake(self.frame.size.width*2/3, self.frame.size.height*1/2);
         UIBezierPath *arc = [UIBezierPath bezierPath]; //empty path
         [arc moveToPoint:center];
         CGPoint next;
@@ -75,12 +94,14 @@
         [arc addLineToPoint:center]; //back to center
         
         UIColor *randomcolor = [UIColor numberedFlatColor:x];
+        [stockColors setValue:randomcolor forKey:stock.symbol];
+        //NSLog(@"color: %@ key: %@", randomcolor, stock.symbol);
         [randomcolor set];
         [arc fill];
     }
     //rest is CASH
-    int radius = 100;
-    CGPoint center = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+    int radius = 70;
+    CGPoint center = CGPointMake(self.frame.size.width*2/3, self.frame.size.height*1/2);
     UIBezierPath *arc = [UIBezierPath bezierPath]; //empty path
     [arc moveToPoint:center];
     CGPoint next;
@@ -92,6 +113,8 @@
     UIColor *randomcolor = [UIColor flatGreenColor];
     [randomcolor set];
     [arc fill];
+    NSLog(@"stockcolors: %@", stockColors);
+    [self drawLegend];
 }
 
 @end

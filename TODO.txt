@@ -47,8 +47,9 @@
 (_)open price N/A workaround (midnight issue)
 (_)portfolio ranking history accessible from iOS
 (_)new table of user_id and ranking
-(_)label pie chart
+(X)label pie chart
 (_)graph account rank & portfolio value over time in homeview
+(_)make pie chart legend scrollable
 
 FINAL STEPS
 (_)Good backgrounds

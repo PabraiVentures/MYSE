@@ -101,7 +101,6 @@
         }
         return [UIColor colorWithRed:0 green:1.0 blue:0 alpha:0.4];
     }
-    
     return [UIColor yellowColor];
 }
 
@@ -121,7 +120,6 @@
     
     UILabel *symbolLabel = (UILabel*)[cell viewWithTag:kTagSymbolLabel];
     symbolLabel.text = [(CoreStock*)[stocks objectAtIndex:indexPath.row] symbol];
-    
     return cell;
 }
 
@@ -138,7 +136,6 @@
     NSDictionary *data;
     @try {
         data = [self.currentPrices objectAtIndex:selectedIndex];
-        //data = [Controller fetchQuotesFor:[NSArray arrayWithObject: detailStock.symbol]];
     }
     @catch (NSException *exception) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Uh Oh!" message:[NSString stringWithFormat:@"Can't get data! Error: %@", exception] delegate:self cancelButtonTitle:@"Okay."otherButtonTitles: nil];
