@@ -16,6 +16,10 @@
     NSString *saleSymbol;
     CoreStock *matchedSaleStock;
 }
+@property (weak, nonatomic) IBOutlet UILabel *stockLabel1;
+@property (weak, nonatomic) IBOutlet UILabel *stockLabel2;
+@property (weak, nonatomic) IBOutlet UILabel *stockLabel3;
+@property (weak, nonatomic) IBOutlet UILabel *stockLabel4;
 
 @property (weak, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) id<FBGraphUser> loggedInUser;
@@ -31,6 +35,8 @@
 @property (nonatomic, retain) NSMutableArray *autocompleteSuggestions;
 @property (nonatomic, retain) NSMutableArray *autocompleteSymbols;
 @property (nonatomic, retain) UITableView *autocompleteTableView;
+@property (weak, nonatomic) IBOutlet UILabel *tickerLabel;
+@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 
 - (IBAction)buyButtonClicked:(id)sender;
 - (IBAction)sellButtonClicked:(id)sender;

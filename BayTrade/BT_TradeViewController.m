@@ -59,6 +59,19 @@
 {
     [self.amountField resignFirstResponder];
     [self.symbolField resignFirstResponder];
+    if ([self.symbolField.text length] >0){
+        NSDictionary *stockData = [self callFetchQuotes:self.symbolField.text];
+        if (stockData==NULL) {
+            return;
+        }
+        self.priceLabel.text=[stockData valueForKey:@"LastTradePriceOnly"];
+        self.tickerLabel.text=[stockData valueForKey:@"symbol"];
+        [self.stockLabel1 setHidden:false];
+        [self.stockLabel2 setHidden:false];
+        [self.stockLabel3 setHidden:false];
+        [self.stockLabel4 setHidden:true];
+
+    }
 }
 
 - (void) didReceiveMemoryWarning
