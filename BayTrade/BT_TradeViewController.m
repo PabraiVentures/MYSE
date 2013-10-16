@@ -64,11 +64,15 @@
         if (stockData==NULL) {
             return;
         }
-        self.priceLabel.text= [NSString stringWithFormat:@"$%@",[stockData valueForKey:@"LastTradePriceOnly"]];
-        self.tickerLabel.text=[stockData valueForKey:@"symbol"];
+        double lastPrice = [[stockData valueForKey:@"LastTradePriceOnly"] doubleValue];
+        self.priceLabel.text = [NSString stringWithFormat:@"$%.2f", lastPrice];
+        self.tickerLabel.text = [stockData valueForKey:@"symbol"];
+        int maxPurchase = floor(self.userCache.coreModel.portfolio.totalcashvalue.doubleValue / lastPrice);
+        self.maxPurchaseLabel.text = [NSString stringWithFormat: @"%i", maxPurchase];
         [self.stockLabel1 setHidden:false];
         [self.stockLabel2 setHidden:false];
         [self.stockLabel3 setHidden:false];
+        [self.stockLabel5 setHidden:false];
         [self.stockLabel4 setHidden:true];
 
     }

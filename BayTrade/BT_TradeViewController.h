@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *stockLabel2;
 @property (weak, nonatomic) IBOutlet UILabel *stockLabel3;
 @property (weak, nonatomic) IBOutlet UILabel *stockLabel4;
+@property (weak, nonatomic) IBOutlet UILabel *stockLabel5;
 
 @property (weak, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) id<FBGraphUser> loggedInUser;
@@ -37,6 +38,7 @@
 @property (nonatomic, retain) UITableView *autocompleteTableView;
 @property (weak, nonatomic) IBOutlet UILabel *tickerLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *maxPurchaseLabel;
 
 - (IBAction)buyButtonClicked:(id)sender;
 - (IBAction)sellButtonClicked:(id)sender;

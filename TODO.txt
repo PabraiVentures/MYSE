@@ -41,7 +41,7 @@
 (_)rankings server code
 (X)splash screen - load all data upon app open before loading any views
 (_)failsafe for all YQL calls
-(_)show how much of stock you can buy
+(X)show how much of stock you can buy
 (X)pie chart drawing
 (_)fb pics of friends on rankings
 (_)open price N/A workaround (midnight issue)
