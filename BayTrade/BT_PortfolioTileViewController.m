@@ -12,6 +12,7 @@
 #import "BT_AppDelegate.h"
 
 #define kTagSymbolLabel 50
+#define kTagPercentLabel 60
 
 @interface BT_PortfolioTileViewController ()
 
@@ -120,6 +121,25 @@
     
     UILabel *symbolLabel = (UILabel*)[cell viewWithTag:kTagSymbolLabel];
     symbolLabel.text = [(CoreStock*)[stocks objectAtIndex:indexPath.row] symbol];
+    
+    UILabel *percentLabel = (UILabel*)[cell viewWithTag:kTagPercentLabel];
+    NSDictionary *data;
+    @try {
+        data = [self.currentPrices objectAtIndex:indexPath.row];
+    }
+    @catch (NSException *exception) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Uh Oh!" message:[NSString stringWithFormat:@"Can't get data! Error: %@", exception] delegate:self cancelButtonTitle:@"Okay." otherButtonTitles: nil];
+        [alert show];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    NSString *myStockPrice = data[@"LastTradePriceOnly"];
+    NSString *openPrice = data[@"Open"];
+    double percentChange = ([myStockPrice doubleValue] / [openPrice doubleValue] - 1) *100;
+    NSString *percentChangeString;
+    if (percentChange >= 0) percentChangeString = [NSString stringWithFormat: @"+%.2f", percentChange];
+    else percentChangeString = [NSString stringWithFormat: @"%.2f", percentChange];
+
+    percentLabel.text = percentChangeString;
     return cell;
 }
 
@@ -138,7 +158,7 @@
         data = [self.currentPrices objectAtIndex:selectedIndex];
     }
     @catch (NSException *exception) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Uh Oh!" message:[NSString stringWithFormat:@"Can't get data! Error: %@", exception] delegate:self cancelButtonTitle:@"Okay."otherButtonTitles: nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Uh Oh!" message:[NSString stringWithFormat:@"Can't get data! Error: %@", exception] delegate:self cancelButtonTitle:@"Okay." otherButtonTitles: nil];
         [alert show];
         [self dismissViewControllerAnimated:YES completion:nil];
     }

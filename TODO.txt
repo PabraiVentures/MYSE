@@ -19,10 +19,10 @@
 (X)set sell trade price
 (X)confirm purchase with user first
 (X)confirm sale with user first
-(_)iOS 7 capabilities
+(X)iOS 7 capabilities
 (X)portfolio detail view
 (_)history detail view
-(_)symbol lookup in trade view controller
+(X)symbol lookup in trade view controller
 (X)homeviewcontroller - name
 (_)homeviewcontroller - picture
 (_)homeviewcontroller - change in ranking today
@@ -50,6 +50,8 @@
 (X)label pie chart
 (_)graph account rank & portfolio value over time in homeview
 (_)make pie chart legend scrollable
+(_)rotate pie chart when scrolling through legend?
+(_)details in legend?
 
 FINAL STEPS
 (_)Good backgrounds
