@@ -136,7 +136,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="8h6-az-vBp">
-                                <rect key="frame" x="0.0" y="34" width="320" height="499"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="546"/>
                                 <color key="backgroundColor" red="0.0039215688593685627" green="0.89803928136825562" blue="1" alpha="1" colorSpace="deviceRGB"/>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Symbol" textAlignment="center" minimumFontSize="17" id="BU3-T7-3s6">
