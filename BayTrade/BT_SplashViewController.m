@@ -11,6 +11,7 @@
 #import "StackMob.h"
 #import <CoreData/CoreData.h>
 #import "Controller.h"
+#import "BT_GraphAnimationView.h"
 
 @interface BT_SplashViewController ()
 
@@ -38,6 +39,8 @@
     BT_AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
     self.userCache =[appDelegate userCache];
     [self performSelector:@selector(delaySetCoreModel) withObject:nil afterDelay:1.0];
+    BT_GraphAnimationView *loadingAnimationView = [[BT_GraphAnimationView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 350)];
+    [self.view addSubview:loadingAnimationView];
 }
 
 - (void) delaySetCoreModel
@@ -122,7 +125,6 @@
         return;
     }];
     /********DONE GETTING COREMODEL FROM STACKMOB***********/
-    //totalItems = self.userCache.coreModel.portfolio.stocks.count * 2; //has to get 2 pieces of info for each stock
 }
 
 -(void) loadTickerData
@@ -165,7 +167,6 @@
 //move progress indicator
 -(void)setProgressStatus:(NSNumber*)percentDone
 {
-    NSLog(@"changing indicator to %@", percentDone);
     [progressIndicator setProgress:[percentDone floatValue] animated:YES];
 }
 

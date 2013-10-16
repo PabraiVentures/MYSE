@@ -52,6 +52,7 @@
 (_)make pie chart legend scrollable
 (_)rotate pie chart when scrolling through legend?
 (_)details in legend?
+(X)splash screen animation
 
 FINAL STEPS
 (_)Good backgrounds

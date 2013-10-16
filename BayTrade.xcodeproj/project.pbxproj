@@ -19,6 +19,8 @@
 		528E8BA317E379B7006E21FB /* UIColor+BTFlatColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 528E8BA217E379B7006E21FB /* UIColor+BTFlatColors.m */; };
 		528E8BA417E37BD2006E21FB /* UIColor+BTFlatColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 528E8BA217E379B7006E21FB /* UIColor+BTFlatColors.m */; };
 		52D23B9917E25031000B6335 /* BT_SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D23B9817E25031000B6335 /* BT_SplashViewController.m */; };
+		52FD82AC180F24D000DCF967 /* BT_GraphAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 52FD82AB180F24D000DCF967 /* BT_GraphAnimationView.m */; };
+		52FD82AE180F2CE300DCF967 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52FD82AD180F2CE300DCF967 /* QuartzCore.framework */; };
 		7D06431D17BAE70800889177 /* BT_LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D06431C17BAE70800889177 /* BT_LoginViewController.m */; };
 		7DF8F95717BC7F91005553A1 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DF8F95617BC7F91005553A1 /* User.m */; };
 		9307A2EE17A43E6B00E647DF /* wallpaper.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9307A2ED17A43E6B00E647DF /* wallpaper.jpg */; };
@@ -92,6 +94,9 @@
 		528E8BA217E379B7006E21FB /* UIColor+BTFlatColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+BTFlatColors.m"; path = "BayTradeTests/UIColor+BTFlatColors.m"; sourceTree = SOURCE_ROOT; };
 		52D23B9717E25031000B6335 /* BT_SplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BT_SplashViewController.h; sourceTree = "<group>"; };
 		52D23B9817E25031000B6335 /* BT_SplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BT_SplashViewController.m; sourceTree = "<group>"; };
+		52FD82AA180F24D000DCF967 /* BT_GraphAnimationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BT_GraphAnimationView.h; sourceTree = "<group>"; };
+		52FD82AB180F24D000DCF967 /* BT_GraphAnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BT_GraphAnimationView.m; sourceTree = "<group>"; };
+		52FD82AD180F2CE300DCF967 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		7D06431B17BAE70800889177 /* BT_LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BT_LoginViewController.h; sourceTree = "<group>"; };
 		7D06431C17BAE70800889177 /* BT_LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BT_LoginViewController.m; sourceTree = "<group>"; };
 		7DF8F95417BC5CC7005553A1 /* BT_AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BT_AppDelegate.h; sourceTree = "<group>"; };
@@ -211,6 +216,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52FD82AE180F2CE300DCF967 /* QuartzCore.framework in Frameworks */,
 				93D5A0CD17A3C75300ECA5D8 /* CoreLocation.framework in Frameworks */,
 				93D5A0CB17A3C74500ECA5D8 /* MobileCoreServices.framework in Frameworks */,
 				93D5A0C917A3C73B00ECA5D8 /* SystemConfiguration.framework in Frameworks */,
@@ -262,6 +268,8 @@
 			children = (
 				52D23B9717E25031000B6335 /* BT_SplashViewController.h */,
 				52D23B9817E25031000B6335 /* BT_SplashViewController.m */,
+				52FD82AA180F24D000DCF967 /* BT_GraphAnimationView.h */,
+				52FD82AB180F24D000DCF967 /* BT_GraphAnimationView.m */,
 				525122BC17E0226D00A8782B /* BT_PortfolioTileViewController.h */,
 				525122BD17E0226F00A8782B /* BT_PortfolioTileViewController.m */,
 				93E19FC117A36492000D60B5 /* BT_TabBarController.h */,
@@ -405,6 +413,7 @@
 		93E19F7A17A36420000D60B5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				52FD82AD180F2CE300DCF967 /* QuartzCore.framework */,
 				93D5A08A17A3C6FF00ECA5D8 /* StackMob-v2.0.0 */,
 				5251229F17D774FC00A8782B /* FacebookSDK.framework */,
 				93D5A0CC17A3C75300ECA5D8 /* CoreLocation.framework */,
@@ -591,6 +600,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52FD82AC180F24D000DCF967 /* BT_GraphAnimationView.m in Sources */,
 				528E8BA417E37BD2006E21FB /* UIColor+BTFlatColors.m in Sources */,
 				93E19F8817A36420000D60B5 /* main.m in Sources */,
 				93E19F8C17A36420000D60B5 /* BT_AppDelegate.m in Sources */,

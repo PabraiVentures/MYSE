@@ -9,9 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Cache.h"
 
-@interface BT_SplashViewController : UIViewController {
-    //int totalItems;
-}
+@interface BT_SplashViewController : UIViewController
 
 @property (nonatomic, retain) IBOutlet UIProgressView *progressIndicator;
 @property (nonatomic, retain) Cache *userCache;
