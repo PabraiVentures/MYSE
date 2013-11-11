@@ -30,43 +30,32 @@
 @synthesize loggedInUser = _loggedInUser;
 @synthesize profilePic = _profilePic;
 
-- (void) viewDidLoad
-{
+- (void) viewDidLoad {
     [super viewDidLoad];
     self.userCache=[((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) userCache];
-    
     // Create Login View so that the app will be granted "status_update" permission. 
     FBLoginView *loginview = [[FBLoginView alloc] init];
     loginview.frame = CGRectOffset(loginview.frame, 50, 50);
     loginview.hidden = YES;
     loginview.delegate = self;
-    
     [self.view addSubview:loginview];
     [loginview sizeToFit];
-    
     //get the object context to work with stackmob data
     self.managedObjectContext = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
-    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
-    
     [self.view addGestureRecognizer:tap];
-    
-    //[self performSelector:@selector(setCoreModel) withObject:nil afterDelay:0.5];
     [self updateBuyPower];
     [self updateValue];
-    self.autocompleteSymbols = [[NSMutableArray alloc] initWithObjects:@"AAPL", @"GOOG", @"CSCO", @"IBM", @"YHOO", @"A", @"F", nil];
+    self.autocompleteSymbols = [[NSMutableArray alloc] initWithObjects:@"AAPL", @"GOOG", @"CSCO", @"IBM", @"YHOO", @"F", nil];
     self.autocompleteSuggestions = [[NSMutableArray alloc] init];
 }
 
-- (void) dismissKeyboard
-{
+- (void) dismissKeyboard {
     [self.amountField resignFirstResponder];
     [self.symbolField resignFirstResponder];
-    if ([self.symbolField.text length] > 0){
+    if ([self.symbolField.text length] > 0) {
         NSDictionary *stockData = [self callFetchQuotes:self.symbolField.text];
-        if (stockData==NULL) {
-            return;
-        }
+        if (stockData == NULL) return;
         double lastPrice = [[stockData valueForKey:@"LastTradePriceOnly"] doubleValue];
         self.priceLabel.text = [NSString stringWithFormat:@"$%.2f", lastPrice];
         self.tickerLabel.text = [stockData valueForKey:@"symbol"];
@@ -75,97 +64,80 @@
         [self.stockLabel1 setHidden:false];
         [self.stockLabel2 setHidden:false];
         [self.stockLabel3 setHidden:false];
+        [self.stockLabel4 setHidden:true]; //label for entering stock symbol
         [self.stockLabel5 setHidden:false];
-        [self.stockLabel4 setHidden:true];
-
     }
 }
 
-- (void) didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
-//assigns self.userCache.coreModel to the StackMob coreModel
-- (void) setCoreModel
-{
-    /********GET COREMODEL FROM STACKMOB***********/
-    //download stackmob coremodel and save to local coremodel
-    //get the model, update and send back to stackmob
+-(NSFetchRequest*)getRequestForUserCoreModel {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CoreModel"];
-    
     // query for coremodel for THIS user
     NSString* coreModelRequest=[NSString stringWithFormat:@"user == '%@'",self.userCache.userID];
     [fetchRequest setPredicate:[NSPredicate predicateWithFormat:coreModelRequest]];
-    
+    return fetchRequest;
+}
+
+- (void) initializeCoreModel {
+    [self.valueDisplay setText:@"100000.00"];
+    [self.cashDisplay  setText:@"100000.00"];
+    self.userCache.coreModel.portfolio.totalcashvalue = [NSNumber numberWithFloat: 100000.0];
+    [self setCoreModel];
+}
+
+//assigns self.userCache.coreModel to the StackMob coreModel
+- (void) setCoreModel {
+    /********GET COREMODEL FROM STACKMOB***********/
+    //download stackmob coremodel and save to local coremodel
+    NSFetchRequest *fetchRequest = [self getRequestForUserCoreModel];
     //get the object context to work with stackmob data
     self.managedObjectContext = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
     
     // execute the request
     [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {
-        BOOL needsUpdate = YES;
         @try {
-            NSManagedObject* myModel=[results objectAtIndex:0];
-            self.userCache.coreModel = (CoreModel *) myModel; //now we can access coremodel from anywhere
+            self.userCache.coreModel = (CoreModel *)[results objectAtIndex:0]; //now we can access coremodel from anywhere
             NSLog(@"succeeded setting CoreModel");
-        }
-        @catch (NSException *exception) {
-            [self.valueDisplay setText:@"100000.00"];
-            [self.cashDisplay  setText:@"100000.00"];
-            self.userCache.coreModel.portfolio.totalcashvalue = [NSNumber numberWithFloat: 100000.0];
-            [self setCoreModel];
-            needsUpdate = NO;
-        }
-        if(needsUpdate)
-        {
             [self updateBuyPower];
             [self updateValue];
         }
-        
+        @catch (NSException *exception) {
+            [self initializeCoreModel];
+        }
     } onFailure:^(NSError *error) {
         NSLog(@"There was an error! %@", error);
     }];
-    /********DONE GETTING COREMODEL FROM STACKMOB***********/
 }
 
 //Only works for buying
-- (void) updateValue
-{
+- (void) updateValue {
     double value = 0.0;
     double prc = 0.0;
     int amt = 0;
-    for(CoreStock *stock in self.userCache.coreModel.portfolio.stocks)
-    {
+    for(CoreStock *stock in self.userCache.coreModel.portfolio.stocks) {
         prc = [[Controller currentPriceForSymbol:stock.symbol] doubleValue];
         amt = stock.amount.intValue;
         value += (prc * amt);
     }
     value += self.userCache.coreModel.portfolio.totalcashvalue.doubleValue;
-    
     NSString *valString = [NSString stringWithFormat:@"$%.2f", value];
     [self.valueDisplay setText: valString];
 }   
 
-- (void)updateBuyPower
-{
+- (void)updateBuyPower {
     NSString *money = [NSString stringWithFormat:@"$%.2f", self.userCache.coreModel.portfolio.totalcashvalue.floatValue];
     [self.cashDisplay setText: money];
 }
 
 /************Gets stock data from YahooFinance**********/
-- (NSDictionary *) callFetchQuotes: (NSString*) stockSymbol
-{
+- (NSDictionary *) callFetchQuotes: (NSString*) stockSymbol {
     NSArray *stock = [NSArray arrayWithObjects: stockSymbol, nil];
     NSDictionary *data = [Controller fetchQuotesFor:stock];
     return data;
 }
 
-- (CoreStock*) checkForStockInPortfolio: (NSString *) symbol andInt : (int *) amount
-{
-    for(CoreStock* s in self.userCache.coreModel.portfolio.stocks)
-    {
-        if ([s.symbol isEqual: symbol])
-        {
+- (CoreStock*) checkForStockInPortfolio: (NSString *) symbol andInt : (int *) amount {
+    for(CoreStock* s in self.userCache.coreModel.portfolio.stocks) {
+        if ([s.symbol isEqual: symbol]) {
             *amount += s.amount.intValue;
             return s;
         }
@@ -174,16 +146,13 @@
 }
 
 //Returns purchase price of one stock and changed value of "amount" for later calulations
-- (NSMutableArray *) accountForPrevOwnedStock: (NSString *) symbol andInt : (int) amount andPrice : (double) price
-{
+- (NSMutableArray *) accountForPrevOwnedStock: (NSString *) symbol andInt : (int) amount andPrice : (double) price {
     NSNumber *theAmount = [NSNumber numberWithInt:amount];
     NSNumber *thePrice = [NSNumber numberWithDouble:price];
     NSMutableArray *amtAndPrc = [[NSMutableArray alloc] initWithObjects:theAmount, thePrice, nil];
     
-    for(CoreStock* stock in self.userCache.coreModel.portfolio.stocks)
-    {
-        if ([symbol caseInsensitiveCompare: stock.symbol] == NSOrderedSame)
-        {
+    for(CoreStock* stock in self.userCache.coreModel.portfolio.stocks) {
+        if ([symbol caseInsensitiveCompare: stock.symbol] == NSOrderedSame) {
             double newvalue =  price * amount + (stock.amount.intValue * stock.buyprice.doubleValue);
             NSNumber *newAmount = [NSNumber numberWithInt:(amount + stock.amount.intValue)];
             NSNumber *newPurchasedPrice = [NSNumber numberWithDouble:(newvalue / newAmount.doubleValue)];
@@ -196,8 +165,7 @@
     return amtAndPrc;
 }
 
-- (IBAction)logoutButtonClicked:(id)sender {
-    //delete token info
+- (IBAction)logoutButtonClicked:(id)sender { //delete token info
     [FBSession.activeSession closeAndClearTokenInformation];
 }
 
@@ -211,8 +179,7 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (BOOL) textFieldShouldReturn: (UITextField *)theTextField
-{
+- (BOOL) textFieldShouldReturn: (UITextField *)theTextField {
     if ((theTextField == self.symbolField) || (theTextField == self.amountField)) {
         [theTextField endEditing:YES];
         [self dismissKeyboard];
@@ -220,12 +187,18 @@
     return YES;
 }
 
+- (void) showBuyConfirmationAlertWithAmount:(int)amount andSymbol:(NSString*)buyingSymbol andTotalPrice:(double)totalPrice {
+    NSString *confirmationString = [NSString stringWithFormat:@"Are you sure you'd like to buy %i shares of %@ for $%.2f?", amount, buyingSymbol, totalPrice];
+    UIAlertView *buyConfirmation = [[UIAlertView alloc] initWithTitle:@"Confirm Trade" message:confirmationString delegate:self cancelButtonTitle:@"Nevermind" otherButtonTitles:@"Confirm Trade", nil];
+    buyConfirmation.tag = kBuy;
+    [buyConfirmation show];
+}
+
 #pragma mark - Trading Methods
 
 /************************BUYING**************************/
 
-- (IBAction) buyButtonClicked:(id)sender
-{
+- (IBAction) buyButtonClicked:(id)sender {
     NSString *buyingSymbol;
     if([self.symbolField.text length] > 0) buyingSymbol = [self.symbolField.text uppercaseString];
     NSLog(@"buying symbol: %@", buyingSymbol);
@@ -244,41 +217,27 @@
     }
     NSLog(@"data: %@", data);
     NSString *myStockPrice = data[@"LastTradePriceOnly"];
-    
-    double price = [myStockPrice doubleValue];
-    reservedBuyPrice = price;
-    double totalPrice = price * amount;
-    
-    //if the symbol didn't get results...
     if(myStockPrice == NULL || amount == 0) [self showErrorAlert:@"Hold up!" andMessage:@"Invalid symbol or amount"];
     else {
+        reservedBuyPrice = [myStockPrice doubleValue];
+        double totalPrice = reservedBuyPrice * amount;
         NSLog(@"totalcashval: %@", self.userCache.coreModel.portfolio.totalcashvalue);
-        if (totalPrice <= self.userCache.coreModel.portfolio.totalcashvalue.doubleValue)
-        {
-            NSString *confirmationString = [NSString stringWithFormat:@"Are you sure you'd like to buy %i shares of %@ for $%.2f?", amount, buyingSymbol, totalPrice];
-            UIAlertView *buyConfirmation = [[UIAlertView alloc] initWithTitle:@"Confirm Trade" message:confirmationString delegate:self cancelButtonTitle:@"Nevermind" otherButtonTitles:@"Confirm Trade", nil];
-            buyConfirmation.tag = kBuy;
-            [buyConfirmation show];
+        if (totalPrice > self.userCache.coreModel.portfolio.totalcashvalue.doubleValue) {
+            [self showErrorAlert:@"Not enough cash!" andMessage:[NSString stringWithFormat:@"You don't have enough money to buy %i shares of %@ at %.2f.", amount, buyingSymbol, reservedBuyPrice]];
+            return;
         }
-        else [self showErrorAlert:@"Not enough cash!" andMessage:[NSString stringWithFormat:@"You don't have enough money to buy %i shares of %@ at %.2f.", amount, buyingSymbol, price]];
+        [self showBuyConfirmationAlertWithAmount: amount andSymbol:buyingSymbol andTotalPrice:totalPrice];
     }
 }
 
-- (void) buy
-{
+- (void) buy {
     NSLog(@"beginning buy");
     NSString *buyingSymbol = [self.symbolField.text uppercaseString];
     int amount = [self.amountField.text intValue];
     double price = reservedBuyPrice;
-    
     NSLog(@"totalcashvalue: %@", self.userCache.coreModel.portfolio.totalcashvalue);
-    
     //get the model, update and send back to stackmob
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CoreModel"];
-    // query for coremodel for THIS user
-    NSString* getRightUser = [NSString stringWithFormat:@"user == '%@'",self.userCache.userID];
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:getRightUser]];
-    
+    NSFetchRequest *fetchRequest = [self getRequestForUserCoreModel];
     /**********START CODE BLOCK FOR REQUEST ACTION************/
     [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {//TODO decompose
         NSManagedObject* myModel=[results objectAtIndex:0];
@@ -309,7 +268,6 @@
     } onFailure:^(NSError *error) {
         NSLog(@"Error fetching: %@", error);
     }];
-    
     [self setCoreModel];
     [self updateBuyPower];
     [self updateValue];
@@ -320,14 +278,9 @@
     NSLog(@"ending buy");
 }
 
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (alertView.tag == kBuy && buttonIndex != 0){
-        [self buy];
-    }
-    else if (alertView.tag == kSell && buttonIndex !=0) {
-        [self sell];
-    }
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == kBuy && buttonIndex != 0) [self buy];
+    if (alertView.tag == kSell && buttonIndex != 0) [self sell];
 }
 
 -(void)showErrorAlert:(NSString *)title andMessage: (NSString*)message {
@@ -335,46 +288,50 @@
     [alert show];
 }
 
+-(BOOL) isStockValidGivenStock: (CoreStock*) stock andAmount: (int) amount andSymbol: (NSString*) symbol {
+    if (stock.amount.intValue < amount) {
+        [self showErrorAlert:@"Nice try!" andMessage:@"You don't own enought of this stock."];
+        return false;
+    }
+    if (amount <= 0) {
+        [self showErrorAlert:@"Invalid Amount" andMessage:@"Please enter a valid amount."];
+        return false;
+    }
+    NSDictionary *stockData = [self callFetchQuotes:symbol];
+    NSString *myStockPrice = stockData[@"LastTradePriceOnly"];
+    reservedSalePrice = [myStockPrice doubleValue];
+    if (reservedSalePrice <= 0) {
+        [self showErrorAlert:@"Error Fetching Quote" andMessage:@"The symbol you requested returned an invalid quote. Please try again."];
+        return false;
+    }
+    return true;
+}
+
+- (bool) stockAndAmountFieldsAreValid {
+    if ([self.amountField.text length] <= 0) {
+        [self showErrorAlert:@"Must Enter Amount" andMessage:@"Please make sure you have entered an amount."];
+        return false;
+    }
+    if([self.symbolField.text length] <= 0) {
+        [self showErrorAlert:@"Must Enter Symbol" andMessage:@"Please make sure you have entered a symbol."];
+        return false;
+    }
+    return true;
+}
+
 /************************SELLING**************************/
 
-- (IBAction)sellButtonClicked:(id)sender
-{
-    NSInteger amount;
-    if([self.amountField.text length] > 0)
-        amount = [self.amountField.text intValue];
-    else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Must Enter Amount" message:@"Please make sure you have entered an amount." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil];
-        [alert show];
-        return;
-    }
-    
-    NSString *symbol;
-    if([self.symbolField.text length] > 0)
-        symbol = [self.symbolField.text uppercaseString];
-    else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Must Enter Symbol" message:@"Please make sure you have entered a symbol." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil];
-        [alert show];
-        return;
-    }
-    
+- (IBAction)sellButtonClicked:(id)sender {
+    if (![self stockAndAmountFieldsAreValid]) return;
+    NSInteger amount = [self.amountField.text intValue];
+    NSString *symbol = [self.symbolField.text uppercaseString];
     //makes sure enough of stock is available
     for(CoreStock* stock in self.userCache.coreModel.portfolio.stocks) {
         if ([symbol caseInsensitiveCompare:stock.symbol] == NSOrderedSame) {
-            if (stock.amount.intValue < amount) {
-                [self showErrorAlert:@"Nice try!" andMessage:@"You don't own enought of this stock."];
-                return;
-            }
-            if (amount <= 0) {
-                [self showErrorAlert:@"Invalid Amount" andMessage:@"Please enter a valid amount."];
-                return;
-            }
+            if (![self isStockValidGivenStock:stock andAmount: amount andSymbol:symbol]) return;
             NSDictionary *stockData = [self callFetchQuotes:symbol];
             NSString *myStockPrice = stockData[@"LastTradePriceOnly"];
             reservedSalePrice = [myStockPrice doubleValue];
-            if (reservedSalePrice <= 0) {
-                [self showErrorAlert:@"Error Fetching Quote" andMessage:@"The symbol you requested returned an invalid quote. Please try again."];
-                return;
-            }
             double totalPrice = reservedSalePrice * amount;
             NSString *confirmationString = [NSString stringWithFormat:@"Are you sure you'd like to sell %i shares of %@ for $%.2f?", amount, symbol, totalPrice];
             UIAlertView *sellConfirmation = [[UIAlertView alloc] initWithTitle:@"Confirm Trade" message:confirmationString delegate:self cancelButtonTitle:@"Nevermind" otherButtonTitles:@"Confirm Trade", nil];
@@ -387,8 +344,7 @@
     [self showErrorAlert:@"No Matching Stock!" andMessage:@"No stock was found in your portfolio with the symbol you provided. Please try again."];
 }
 
-- (void) sell
-{
+- (void) sell {
     int amount = [self.amountField.text intValue];
     //if selling all, just delete stock from portfolio, THEN completely delete stock
     if(matchedSaleStock.amount.intValue == amount)
@@ -414,7 +370,6 @@
 #pragma mark AutoComplete methods
 
 - (void)searchAutocompleteEntriesWithSubstring:(NSString *)substring {
-    
     // Put anything that starts with this substring into the autocompleteSuggestions array
     // The items in this array is what will show up in the table view
     [self.autocompleteSuggestions removeAllObjects];
@@ -429,7 +384,6 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     self.autocompleteTableView.hidden = NO;
-    
     NSString *substring = [NSString stringWithString:textField.text];
     substring = [substring stringByReplacingCharactersInRange:range withString:string];
     [self searchAutocompleteEntriesWithSubstring:substring];
@@ -443,13 +397,10 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     UITableViewCell *cell = nil;
     static NSString *AutoCompleteRowIdentifier = @"AutoCompleteRowIdentifier";
     cell = [tableView dequeueReusableCellWithIdentifier:AutoCompleteRowIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AutoCompleteRowIdentifier];
-    }
+    if (cell == nil) cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AutoCompleteRowIdentifier];
     cell.textLabel.text = [self.autocompleteSuggestions objectAtIndex:indexPath.row];
     return cell;
 }
