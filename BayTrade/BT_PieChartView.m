@@ -79,7 +79,7 @@
         CGFloat standardRadius = 70;
         CGFloat radius = standardRadius*relativePrice;
         if (relativePrice > 1){
-            radius = standardRadius*(1+(log(relativePrice)/log(1.2)));//equation to slightly exaggerate positive gains for better visualization
+            radius = standardRadius*(1+(log(relativePrice)/log(1.4)));//equation to slightly exaggerate positive gains for better visualization
         }
 
         //draw arc
@@ -95,7 +95,6 @@
         
         UIColor *randomcolor = [UIColor numberedFlatColor:x];
         [stockColors setValue:randomcolor forKey:stock.symbol];
-        //NSLog(@"color: %@ key: %@", randomcolor, stock.symbol);
         [randomcolor set];
         [arc fill];
     }

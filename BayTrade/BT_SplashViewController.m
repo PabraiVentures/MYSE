@@ -90,7 +90,7 @@
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CoreModel"];
     
     // query for coremodel for THIS user
-    NSString* coreModelRequest=[NSString stringWithFormat:@"user == '%@'",self.userCache.userID];
+    NSString* coreModelRequest=[NSString stringWithFormat:@"user == '%@'", [[NSUserDefaults standardUserDefaults] objectForKey:@"userID"]];
     NSLog(@"userid: %@", coreModelRequest);
     [fetchRequest setPredicate:[NSPredicate predicateWithFormat:coreModelRequest]];
     
