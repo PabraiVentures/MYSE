@@ -325,7 +325,6 @@
 }
 
 /************************SELLING**************************/
-
 - (IBAction)sellButtonClicked:(id)sender {
     if (![self stockAndAmountFieldsAreValid]) return;
     NSInteger amount = [self.amountField.text intValue];
@@ -374,9 +373,9 @@
 
 #pragma mark AutoComplete methods
 
+/*Put anything that starts with this substring into the autocompleteSuggestions array.
+ *The items in this array is what will show up in the table view.*/
 - (void)searchAutocompleteEntriesWithSubstring:(NSString *)substring {
-    // Put anything that starts with this substring into the autocompleteSuggestions array
-    // The items in this array is what will show up in the table view
     [self.autocompleteSuggestions removeAllObjects];
     for(NSString *curString in self.autocompleteSymbols) {
         NSRange substringRange = [curString rangeOfString:substring];
