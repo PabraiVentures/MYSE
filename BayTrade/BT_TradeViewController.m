@@ -230,6 +230,33 @@
     }
 }
 
+/***CREATE CORESTOCK TO BE PLACED INTO COREMODEL.PORTFOLIO******/
+- (CoreStock*) stockForCorePortfolio: (NSString*) buyingSymbol andAmount: (int) amount andPrice: (double) price {
+    CoreStock* thestock = [NSEntityDescription insertNewObjectForEntityForName:@"CoreStock" inManagedObjectContext:self.managedObjectContext];
+    NSMutableArray *amountAndPrice = [self accountForPrevOwnedStock:buyingSymbol andInt: amount andPrice:price];
+    thestock.amount = [amountAndPrice objectAtIndex:0];
+    thestock.buyprice = [amountAndPrice objectAtIndex:1];
+    thestock.symbol = buyingSymbol;
+    [thestock setValue:[thestock assignObjectId] forKey:[thestock primaryKeyField]];
+    return thestock;
+}
+
+- (void) addStockToModelWithSymbol: (NSString*)buyingSymbol andPrice:(double)price andAmount:(int)amount {
+    [self.userCache addTradeEventFromStock:[CoreStock initWithSymbol:buyingSymbol AndPrice:price AndAmount:amount] withActionID: 1];
+    //subtract trade value from totalcashvalue
+    double cashMoney =  self.userCache.coreModel.portfolio.totalcashvalue.doubleValue - (price * amount);
+    self.userCache.coreModel.portfolio.totalcashvalue = [NSNumber numberWithDouble: cashMoney];
+    CoreStock* thestock = [self stockForCorePortfolio:buyingSymbol andAmount:amount andPrice:price];
+    //ADD STOCK TO COREMODEL.PORTFOLIO TO BE SAVED LATER
+    [self.userCache.coreModel.portfolio addStocksObject:thestock];// the stock is now in the portfolio
+    //SAVE COREMODEL TO STACKMOB
+    [self.managedObjectContext saveOnSuccess:^{
+        NSLog(@"You updated the model object with a new stock buy!");
+    } onFailure:^(NSError *error) {
+        NSLog(@"There was an error! %@", error);
+    }];
+}
+
 - (void) buy {
     NSLog(@"beginning buy");
     NSString *buyingSymbol = [self.symbolField.text uppercaseString];
@@ -239,32 +266,10 @@
     //get the model, update and send back to stackmob
     NSFetchRequest *fetchRequest = [self getRequestForUserCoreModel];
     /**********START CODE BLOCK FOR REQUEST ACTION************/
-    [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {//TODO decompose
-        NSManagedObject* myModel=[results objectAtIndex:0];
+    [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {
+        NSManagedObject* myModel = [results objectAtIndex:0];
         self.userCache.coreModel = (CoreModel*) myModel;
-        [self.userCache addTradeEventFromStock:[CoreStock initWithSymbol:buyingSymbol AndPrice:price AndAmount:amount] withActionID: 1];
-        
-        //subtract trade value from totalcashvalue
-        double cashMoney =  self.userCache.coreModel.portfolio.totalcashvalue.doubleValue - (price * amount);
-        self.userCache.coreModel.portfolio.totalcashvalue = [NSNumber numberWithDouble: cashMoney];
-        NSMutableArray *amountAndPrice = [self accountForPrevOwnedStock:buyingSymbol andInt: amount andPrice:price];
-        
-        /***CREATE CORESTOCK TO BE PLACED INTO COREMODEL.PORTFOLIO******/
-        CoreStock* thestock=[NSEntityDescription insertNewObjectForEntityForName:@"CoreStock" inManagedObjectContext:self.managedObjectContext];
-        thestock.amount = [amountAndPrice objectAtIndex:0];
-        thestock.buyprice = [amountAndPrice objectAtIndex:1];
-        thestock.symbol = buyingSymbol;
-        [thestock setValue:[thestock assignObjectId] forKey:[thestock primaryKeyField]];
-        /***DONE CREATING CORESTOCK TO BE PLACED INTO COREMODEL.PORTFOLIO******/
-        
-        //ADDING STOCK TO COREMODEL.PORTFOLIO TO BE SAVED LATER
-        [((CoreModel*)(myModel)).portfolio addStocksObject:thestock];// the stock is now in the portfolio
-        //SAVE COREMODEL TO STACKMOB
-        [self.managedObjectContext saveOnSuccess:^{
-            NSLog(@"You updated the model object with a new stock buy!");
-        } onFailure:^(NSError *error) {
-            NSLog(@"There was an error! %@", error);
-        }];
+        [self addStockToModelWithSymbol:buyingSymbol andPrice:price andAmount:amount];
     } onFailure:^(NSError *error) {
         NSLog(@"Error fetching: %@", error);
     }];
