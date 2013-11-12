@@ -38,71 +38,53 @@
 
 -(void) loadRankings
 {
-    if (rankingSegment.selectedSegmentIndex==1){
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CorePortfolioHistory"];
-    // query for coremodel for THIS user
-    NSString* getRightHist = [NSString stringWithFormat:@"ranking < %i", 20];
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:getRightHist]];
-    loadedRankings = [[NSMutableArray alloc] init];
-    /**********START CODE BLOCK FOR REQUEST ACTION************/
-    [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {
-        //CorePortfolioHistory *yesterdayHist = [results objectAtIndex:0];
-        for (CorePortfolioHistory *rank in results) {
-            [loadedRankings addObject:rank];
-        }
-        NSLog(@"results: %@", loadedRankings);
-        [rankingsTable reloadData];
-    } onFailure:^(NSError *error) {
-        NSLog(@"There was an error! %@", error);
-    }];
-        
+    if (rankingSegment.selectedSegmentIndex == 1) {
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CorePortfolioHistory"];
+        // query for coremodel for THIS user
+        NSString* getRightHist = [NSString stringWithFormat:@"ranking < %i", 20];
+        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:getRightHist]];
+        loadedRankings = [[NSMutableArray alloc] init];
+        /**********START CODE BLOCK FOR REQUEST ACTION************/
+        [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {
+            //CorePortfolioHistory *yesterdayHist = [results objectAtIndex:0];
+            for (CorePortfolioHistory *rank in results) {
+                [loadedRankings addObject:rank];
+            }
+            NSLog(@"results: %@", loadedRankings);
+            [rankingsTable reloadData];
+        } onFailure:^(NSError *error) {
+            NSLog(@"There was an error! %@", error);
+        }];
+        return;
     }
-    
-    else{
-        [FBRequestConnection startForMyFriendsWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error)
-         {
-             
-             if (!error && result)
-             {
-                 NSMutableArray* predicateArray=[[NSMutableArray alloc] init];
-               NSArray*  fetchedFriendData = [[NSArray alloc] initWithArray:[result objectForKey:@"data"]];
-                 
-                 NSLog(@"--%@---",fetchedFriendData);
-                 int i=0;
-                 for (i=0;i<fetchedFriendData.count-1;i++){
-                     // for each friend
-                    [predicateArray addObject: [NSString stringWithFormat: @"user/%@",[( (NSDictionary*) [fetchedFriendData objectAtIndex:i] ) objectForKey:@"id"]]];
-                     //build predicate array
-                 }
-                 
-                 //predicate is built
-                 NSArray* hardArray=[NSArray arrayWithArray:predicateArray];
-                 
-                 NSPredicate* cpredicate   =[  NSPredicate predicateWithFormat:@"sm_owner IN %@",hardArray];
-                 
-                 NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CorePortfolioHistory"];
-                 // query for coremodel for THIS user
-            
-                 
-                 [fetchRequest setPredicate:cpredicate];
-                 loadedRankings = [[NSMutableArray alloc] init];
-                 /**********START CODE BLOCK FOR REQUEST ACTION************/
-                 [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {
-                     //CorePortfolioHistory *yesterdayHist = [results objectAtIndex:0];
-                    for (CorePortfolioHistory *rank in results) {
-                         [loadedRankings addObject:rank];
-                     }
-                     NSLog(@"results: %@", results);
-                     [rankingsTable reloadData];
-                 } onFailure:^(NSError *error) {
-                     NSLog(@"There was an error! %@", error);
-                 }];
-                 
-
+    [FBRequestConnection startForMyFriendsWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error)
+     {
+         if (error || !result) return;
+         NSMutableArray* predicateArray=[[NSMutableArray alloc] init];
+         NSArray*  fetchedFriendData = [[NSArray alloc] initWithArray:[result objectForKey:@"data"]];
+         NSLog(@"--%@---",fetchedFriendData);
+         for (int i = 0; i < fetchedFriendData.count-1; i++){
+             // for each friend
+             [predicateArray addObject: [NSString stringWithFormat: @"user/%@",[( (NSDictionary*) [fetchedFriendData objectAtIndex:i] ) objectForKey:@"id"]]]; //build predicate array
+         }
+         NSArray* hardArray = [NSArray arrayWithArray:predicateArray];
+         NSPredicate* cpredicate = [NSPredicate predicateWithFormat:@"sm_owner IN %@",hardArray];
+         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CorePortfolioHistory"];
+         // query for coremodel for THIS user
+         [fetchRequest setPredicate:cpredicate];
+         loadedRankings = [[NSMutableArray alloc] init];
+         /**********START CODE BLOCK FOR REQUEST ACTION************/
+         [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {
+             //CorePortfolioHistory *yesterdayHist = [results objectAtIndex:0];
+             for (CorePortfolioHistory *rank in results) {
+                 [loadedRankings addObject:rank];
              }
+             NSLog(@"results: %@", results);
+             [rankingsTable reloadData];
+         } onFailure:^(NSError *error) {
+             NSLog(@"There was an error! %@", error);
          }];
-    }
-    
+     }];
 }
 
 - (void)didReceiveMemoryWarning

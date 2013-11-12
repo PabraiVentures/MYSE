@@ -77,7 +77,6 @@ static UIFont *detailFont = nil;
     
     CGContextSetFillColorWithColor(UIGraphicsGetCurrentContext(), [UIColor blackColor].CGColor);
     
-    
     [symbol drawInRect:CGRectMake(0, 2, [self symbolWidth], 26) withFont:symbolFont];
     [price drawInRect:CGRectMake(10 + [self symbolWidth], 2, [self priceWidth], 26) withFont:detailFont];
     [image drawInRect:CGRectMake([self symbolWidth] + [self percentWidth] + 23, 9, 12, 7)];

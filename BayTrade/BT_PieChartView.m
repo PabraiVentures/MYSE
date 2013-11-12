@@ -20,7 +20,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        //stockColors = [[NSMutableDictionary alloc] init];
         [self calculateCurrentPrices];
     }
     return self;
@@ -28,16 +27,9 @@
 
 -(void)calculateCurrentPrices
 {
-    //eventually just take from loaded values in splash screen
-    
+    //TODO just take from loaded values in splash screen
     totalPortfolioValue = 0;
     self.currentPrices = [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) currentStockPrices];
-    
-//    self.currentPrices = [[NSMutableArray alloc] init];
-//    for (CoreStock *stock in self.stocks) {
-//        NSLog(@"finding currentPrices");
-//        [self.currentPrices addObject:[Controller fetchQuotesFor:[NSArray arrayWithObject:stock.symbol]]];
-//    }
     totalPortfolioValue = self.userCache.coreModel.portfolio.totalportfoliovalue.doubleValue;
 }
 
