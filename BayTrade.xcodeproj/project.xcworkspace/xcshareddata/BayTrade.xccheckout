@@ -5,34 +5,34 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>56AE8FF0-7993-4147-B68B-75342BF33EED</string>
+	<string>E3233924-420F-47B4-AB1A-73EF95A31B6E</string>
 	<key>IDESourceControlProjectName</key>
 	<string>BayTrade</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>DC630F79-0A19-423C-BBB4-87970972736D</key>
-		<string>https://github.com/nate8185/MYSE.git</string>
+		<key>A2132BCC-15E8-440C-B63E-870B2B3E708D</key>
+		<string>https://github.com/PabraiVentures/MYSE.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>BayTrade.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>DC630F79-0A19-423C-BBB4-87970972736D</key>
+		<key>A2132BCC-15E8-440C-B63E-870B2B3E708D</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/nate8185/MYSE.git</string>
+	<string>https://github.com/PabraiVentures/MYSE.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>DC630F79-0A19-423C-BBB4-87970972736D</string>
+	<string>A2132BCC-15E8-440C-B63E-870B2B3E708D</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>DC630F79-0A19-423C-BBB4-87970972736D</string>
+			<string>A2132BCC-15E8-440C-B63E-870B2B3E708D</string>
 			<key>IDESourceControlWCCName</key>
 			<string>MYSE</string>
 		</dict>

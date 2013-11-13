@@ -45,6 +45,8 @@
 - (IBAction)logoutButtonClicked:(id)sender;
 - (NSMutableArray *) accountForPrevOwnedStock: (NSString *) symbol andInt: (int) amount andPrice: (double) price;
 - (void)searchAutocompleteEntriesWithSubstring:(NSString *)substring;
+-(double)getTotalBuyPriceIfPossibleWithSymbol:(NSString*)buyingSymbol andAmount: (int) amount;
 - (void) setCoreModel;
+-(void)initializeFBLoginView;
 
 @end
