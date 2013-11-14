@@ -56,7 +56,7 @@
 {
     CGFloat currentTime = 0;
     stockColors = [[NSMutableDictionary alloc] init];
-    for (int x = 0; x < [self.stocks count]; x++) {
+    for (int x = 0; x < [self.currentPrices count]; x++) {
         CoreStock *stock = [self.stocks objectAtIndex:x];
         float currentPrice = [[[self.currentPrices objectAtIndex:x] objectForKey:@"LastTradePriceOnly"] floatValue];
         float totalCurrentValue = currentPrice * stock.amount.floatValue;

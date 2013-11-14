@@ -37,10 +37,14 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated
-{
+{    [self calculateCurrentPrices];//must be first!
+
     self.userCache=[((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) userCache];
     self.stocks = [self.userCache.coreModel.portfolio.stocks allObjects];
     [self calculateCurrentPrices];
+
+  NSLog(@"lalala");
+  
     if (self.stocks.count >= 1)
         [self loadDetailForIndex:0];
 }
@@ -145,6 +149,7 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+  
     [self loadDetailForIndex:indexPath.row];
 }
 
