@@ -11,7 +11,9 @@
 #import "BT_TickerView.h"
 #import "BT_PieChartView.h"
 
-@interface BT_HomeViewController : UIViewController
+@interface BT_HomeViewController : UIViewController {
+    NSDate *lastUpdated;
+}
 
 @property (weak, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic,strong) Cache* userCache;

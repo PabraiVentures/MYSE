@@ -42,8 +42,22 @@
     [super didReceiveMemoryWarning];
 }
 
+/*Check if page has been updated in the last 1 minute.*/
 -(void)viewDidAppear:(BOOL)animated
 {
+    NSLog(@"last updated: %@", lastUpdated);
+    if (!lastUpdated) {
+        NSLog(@"initializing lastupdated.");
+        lastUpdated = [NSDate date];
+        return;
+    }
+    NSTimeInterval timeSinceUpdate = [lastUpdated timeIntervalSinceNow];
+    NSLog(@"time since update: %f", timeSinceUpdate);
+    if (timeSinceUpdate < -60) { //60 seconds
+        NSLog(@"updating. time since update: %f", timeSinceUpdate);
+        [(BT_AppDelegate*)[[UIApplication sharedApplication] delegate] downloadCurrentStocksInfo];
+        [self viewDidLoad];
+    }
     self.managedObjectContext = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
     [self loadWelcomeLabel];
     //[self loadChangeInRank];

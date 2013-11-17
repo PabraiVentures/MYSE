@@ -15,6 +15,7 @@
     double reservedSalePrice;
     NSString *saleSymbol;
     CoreStock *matchedSaleStock;
+    NSDate *lastUpdated;
 }
 - (IBAction)orderTypeChanged;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *orderTypeSegment;

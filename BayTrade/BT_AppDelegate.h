@@ -29,5 +29,7 @@
 
 @property (strong, nonatomic) CoreStock *selectedPortfolioStock;
 
+-(void)downloadCurrentStocksInfo;
+
 @end
 //goto https://developer.stackmob.com/ios-sdk/developer-guide#Datastore

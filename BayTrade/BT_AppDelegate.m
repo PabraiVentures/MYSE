@@ -19,6 +19,7 @@
 #import "CorePortfolio.h"
 #import "CoreModel.h"
 #import <CoreData/CoreData.h>
+#import "Controller.h"
 @class NSManagedObject;
 
 @implementation BT_AppDelegate
@@ -52,6 +53,26 @@
     }
     return didWork;
 }
+
+-(void)downloadCurrentStocksInfo
+{
+    NSLog(@"downloading current stocks info");
+    NSLog(@"usercache stocks: %@", self.userCache.coreModel.portfolio);
+    NSMutableArray *currentPrices = [[NSMutableArray alloc] init];
+    @try{
+        for (CoreStock *stock in self.userCache.coreModel.portfolio.stocks) {
+            [currentPrices addObject:[Controller fetchQuotesFor:[NSArray arrayWithObject:stock.symbol]]];
+        }
+    }
+    @catch(NSException* e){
+        NSLog(@"Error spashsscreen loading data\n%@",e);
+        [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setCurrentStockPrices:currentPrices];
+        [self performSelectorOnMainThread:@selector(done) withObject:nil waitUntilDone:NO];
+        return;
+    }
+    [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setCurrentStockPrices:currentPrices];
+}
+
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [FBAppEvents activateApp];
