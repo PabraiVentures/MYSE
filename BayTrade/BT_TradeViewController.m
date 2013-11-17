@@ -16,13 +16,14 @@
 #import "CoreModel.h"
 #import "CoreStock.h"
 #import "CorePortfolio.h"
+#import "StockOrder.h"
 #import <FacebookSDK/FacebookSDK.h>
 
 @interface BT_TradeViewController ()
 
 @end
 
-#define kSell 1
+#define kSell 0
 #define kBuy 1
 
 @implementation BT_TradeViewController
@@ -123,9 +124,13 @@
   double prc = 0.0;
   int amt = 0;
   for(CoreStock *stock in self.userCache.coreModel.portfolio.stocks) {
+    if ((stock.symbol!=NULL)) {
+      
+    
     prc = [[Controller currentPriceForSymbol:stock.symbol] doubleValue];
     amt = stock.amount.intValue;
     value += (prc * amt);
+    }
   }
   value += self.userCache.coreModel.portfolio.totalcashvalue.doubleValue;
   NSString *valString = [NSString stringWithFormat:@"$%.2f", value];
@@ -279,7 +284,26 @@
     NSLog(@"There was an error! %@", error);
   }];
 }
-
+-(void) makeOrderWithSymbol: (NSString*) symbol withPrice:(double)price andAmount:(int) amount andIsLong: (bool)islong andType: (int) type{
+  NSManagedObjectContext *moc = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
+  StockOrder* order=[NSEntityDescription insertNewObjectForEntityForName:@"StockOrder" inManagedObjectContext:moc];
+  [order setValue:[order assignObjectId] forKey:[order primaryKeyField]];
+  order.addedtolookup = false;
+  order.islongposition=[NSNumber numberWithInt: islong];
+  order.portfolio=self.userCache.coreModel.portfolio;
+  order.lasttimeprocessed=0;
+  order.price=[NSNumber numberWithDouble:price];
+  order.quantity=[NSNumber numberWithInt:amount];
+  order.status=@"created";
+  order.symbol=symbol;
+  order.tradetype=[NSNumber numberWithInt:type];
+  [self.managedObjectContext saveOnSuccess:^{
+    NSLog(@"You updated the model object with a new order!");
+  } onFailure:^(NSError *error) {
+    NSLog(@"There was an error! %@", error);
+  }];
+  
+}
 - (void) buy {
   NSLog(@"beginning buy");
   NSString *buyingSymbol = [self.symbolField.text uppercaseString];
@@ -296,6 +320,10 @@
   } onFailure:^(NSError *error) {
     NSLog(@"Error fetching: %@", error);
   }];
+  ///got he core model
+   int tradetype=self.orderTypeSegment.selectedSegmentIndex;
+  if (tradetype==0)self.priceField.text=@("0");
+  [self makeOrderWithSymbol:buyingSymbol withPrice:self.priceField.text.doubleValue andAmount:amount andIsLong:true andType:tradetype];
   [self setCoreModel];
   [self updateBuyPower];
   [self updateValue];
@@ -304,6 +332,7 @@
     NSLog(@"%@ : $%.2f\tamount:%i\n", s.symbol, s.buyprice.doubleValue, s.amount.intValue);
   }
   NSLog(@"ending buy");
+  self.priceField.text=@("0");
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -383,13 +412,16 @@
   self.userCache.coreModel.portfolio.totalcashvalue = [NSNumber numberWithDouble: (self.userCache.coreModel.portfolio.totalcashvalue.doubleValue + reservedSalePrice * amount)];
   
   [self.userCache addTradeEventFromStock:[CoreStock initWithSymbol:matchedSaleStock.symbol AndPrice:reservedSalePrice AndAmount:amount] withActionID: 0];
-  
+ int ordertype= self.orderTypeSegment.selectedSegmentIndex+3;
+  if (ordertype==3)self.priceField.text=@("0");
+  [self makeOrderWithSymbol:matchedSaleStock.symbol withPrice: self.priceField.text.doubleValue andAmount:amount andIsLong:true andType:ordertype];
   //SAVE COREMODEL TO STACKMOB
   [self.managedObjectContext saveOnSuccess:^{
     NSLog(@"Updated model by selling stock!");
   } onFailure:^(NSError *error) {
     NSLog(@"There was an error! %@", error);
   }];
+  self.priceField.text=@("0");
   [self updateBuyPower];
   [self updateValue];
 }
@@ -440,4 +472,9 @@
   self.symbolField.text = selectedCell.textLabel.text;
 }
 
+- (IBAction)orderTypeChanged {
+  if (self.orderTypeSegment.selectedSegmentIndex==0) {
+    self.priceField.hidden=true;
+  }else self.priceField.hidden=false;
+}
 @end

@@ -16,11 +16,14 @@
     NSString *saleSymbol;
     CoreStock *matchedSaleStock;
 }
+- (IBAction)orderTypeChanged;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *orderTypeSegment;
 @property (weak, nonatomic) IBOutlet UILabel *stockLabel1;
 @property (weak, nonatomic) IBOutlet UILabel *stockLabel2;
 @property (weak, nonatomic) IBOutlet UILabel *stockLabel3;
 @property (weak, nonatomic) IBOutlet UILabel *stockLabel4;
 @property (weak, nonatomic) IBOutlet UILabel *stockLabel5;
+@property (weak, nonatomic) IBOutlet UITextField *priceField;
 
 @property (weak, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) id<FBGraphUser> loggedInUser;
@@ -48,5 +51,7 @@
 -(double)getTotalBuyPriceIfPossibleWithSymbol:(NSString*)buyingSymbol andAmount: (int) amount;
 - (void) setCoreModel;
 -(void)initializeFBLoginView;
+-(void) makeOrderWithSymbol: (NSString*) symbol withPrice:(double)price andAmount:(int) amount andIsLong: (bool)islong andType: (int) type;
+
 
 @end

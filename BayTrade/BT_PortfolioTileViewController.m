@@ -130,21 +130,22 @@
     NSDictionary *data;
     @try {
         data = [self.currentPrices objectAtIndex:indexPath.row];
+      NSString *myStockPrice = data[@"LastTradePriceOnly"];
+      NSString *openPrice = data[@"Open"];
+      double percentChange = ([myStockPrice doubleValue] / [openPrice doubleValue] - 1) *100;
+      NSString *percentChangeString;
+      if (percentChange >= 0) percentChangeString = [NSString stringWithFormat: @"+%.2f", percentChange];
+      else percentChangeString = [NSString stringWithFormat: @"%.2f", percentChange];
+      
+      percentLabel.text = percentChangeString;
+
     }
     @catch (NSException *exception) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Uh Oh!" message:[NSString stringWithFormat:@"Can't get data! Error: %@", exception] delegate:self cancelButtonTitle:@"Okay." otherButtonTitles: nil];
         [alert show];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
-    NSString *myStockPrice = data[@"LastTradePriceOnly"];
-    NSString *openPrice = data[@"Open"];
-    double percentChange = ([myStockPrice doubleValue] / [openPrice doubleValue] - 1) *100;
-    NSString *percentChangeString;
-    if (percentChange >= 0) percentChangeString = [NSString stringWithFormat: @"+%.2f", percentChange];
-    else percentChangeString = [NSString stringWithFormat: @"%.2f", percentChange];
-
-    percentLabel.text = percentChangeString;
-    return cell;
+       return cell;
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath

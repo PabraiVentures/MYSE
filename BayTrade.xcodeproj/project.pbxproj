@@ -64,6 +64,7 @@
 		93E19FB817A36420000D60B5 /* BayTradeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E19FB717A36420000D60B5 /* BayTradeTests.m */; };
 		93E19FC317A36492000D60B5 /* BT_TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E19FC217A36492000D60B5 /* BT_TabBarController.m */; };
 		93E19FCB17A365E9000D60B5 /* Cache.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E19FC817A365E8000D60B5 /* Cache.m */; };
+		93F4DEB0183821490004D8BA /* StockOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F4DEAF183821490004D8BA /* StockOrder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -209,6 +210,8 @@
 		93E19FC217A36492000D60B5 /* BT_TabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BT_TabBarController.m; sourceTree = "<group>"; };
 		93E19FC717A365E8000D60B5 /* Cache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cache.h; sourceTree = "<group>"; };
 		93E19FC817A365E8000D60B5 /* Cache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cache.m; sourceTree = "<group>"; };
+		93F4DEAE183821490004D8BA /* StockOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StockOrder.h; path = ../StockOrder.h; sourceTree = "<group>"; };
+		93F4DEAF183821490004D8BA /* StockOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StockOrder.m; path = ../StockOrder.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -295,6 +298,8 @@
 		525122A317D7759100A8782B /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				93F4DEAE183821490004D8BA /* StockOrder.h */,
+				93F4DEAF183821490004D8BA /* StockOrder.m */,
 				7DF8F95517BC7F91005553A1 /* User.h */,
 				7DF8F95617BC7F91005553A1 /* User.m */,
 				93E19FC717A365E8000D60B5 /* Cache.h */,
@@ -602,6 +607,7 @@
 			files = (
 				52FD82AC180F24D000DCF967 /* BT_GraphAnimationView.m in Sources */,
 				528E8BA417E37BD2006E21FB /* UIColor+BTFlatColors.m in Sources */,
+				93F4DEB0183821490004D8BA /* StockOrder.m in Sources */,
 				93E19F8817A36420000D60B5 /* main.m in Sources */,
 				93E19F8C17A36420000D60B5 /* BT_AppDelegate.m in Sources */,
 				93E19F9817A36420000D60B5 /* BT_HomeViewController.m in Sources */,

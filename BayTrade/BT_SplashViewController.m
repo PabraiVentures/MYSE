@@ -62,15 +62,25 @@
     NSLog(@"downloading current stocks info");
     NSLog(@"usercache stocks: %@", self.userCache.coreModel.portfolio);
     float stockNum = 1; //TODO
-    float numStocks = self.userCache.coreModel.portfolio.stocks.count; //TODO
+    float numStocks = self.userCache.coreModel.portfolio.stocks.count-1; //TODO
     NSMutableArray *currentPrices = [[NSMutableArray alloc] init];
-    
+  @try{
     for (CoreStock *stock in self.userCache.coreModel.portfolio.stocks) {
         NSNumber *progPercent = [NSNumber numberWithFloat:(stockNum / numStocks)];
         stockNum++; // roll into single YQL request?
         [currentPrices addObject:[Controller fetchQuotesFor:[NSArray arrayWithObject:stock.symbol]]];
         [self performSelectorOnMainThread:@selector(setProgressStatus:) withObject:progPercent waitUntilDone:YES];
     }
+  }
+  @catch(NSException* e){
+    NSLog(@"Error spashsscreen loading data\n%@",e);
+    [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setCurrentStockPrices:currentPrices];
+    NSLog(@"load success; going to trade view");
+    [self performSelectorOnMainThread:@selector(done) withObject:nil waitUntilDone:NO];
+
+    return;
+  }
+  
     [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setCurrentStockPrices:currentPrices];
     NSLog(@"load success; going to trade view");
     [self performSelectorOnMainThread:@selector(done) withObject:nil waitUntilDone:NO];
