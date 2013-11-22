@@ -22,13 +22,13 @@ def executeOrder(ticker,portfolio,price,amount,type,stockorder_id,client):
 				body={"amount":(i['amount']-amount)}
 			str2="corestock/"+i['corestock_id']
 			client._execute(1,"PUT",str2,body).read()
-      #now need to make trade event
-      body={"acionid":type,"tradeamount":amount,"tradeprice":price,"ticker"ticker,}
-      str3="coretradeevent"
-      client._execute(1,"PUT",str3,body).read()
+	#now need to make trade event
+	body={"acionid":type,"tradeamount":amount,"tradeprice":price,"ticker":ticker}
+	str3="coretradeevent"
+	client._execute(1,"PUT",str3,body).read()
 
 		
-			break
+	#break
 	if foundstock==0:
 		body={"amount":amount,"portfolio":port['coreportfolio_id'],"symbol":ticker,"sm_owner":port['sm_owner']}
 		str2="corestock"
@@ -44,7 +44,7 @@ def executeOrder(ticker,portfolio,price,amount,type,stockorder_id,client):
 		 
 while 2>0:
 	try:
-		sleep(300)
+		sleep(3)
 		client=cl.BaseClient("api.mob1.stackmob.com","ef598654-95fb-4ecd-8f13-9309f2fcad0f", "9ac9ecaa-21eb-4ef2-8ddc-10ce40ca67e4")
 		w=client._execute(1,"GET","stockorder",None)
 		u= w.read()

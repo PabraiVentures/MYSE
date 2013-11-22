@@ -127,8 +127,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "235"
             endingLineNumber = "235"
-            landmarkName = "-getTotalBuyPriceIfPossibleWithSymbol:andAmount:"
-            landmarkType = "5">
+            landmarkName = "@implementation BT_TradeViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -156,11 +156,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BayTrade/BT_TradeViewController.m"
-            timestampString = "406338359.827665"
+            timestampString = "406823856.185578"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "324"
-            endingLineNumber = "324"
+            startingLineNumber = "310"
+            endingLineNumber = "310"
             landmarkName = "-buy"
             landmarkType = "5">
          </BreakpointContent>

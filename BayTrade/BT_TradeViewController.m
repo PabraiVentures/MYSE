@@ -4,7 +4,7 @@
 //
 //  Created by Nathan Pabrai on 7/26/13.
 //  Copyright (c) 2013 byteNsell. All rights reserved.
-//471 lines
+//463 lines
 
 #import "BT_TradeViewController.h"
 #import "BT_TabBarController.h"
@@ -286,21 +286,7 @@
   return thestock;
 }
 
-/*- (void) addStockToModelWithSymbol: (NSString*)buyingSymbol andPrice:(double)price andAmount:(int)amount {
-  [self.userCache addTradeEventFromStock:[CoreStock initWithSymbol:buyingSymbol AndPrice:price AndAmount:amount] withActionID: 1];
-  //subtract trade value from totalcashvalue
-  double cashMoney =  self.userCache.coreModel.portfolio.totalcashvalue.doubleValue - (price * amount);
-  self.userCache.coreModel.portfolio.totalcashvalue = [NSNumber numberWithDouble: cashMoney];
-  CoreStock* thestock = [self stockForCorePortfolio:buyingSymbol andAmount:amount andPrice:price];
-  //ADD STOCK TO COREMODEL.PORTFOLIO TO BE SAVED LATER
-  [self.userCache.coreModel.portfolio addStocksObject:thestock];// the stock is now in the portfolio
-  //SAVE COREMODEL TO STACKMOB
-  [self.managedObjectContext saveOnSuccess:^{
-    NSLog(@"You updated the model object with a new stock buy!");
-  } onFailure:^(NSError *error) {
-    NSLog(@"There was an error! %@", error);
-  }];
-}*/
+
 -(void) makeOrderWithSymbol: (NSString*) symbol withPrice:(double)price andAmount:(int) amount andIsLong: (bool)islong andType: (int) type{
   NSManagedObjectContext *moc = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
   StockOrder* order=[NSEntityDescription insertNewObjectForEntityForName:@"StockOrder" inManagedObjectContext:moc];
@@ -327,17 +313,6 @@
   int amount = [self.amountField.text intValue];
   double price = reservedBuyPrice;
   NSLog(@"totalcashvalue: %@", self.userCache.coreModel.portfolio.totalcashvalue);
-  //get the model, update and send back to stackmob
-//  NSFetchRequest *fetchRequest = [self getRequestForUserCoreModel];
-  /**********START CODE BLOCK FOR REQUEST ACTION************/
- // [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {
-//    NSManagedObject* myModel = [results objectAtIndex:0];
-//    self.userCache.coreModel = (CoreModel*) myModel;
-//    [self addStockToModelWithSymbol:buyingSymbol andPrice:price andAmount:amount];
-//  } onFailure:^(NSError *error) {
-//    NSLog(@"Error fetching: %@", error);
- // }];
-  ///got he core model
    int tradetype=self.orderTypeSegment.selectedSegmentIndex;
   if (tradetype==0)self.priceField.text=@("0");
   [self makeOrderWithSymbol:buyingSymbol withPrice:self.priceField.text.doubleValue andAmount:amount andIsLong:true andType:tradetype];
@@ -419,16 +394,7 @@
 
 - (void) sell {
   int amount = [self.amountField.text intValue];
-  //if selling all, just delete stock from portfolio, THEN completely delete stock
- // if(matchedSaleStock.amount.intValue == amount)
- // {
- //   [self.userCache.coreModel.portfolio removeStocksObject:matchedSaleStock];
- //   [self.managedObjectContext deleteObject:matchedSaleStock];
-//  }
- /* else */matchedSaleStock.amount = [NSNumber numberWithInt:(matchedSaleStock.amount.intValue - amount)]; //only selling a portion of your chosen stock
-  //self.userCache.coreModel.portfolio.totalcashvalue = [NSNumber numberWithDouble: (self.userCache.coreModel.portfolio.totalcashvalue.doubleValue + reservedSalePrice * amount)];
-  
-  //[self.userCache addTradeEventFromStock:[CoreStock initWithSymbol:matchedSaleStock.symbol AndPrice:reservedSalePrice AndAmount:amount] withActionID: 0];
+matchedSaleStock.amount = [NSNumber numberWithInt:(matchedSaleStock.amount.intValue - amount)]; //only selling a portion of your chosen stock
  int ordertype= self.orderTypeSegment.selectedSegmentIndex+3;
   if (ordertype==3)self.priceField.text=@("0");
   [self makeOrderWithSymbol:matchedSaleStock.symbol withPrice: self.priceField.text.doubleValue andAmount:amount andIsLong:true andType:ordertype];
