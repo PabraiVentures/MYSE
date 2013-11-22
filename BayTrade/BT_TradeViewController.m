@@ -237,11 +237,11 @@
   NSString *buyingSymbol;
   if([self.symbolField.text length] > 0) buyingSymbol = [self.symbolField.text uppercaseString];
   NSLog(@"buying symbol: %@", buyingSymbol);
-  int amount;
+  int amount=0;
   int amountForHistory;
   double totalPrice=-1;
   if([self.amountField.text length] > 0) amount = [self.amountField.text intValue];
-  else amount = 0;
+ // else amount = 0;
   amountForHistory = amount;
 
   totalPrice=[self getTotalBuyPriceIfPossibleWithSymbol: buyingSymbol andAmount: amount ];
@@ -260,6 +260,7 @@
     return -1;
   }
   NSLog(@"data: %@", data);
+  if (data== NULL  )return -1;
   NSString *myStockPrice = data[@"LastTradePriceOnly"];
   if(myStockPrice == NULL || amount == 0) [self showErrorAlert:@"Error" andMessage:@"Invalid symbol or amount"];
   else {
