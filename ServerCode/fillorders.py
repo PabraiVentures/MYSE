@@ -13,15 +13,21 @@ def executeOrder(ticker,portfolio,price,amount,type,stockorder_id,client):
 	str1="coreportfolio/"+portfolio
 	port= json.loads(client._execute(0,"GET",str1,None).read())
 	foundstock=0
-	for i in port['stocks']:
-		if ticker == i['symbol']:
-			foundstock=1
-			if type<3:
-				body={"amount":(amount+i['amount'])}
-			if type>=3:
-				body={"amount":(i['amount']-amount)}
-			str2="corestock/"+i['corestock_id']
-			client._execute(1,"PUT",str2,body).read()
+	if 'stocks' in port:
+		for i in port['stocks']:
+			if ticker == i['symbol']:
+				print "match"
+				foundstock=1
+				if type<3:
+					body={"amount":(amount+i['amount'])}
+				if type>=3:
+					body={"amount":(i['amount']-amount)}
+				str2="corestock/"+i['corestock_id']
+				client._execute(1,"PUT",str2,body).read()
+				
+	#NEED TO PUT STOCK IN ARRAY
+	if foundstock is 0:
+		print " didnt match stock"
 	#now need to make trade event
 	body={"acionid":type,"tradeamount":amount,"tradeprice":price,"ticker":ticker}
 	str3="coretradeevent"
@@ -42,9 +48,9 @@ def executeOrder(ticker,portfolio,price,amount,type,stockorder_id,client):
 	
 	client._execute(1,"DELETE","stockorder/"+stockorder_id,None).read()
 		 
-while 2>0:
+if 2>0:
 	try:
-		sleep(3)
+		sleep(.2)
 		client=cl.BaseClient("api.mob1.stackmob.com","ef598654-95fb-4ecd-8f13-9309f2fcad0f", "9ac9ecaa-21eb-4ef2-8ddc-10ce40ca67e4")
 		w=client._execute(1,"GET","stockorder",None)
 		u= w.read()
@@ -65,6 +71,8 @@ while 2>0:
 					executeOrder(i['symbol'],i['portfolio'],currprice,i['quantity'],i['tradetype'],i['stockorder_id'],client)
 			
 	except:
-		n=2
+		print "error", sys.exc_info()[0]
+		raise
+	
 	#know that type is not market so need to check current price
 
