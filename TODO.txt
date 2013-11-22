@@ -62,3 +62,4 @@ FINAL STEPS
 (_)Get Tom to make MYSE logo
 (_)Finalize home screen with labels on the pie chart
 (_)Talk to the non dev team this week about progress and our demands of them
+(_)Portfolio Value vs SP500 chart
