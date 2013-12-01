@@ -1,4 +1,63 @@
+  [M][Y]
+  [S][E]
+
+FINAL STEPS
+
+Functional
 (_)encapsulate all networks functions in try/catch
+(_)Tutorial on first time opening (just pictures of how to trade) with skipping option
+(_)portfolio view - refresh tiles
+(_)failsafe for all YQL calls
+(_)graph account rank & portfolio value over time in homeview
+(_)Portfolio Value vs SP500 chart
+(_)Portfolio view- multiple timespan graphs
+(_)Error checking in iOS code for edge stock cases and market hours
+(_)Error checking in Server code for edge stock cases and market hours
+(_)Speed up iOS code: The bottleneck is networking calls
+(_)Speed up server code: The bottleneck is networking calls
+(_)Use Yahoo accounts to increase YQL caps for servers
+(_)Push notifications to users
+
+Esthetic
+(_)homeviewcontroller - picture
+(_)homeviewcontroller - change in ranking today
+(_)homeviewcontroller - total stocks value
+(_)Financial News ticker (just get a feed)
+(_)Put stock price ticker everywhere
+(_)Put account value and rank everywhere
+(_)Help buttons on each page with detailed explanations
+(_)portfolio detail view - buy/sell option ->takes you to trade page with stock entered
+(_)fb pics of friends on rankings
+(_)make pie chart legend scrollable
+(_)rotate pie chart when scrolling through legend
+(_)details in legend
+(_)Good backgrounds
+(_)Finalize trade screen and put stock info on it
+(_)Finalize portfolio screen by adding info to tiles, reformatting detail text and 
+	allowing the user to pick the chart timescale
+
+(_)MY(\n)SE logo
+(_)Finalize home screen with labels on the pie chart
+
+
+
+
+(X)rankings server code
+
+(X)homeviewcontroller - stocks you own the most of
+(X)label pie chart
+(X)splash screen animation
+(X)splash screen - load all data upon app open before loading any views
+(X)fix - buying power updated for last trade
+(X)remove redundant setCoreModel calls
+(X)portfolio view - collection view
+(X)portfolio view - merge detail view into portfolio subview
+(X)portfolio view - asynchronous to avoid lag
+(X)homeviewcontroller - ticker scrolling view
+(X)show how much of stock you can buy
+(X)pie chart drawing
+(X)symbol lookup in trade view controller
+(X)homeviewcontroller - name
 (X)clean up all network-related functions
 (X)clean up updateOwnedStocks function
 (X)figure out why we need to use setCoreModel function so many times
@@ -21,45 +80,3 @@
 (X)confirm sale with user first
 (X)iOS 7 capabilities
 (X)portfolio detail view
-(_)history detail view
-(X)symbol lookup in trade view controller
-(X)homeviewcontroller - name
-(_)homeviewcontroller - picture
-(_)homeviewcontroller - change in ranking today
-(X)homeviewcontroller - ticker scrolling view
-(_)homeviewcontroller - total stocks value
-(X)homeviewcontroller - stocks you own the most of
-(_)homeviewcontroller - account performance over time
-(_)merge cache with coremodel.m
-(X)remove redundant setCoreModel calls
-(X)portfolio view - collection view
-(X)portfolio view - merge detail view into portfolio subview
-(X)portfolio view - asynchronous to avoid lag
-(_)portfolio view - refresh tiles
-(_)portfolio detail view - buy/sell option
-(X)fix - buying power updated for last trade
-(_)rankings server code
-(X)splash screen - load all data upon app open before loading any views
-(_)failsafe for all YQL calls
-(X)show how much of stock you can buy
-(X)pie chart drawing
-(_)fb pics of friends on rankings
-(_)open price N/A workaround (midnight issue)
-(_)portfolio ranking history accessible from iOS
-(_)new table of user_id and ranking
-(X)label pie chart
-(_)graph account rank & portfolio value over time in homeview
-(_)make pie chart legend scrollable
-(_)rotate pie chart when scrolling through legend?
-(_)details in legend?
-(X)splash screen animation
-
-FINAL STEPS
-(_)Good backgrounds
-(_)Finalize trade screen and put stock info on it
-(_)Finalize portfolio screen by adding info to tiles, reformatting detail text and 
-	allowing the user to pick the chart timescale
-(_)Get Tom to make MYSE logo
-(_)Finalize home screen with labels on the pie chart
-(_)Talk to the non dev team this week about progress and our demands of them
-(_)Portfolio Value vs SP500 chart
