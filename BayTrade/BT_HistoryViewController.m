@@ -46,7 +46,8 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated
-{    
+{
+    NSLog(@"view did appear, trying to load stocks.");
     //get the trade events for this user
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CoreTradeEvent"];
     // query for tradeevents for THIS user
@@ -102,12 +103,26 @@
     
     double doMath = event.tradeamount.intValue * event.tradeprice.doubleValue;
     
-    NSString *action = @"Sold";
-    if (event.actionid.intValue == 1)
-    {
-        action = @"Bought";
+    NSString *action = @"";
+    if (event.actionid.intValue == 0) {
+        action = @"Market bought";
     }
-
+    else if (event.actionid.intValue == 1) {
+        action = @"Limit bought";
+    }
+    else if (event.actionid.intValue == 2) {
+        action = @"Stop bought";
+    }
+    else if (event.actionid.intValue == 3) {
+        action = @"Market sold";
+    }
+    else if (event.actionid.intValue == 4) {
+        action = @"Limit sold";
+    }
+    else if (event.actionid.intValue == 5) {
+        action = @"Stop sold";
+    }
+    else NSLog(@"error in event actionID -- no corresponding action for id #%i", event.actionid.intValue);
     NSString *actionDetail = [NSString stringWithFormat:@"\n%@ %@ shares of %@\nTrade Value: $%.2f x %@ = $%.2f", action, event.tradeamount, [event.ticker uppercaseString], [event.tradeprice doubleValue], event.tradeamount, doMath];
     
     cell.textLabel.text = [self timeString:event.time withAction:action];

@@ -53,7 +53,8 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    double maxRadius = self.frame.size.height / 2;
+    double maxRadius = 50;
+    NSLog(@"max radius: %f", maxRadius);
     CGFloat currentTime = 0;
     stockColors = [[NSMutableDictionary alloc] init];
     for (int x = 0; x < [self.currentPrices count]; x++) {
@@ -66,12 +67,12 @@
         CGFloat starttime = currentTime; //1 pm = 1/6 rad
         CGFloat endtime = starttime+((2*M_PI)*percentOfPie);  //6 pm = 1 rad
         currentTime = endtime;
-        CGFloat relativePrice = currentPrice/stock.buyprice.floatValue;
+        CGFloat relativePrice = (stock.buyprice.floatValue != 0 ? currentPrice/stock.buyprice.floatValue : 0);
         
         CGFloat radius = relativePrice;
         NSLog(@"radius1: %f", radius);
-        if (relativePrice > 1){
-            radius = 1+(log(relativePrice)/log(1.4));//equation to slightly exaggerate positive gains for better visualization
+        if (relativePrice > 1) {
+            radius = 1 + (log(relativePrice)/log(1.4));//equation to slightly exaggerate positive gains for better visualization
         }
         NSLog(@"RADIUS: %f", radius);
         radius *= maxRadius;
@@ -92,7 +93,7 @@
         [arc fill];
     }
     //rest is CASH
-    int radius = 70;
+    int radius = maxRadius;
     CGPoint center = CGPointMake(self.frame.size.width*2/3, self.frame.size.height*1/2);
     UIBezierPath *arc = [UIBezierPath bezierPath]; //empty path
     [arc moveToPoint:center];

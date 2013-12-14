@@ -15,12 +15,13 @@
 
 @interface Cache : NSObject
 
+@property (weak, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain) NSMutableArray* eventArray;
 @property (nonatomic, retain) NSString* userID;
 @property (nonatomic, retain) CoreModel* coreModel;
 
 -(void) addTradeEventFromStock:(CoreStock*) theStock withActionID: (int) actionID;
-
+-(void) updateCoreModel;
 +(void) makeNewModelWithFBID:(NSString*)userID;
 
 @end

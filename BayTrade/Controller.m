@@ -62,7 +62,7 @@
 //    <#statements#>
 //  }
     NSDictionary *quote = [Controller fetchQuotesFor:[NSArray arrayWithObject:symbol]];
-  NSLog(@" ++++++ OUT\n %@%@",symbol,quote);
+    NSLog(@" ++++++ OUT\n %@%@",symbol,quote);
     return quote[@"LastTradePriceOnly"];
 }
 

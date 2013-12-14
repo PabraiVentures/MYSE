@@ -24,7 +24,7 @@
 
 @implementation BT_AppDelegate
 @synthesize managedObjectModel=_managedObjectModel;
-@synthesize loginView, selectedPortfolioStock;
+@synthesize loginView, selectedPortfolioStock, userCache;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -38,7 +38,21 @@
     self.userCache = [[Cache alloc] init]; //TODO should this be here?
     self.userCache.userID = [[NSUserDefaults standardUserDefaults] objectForKey:@"userID"];
     NSLog(@"did finish launching with options");
+    [self performSelectorInBackground:@selector(updateCoreModelInBackground) withObject:nil];
     return YES;
+}
+
+- (void)updateCoreModelInBackground
+{
+    sleep(60.0);
+    [self performSelectorInBackground:@selector(updateCoreModel) withObject:nil];
+    [self performSelectorInBackground:@selector(updateCoreModelInBackground) withObject:nil];
+}
+
+- (void)updateCoreModel
+{
+    NSLog(@"updating core model");
+    [userCache updateCoreModel];
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
@@ -59,12 +73,12 @@
     NSLog(@"downloading current stocks info");
     NSLog(@"usercache stocks: %@", self.userCache.coreModel.portfolio);
     NSMutableArray *currentPrices = [[NSMutableArray alloc] init];
-    @try{
+    @try {
         for (CoreStock *stock in self.userCache.coreModel.portfolio.stocks) {
             [currentPrices addObject:[Controller fetchQuotesFor:[NSArray arrayWithObject:stock.symbol]]];
         }
     }
-    @catch(NSException* e){
+    @catch(NSException* e) {
         NSLog(@"Error spashsscreen loading data\n%@",e);
         [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setCurrentStockPrices:currentPrices];
         [self performSelectorOnMainThread:@selector(done) withObject:nil waitUntilDone:NO];
@@ -73,6 +87,11 @@
     [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setCurrentStockPrices:currentPrices];
 }
 
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    NSLog(@"received notification.");
+    [self updateCoreModel];
+}
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [FBAppEvents activateApp];

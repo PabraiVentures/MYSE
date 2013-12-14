@@ -12,6 +12,7 @@
 #import "BT_LoginViewController.h"
 #import "CoreStock.h"
 #import "Cache.h"
+#import "BT_TradeViewController.h"
 
 @class SMCoreDataStore;
 @class SMClient;
