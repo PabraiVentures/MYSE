@@ -22,7 +22,7 @@ class BaseClient:
 			headers["X-Stackmob-Expand"]="1"
 		headers["Content-Type"] = "application/json"
 		#headers["Version"]="0"
-		self.connection.set_debuglevel(1)
+		self.connection.set_debuglevel(0)
 		bodyString = ""
 		if(body != None):
 			bodyString = json.dumps(body)
