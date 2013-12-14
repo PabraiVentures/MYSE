@@ -17,6 +17,7 @@ Functional
 (_)Speed up server code: The bottleneck is networking calls
 (_)Use Yahoo accounts to increase YQL caps for servers
 (_)Push notifications to users
+(_)In history have 1 selection for pending, and one for all orders
 
 Esthetic
 (_)homeviewcontroller - picture

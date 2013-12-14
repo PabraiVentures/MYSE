@@ -24,14 +24,20 @@ def executeOrder(ticker,portfolio,price,amount,type,stockorder_id,client):
 					body={"amount":(i['amount']-amount)}
 				str2="corestock/"+i['corestock_id']
 				client._execute(1,"PUT",str2,body).read()
+
 				
 	#NEED TO PUT STOCK IN ARRAY
+	
 	if foundstock is 0:
 		print " didnt match stock"
 	#now need to make trade event
-	body={"acionid":type,"tradeamount":amount,"tradeprice":price,"ticker":ticker}
+	body={"actionid":type,"tradeamount":amount,"tradeprice":price,"ticker":ticker}
 	str3="coretradeevent"
 	client._execute(1,"PUT",str3,body).read()
+	
+	
+	
+	
 
 		
 	#break
@@ -39,6 +45,24 @@ def executeOrder(ticker,portfolio,price,amount,type,stockorder_id,client):
 		body={"amount":amount,"portfolio":port['coreportfolio_id'],"symbol":ticker,"sm_owner":port['sm_owner']}
 		str2="corestock"
 		client._execute(1,"POST",str2,body).read()
+		
+		
+		sleep(.5)
+		str1="corestock"
+		body={"portfolio":portfolio ,"symbol":ticker }
+		stock=json.loads(client._execute(0,"GET",str1,body).read())
+		print port
+		stockid=stock[0]['corestock_id']
+		
+		body=[stockid]
+		str3="coreportfolio/"+portfolio+"/stocks"
+		#print "BODY: " + body+ "STRING: " +str3 
+		json.loads(client._execute(0,"PUT",str3,body).read())
+		print "connected stock to portfolio"	
+	#got stock id now need to put in portfolio's stocks
+		
+#
+
 	if type<3:
 		body={"totalcashvalue":port['totalcashvalue']-price*amount}
 	else:
