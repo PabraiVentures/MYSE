@@ -47,7 +47,7 @@
 {
     NSLog(@"last updated: %@", lastUpdated);
     if (!lastUpdated) {
-        NSLog(@"initializing lastupdated.");
+        NSLog(@"initializing lastupdated in home.");
         lastUpdated = [NSDate date];
         return;
     }

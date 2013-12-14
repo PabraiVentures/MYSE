@@ -52,11 +52,12 @@
 - (void) viewDidAppear:(BOOL)animated {
     NSLog(@"last updated: %@", lastUpdated);
     if (!lastUpdated) {
-        NSLog(@"initializing lastupdated.");
+        NSLog(@"initializing lastupdated in trade.");
         lastUpdated = [NSDate date];
         return;
     }
     NSTimeInterval timeSinceUpdate = [lastUpdated timeIntervalSinceNow];
+    NSLog(@"here");
     NSLog(@"time since update: %f", timeSinceUpdate);
     if (timeSinceUpdate < -60) { //60 seconds
         NSLog(@"updating. time since update: %f", timeSinceUpdate);
@@ -264,14 +265,16 @@
   NSString *myStockPrice = data[@"LastTradePriceOnly"];
   if(myStockPrice == NULL || amount == 0) [self showErrorAlert:@"Error" andMessage:@"Invalid symbol or amount"];
   else {
-    reservedBuyPrice = [myStockPrice doubleValue];
-    double totalPrice = reservedBuyPrice * amount;
-    NSLog(@"totalcashval: %@", self.userCache.coreModel.portfolio.totalcashvalue);
-    if (totalPrice > self.userCache.coreModel.portfolio.totalcashvalue.doubleValue) {
-      [self showErrorAlert:@"Not enough cash!" andMessage:[NSString stringWithFormat:@"You don't have enough money to buy %i shares of %@ at %.2f.", amount, buyingSymbol, reservedBuyPrice]];
-      return -1;
-    }
-    return totalPrice;
+      NSLog(@"before");
+      reservedBuyPrice = [myStockPrice doubleValue];
+      NSLog(@"after");
+      double totalPrice = reservedBuyPrice * amount;
+      NSLog(@"totalcashval: %@", self.userCache.coreModel.portfolio.totalcashvalue);
+      if (totalPrice > self.userCache.coreModel.portfolio.totalcashvalue.doubleValue) {
+          [self showErrorAlert:@"Not enough cash!" andMessage:[NSString stringWithFormat:@"You don't have enough money to buy %i shares of %@ at %.2f.", amount, buyingSymbol, reservedBuyPrice]];
+          return -1;
+      }
+      return totalPrice;
   }
   return -1;
 
@@ -302,7 +305,8 @@
   order.symbol=symbol;
   order.tradetype=[NSNumber numberWithInt:type];
   [self.managedObjectContext saveOnSuccess:^{
-    NSLog(@"You updated the model object with a new order!");
+      NSLog(@"You updated the model object with a new order!");
+      [self showErrorAlert:@"Order Placed!" andMessage:@"Your order has been placed. It will execute once the conditions of the order are met."];
   } onFailure:^(NSError *error) {
     NSLog(@"There was an error! %@", error);
   }];
@@ -312,7 +316,6 @@
   NSLog(@"beginning buy");
   NSString *buyingSymbol = [self.symbolField.text uppercaseString];
   int amount = [self.amountField.text intValue];
-  double price = reservedBuyPrice;
   NSLog(@"totalcashvalue: %@", self.userCache.coreModel.portfolio.totalcashvalue);
    int tradetype=self.orderTypeSegment.selectedSegmentIndex;
   if (tradetype==0)self.priceField.text=@("0");

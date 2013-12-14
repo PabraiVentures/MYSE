@@ -37,7 +37,7 @@
 {
     legendView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width/2, self.frame.size.height)];
     int legendHeight = legendView.frame.size.height;
-    int itemHeight = legendHeight / stockColors.count;
+    int itemHeight = (stockColors.count > 0? legendHeight / stockColors.count : 1);
     int currentHeight = 0;
     for (NSString *key in stockColors) {
         UIColor *color = stockColors[key];
@@ -51,9 +51,9 @@
     [self addSubview:legendView];
 }
 
-// An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
+    double maxRadius = self.frame.size.height / 2;
     CGFloat currentTime = 0;
     stockColors = [[NSMutableDictionary alloc] init];
     for (int x = 0; x < [self.currentPrices count]; x++) {
@@ -68,12 +68,13 @@
         currentTime = endtime;
         CGFloat relativePrice = currentPrice/stock.buyprice.floatValue;
         
-        CGFloat standardRadius = 70;
-        CGFloat radius = standardRadius*relativePrice;
+        CGFloat radius = relativePrice;
+        NSLog(@"radius1: %f", radius);
         if (relativePrice > 1){
-            radius = standardRadius*(1+(log(relativePrice)/log(1.4)));//equation to slightly exaggerate positive gains for better visualization
+            radius = 1+(log(relativePrice)/log(1.4));//equation to slightly exaggerate positive gains for better visualization
         }
-
+        NSLog(@"RADIUS: %f", radius);
+        radius *= maxRadius;
         //draw arc
         CGPoint center = CGPointMake(self.frame.size.width*2/3, self.frame.size.height*1/2);
         UIBezierPath *arc = [UIBezierPath bezierPath]; //empty path
