@@ -12,18 +12,26 @@ def executeOrder(ticker,portfolio,price,amount,type,stockorder_id,client):
 	print ticker+" "+portfolio+" "+str(price)+" "+str(amount)+" "+str(type)+" "+stockorder_id
 	str1="coreportfolio/"+portfolio
 	port= json.loads(client._execute(0,"GET",str1,None).read())
-	foundstock=0
+	foundstock=0;
+	overflow=0
+	deleted=0
 	if 'stocks' in port:
 		for i in port['stocks']:
 			if ticker == i['symbol']:
 				print "match"
 				foundstock=1
-				if type<3:
+				if type<3 and (port['totalcashvalue'] >= price*amount):
 					body={"amount":(amount+i['amount']),"buyprice":(i['buyprice']*i['amount']+price*amount)/(i['amount']+amount)}
-				if type>=3:
+				if type>=3 :
 					body={"amount":(i['amount']-amount)}
-				str2="corestock/"+i['corestock_id']
-				client._execute(1,"PUT",str2,body).read()
+					if (i['amount']-amount) <= 0:
+						deleted=1
+						overflow=i['amount']-amount
+						client._execute(1,"DELETE","corestock/"+i['corestock_id'],None).read()
+
+				if not deleted:		
+					str2="corestock/"+i['corestock_id']
+					client._execute(1,"PUT",str2,body).read()
 
 				
 	#NEED TO PUT STOCK IN ARRAY
@@ -42,7 +50,7 @@ def executeOrder(ticker,portfolio,price,amount,type,stockorder_id,client):
 
 		
 	#break
-	if foundstock==0:
+	if foundstock==0 and not deleted:
 		body={"amount":amount,"portfolio":port['coreportfolio_id'],"symbol":ticker,"sm_owner":port['sm_owner'],"buyprice":price}
 		str2="corestock"
 		client._execute(1,"POST",str2,body).read()
@@ -67,7 +75,11 @@ def executeOrder(ticker,portfolio,price,amount,type,stockorder_id,client):
 	if type<3:
 		body={"totalcashvalue":port['totalcashvalue']-price*amount}
 	else:
-		body={"totalcashvalue":port['totalcashvalue']+price*amount}
+		if overflow>0:
+			body={"totalcashvalue":port['totalcashvalue']+price*(amount+overflow)}
+		else:
+			body={"totalcashvalue":port['totalcashvalue']+price*amount}
+		
 	str2="coreportfolio/"+port['coreportfolio_id']
 	client._execute(1,"PUT",str2,body).read()
 	
