@@ -12,9 +12,9 @@ def executeOrder(ticker,portfolio,price,amount,type,stockorder_id,client):
 	print ticker+" "+portfolio+" "+str(price)+" "+str(amount)+" "+str(type)+" "+stockorder_id
 	str1="coreportfolio/"+portfolio
 	port= json.loads(client._execute(0,"GET",str1,None).read())
-	foundstock=0;
+	foundstock=0
 	overflow=0
-	deleted=0
+	deleted= 0
 	if 'stocks' in port:
 		for i in port['stocks']:
 			if ticker == i['symbol']:
@@ -29,7 +29,7 @@ def executeOrder(ticker,portfolio,price,amount,type,stockorder_id,client):
 						overflow=i['amount']-amount
 						client._execute(1,"DELETE","corestock/"+i['corestock_id'],None).read()
 
-				if not deleted:		
+				if deleted==0:		
 					str2="corestock/"+i['corestock_id']
 					client._execute(1,"PUT",str2,body).read()
 
@@ -75,7 +75,7 @@ def executeOrder(ticker,portfolio,price,amount,type,stockorder_id,client):
 	if type<3:
 		body={"totalcashvalue":port['totalcashvalue']-price*amount}
 	else:
-		if overflow>0:
+		if overflow<0:
 			body={"totalcashvalue":port['totalcashvalue']+price*(amount+overflow)}
 		else:
 			body={"totalcashvalue":port['totalcashvalue']+price*amount}

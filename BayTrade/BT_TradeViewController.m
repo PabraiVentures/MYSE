@@ -152,6 +152,8 @@
           //update model
           CorePortfolio * corp= [models objectAtIndex:0];
           self.userCache.coreModel.portfolio=corp;
+          ((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]).userCache.coreModel.portfolio=self.userCache.coreModel.portfolio;
+
           NSLog(@"--\nPortfolio CASH %@", corp.totalcashvalue);
           [self updateBuyPower];
           [self updateValue];

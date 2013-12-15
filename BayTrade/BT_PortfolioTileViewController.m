@@ -40,7 +40,6 @@
 {
     NSLog(@"view did appear");
     [self calculateCurrentPrices];//must be first!
-    self.userCache=[((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) userCache];
     self.stocks = [self.userCache.coreModel.portfolio.stocks allObjects];
     [self calculateCurrentPrices];
     if (self.stocks.count >= 1)
