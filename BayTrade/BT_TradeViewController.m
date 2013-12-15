@@ -401,7 +401,6 @@
 
 - (void) sell {
     int amount = [self.amountField.text intValue];
-    matchedSaleStock.amount = [NSNumber numberWithInt:(matchedSaleStock.amount.intValue - amount)]; //only selling a portion of your chosen stock
     int ordertype= self.orderTypeSegment.selectedSegmentIndex+3;
     if (ordertype==3)self.priceField.text=@("0");
     [self makeOrderWithSymbol:matchedSaleStock.symbol withPrice: self.priceField.text.doubleValue andAmount:amount andIsLong:true andType:ordertype];

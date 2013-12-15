@@ -49,9 +49,9 @@ def executeOrder(ticker,portfolio,price,amount,type,stockorder_id,client):
 		
 		
 		sleep(.5)
-		str1="corestock"
-		body={"portfolio":port['coreportfolio_id'] ,"symbol":ticker }
-		stock=json.loads(client._execute(0,"GET",str1,body).read())
+		str1="corestock?portfolio="+port['coreportfolio_id']+"&symbol="+ticker
+		
+		stock=json.loads(client._execute(0,"GET",str1,None).read())
 		#print port
 		stockid=stock[0]['corestock_id']
 		
@@ -101,6 +101,7 @@ while 2>0:
 			
 	except:
 		print "error", sys.exc_info()[0]
+		
 		
 	
 	#know that type is not market so need to check current price
