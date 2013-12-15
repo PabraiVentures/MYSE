@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BayTrade/BT_TradeViewController.m"
-            timestampString = "406334369.240701"
+            timestampString = "408841135.609166"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "235"
-            endingLineNumber = "235"
+            startingLineNumber = "271"
+            endingLineNumber = "271"
             landmarkName = "-buyButtonClicked:"
             landmarkType = "5">
          </BreakpointContent>
@@ -156,12 +156,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BayTrade/BT_TradeViewController.m"
-            timestampString = "406825906.546861"
+            timestampString = "408841135.609166"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "311"
-            endingLineNumber = "311"
+            startingLineNumber = "347"
+            endingLineNumber = "347"
             landmarkName = "-makeOrderWithSymbol:withPrice:andAmount:andIsLong:andType:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BayTrade/BT_TradeViewController.m"
+            timestampString = "408841135.609166"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
+            landmarkName = "-dismissKeyboard"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

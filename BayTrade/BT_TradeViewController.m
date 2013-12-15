@@ -27,7 +27,7 @@
 #define kBuy 1
 
 @implementation BT_TradeViewController
-@synthesize managedObjectContext;
+//@synthesize managedObjectContext;
 @synthesize loggedInUser = _loggedInUser;
 @synthesize profilePic = _profilePic;
 
@@ -62,6 +62,8 @@
     if (timeSinceUpdate < -10) { //60 seconds
         NSLog(@"updating. time since update: %f", timeSinceUpdate);
         [self setCoreModel];
+
+      
     }
 }
 
@@ -123,15 +125,49 @@
 //assigns self.userCache.coreModel to the StackMob coreModel
 - (void) setCoreModel {
     @try {
+    
+      self.managedObjectContext = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
+
+      /*
         [((BT_AppDelegate*)[[UIApplication sharedApplication]delegate]) updateCoreModel];
         self.userCache = [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) userCache];
         NSLog(@"succeeded setting CoreModel");
         [self updateBuyPower];
         [self updateValue];
-        NSLog(@"updated buy power and value.");
+        NSLog(@"updated buy power and value.");*/
+      
+      
+      NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CorePortfolio"];
+      // query for tradeevents for THIS user
+      fetchRequest.includesPendingChanges=false;
+      NSString* getRightModel=[NSString stringWithFormat:@"sm_owner == 'user/%@'",self.userCache.userID ];
+      [fetchRequest setPredicate:[NSPredicate predicateWithFormat:getRightModel]];
+      
+      /**********START CODE BLOCK FOR REQUEST ACTION************/
+      [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *models) {
+        
+        if([models count] > 0)
+        {
+         // self.userCache.coreModel set=[models objectAtIndex:0];
+          //update model
+          CorePortfolio * corp= [models objectAtIndex:0];
+          self.userCache.coreModel.portfolio=corp;
+          NSLog(@"--\nPortfolio CASH %@", corp.totalcashvalue);
+          [self updateBuyPower];
+          [self updateValue];
+        }
+        
+      } onFailure:^(NSError *error) {
+        NSLog(@"Error fetching: %@", error);
+      }];
     }
+
+      
+  
     @catch (NSException *exception) {
-        [self initializeCoreModel];
+        //self initializeCoreModel];
+         
+         NSLog(@"Error fetching core model in setCoreModel");
     }
 }
 
@@ -400,11 +436,11 @@
     if (ordertype==3)self.priceField.text=@("0");
     [self makeOrderWithSymbol:matchedSaleStock.symbol withPrice: self.priceField.text.doubleValue andAmount:amount andIsLong:true andType:ordertype];
     //SAVE COREMODEL TO STACKMOB
-    [self.managedObjectContext saveOnSuccess:^{
-        NSLog(@"Updated model by making order selling stock!");
-    } onFailure:^(NSError *error) {
-        NSLog(@"There was an error! %@", error);
-    }];
+ //   [self.managedObjectContext saveOnSuccess:^{
+  //      NSLog(@"Updated model by making order selling stock!");
+  //  } onFailure:^(NSError *error) {
+  //      NSLog(@"There was an error! %@", error);
+  //  }];
     self.priceField.text=@("0");
     [self updateBuyPower];
     [self updateValue];

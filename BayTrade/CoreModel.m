@@ -12,8 +12,8 @@
 
 @implementation CoreModel
 
-@synthesize model_id;
-@synthesize portfolio;
-@synthesize tradeevents;
+@dynamic  model_id;
+@dynamic  portfolio;
+@dynamic tradeevents;
 
 @end
