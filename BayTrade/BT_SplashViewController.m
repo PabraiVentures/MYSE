@@ -93,6 +93,7 @@
 
 - (void) setCoreModel
 {
+  
     NSLog(@"setting core model");
     /********GET COREMODEL FROM STACKMOB***********/
     //download stackmob coremodel and save to local coremodel
