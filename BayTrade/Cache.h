@@ -21,7 +21,7 @@
 @property (nonatomic, retain) CoreModel* coreModel;
 
 -(void) addTradeEventFromStock:(CoreStock*) theStock withActionID: (int) actionID;
--(void) updateCoreModel;
+//- (void) updateCoreModel: (NSManagedObjectContext*) context;
 +(void) makeNewModelWithFBID:(NSString*)userID;
 
 @end
