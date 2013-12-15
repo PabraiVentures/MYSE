@@ -58,11 +58,8 @@
 
 + (NSNumber*) currentPriceForSymbol: (NSString*) symbol
 {
-///  if (<#condition#>) {
-//    <#statements#>
-//  }
     NSDictionary *quote = [Controller fetchQuotesFor:[NSArray arrayWithObject:symbol]];
-    NSLog(@" ++++++ OUT\n %@%@",symbol,quote);
+    NSLog(@"fetched price for symbol %@", quote[@"symbol"]);
     return quote[@"LastTradePriceOnly"];
 }
 
