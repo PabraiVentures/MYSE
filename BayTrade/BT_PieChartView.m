@@ -57,26 +57,24 @@
     NSLog(@"max radius: %f", maxRadius);
     CGFloat currentTime = 0;
     stockColors = [[NSMutableDictionary alloc] init];
-    NSMutableDictionary *radiusDict;
-    double maxIncrease = 0;
-    for (int x = 0; x < [self.currentPrices count]; x++) {
-        CoreStock *stock = [self.stocks objectAtIndex:x];
-        float currentPrice = [[[self.currentPrices objectAtIndex:x] objectForKey:@"LastTradePriceOnly"] floatValue];
-        CGFloat relativePrice = (stock.buyprice.floatValue != 0 ? currentPrice/stock.buyprice.floatValue : 0);
-        if (relativePrice > maxIncrease) maxIncrease = relativePrice;
-        CGFloat radius = relativePrice;
-        [radiusDict setObject:[NSNumber numberWithDouble:radius] forKey:stock.symbol];
-    }
     for (int x = 0; x < [self.currentPrices count]; x++) {
         CoreStock *stock = [self.stocks objectAtIndex:x];
         float currentPrice = [[[self.currentPrices objectAtIndex:x] objectForKey:@"LastTradePriceOnly"] floatValue];
         float totalCurrentValue = currentPrice * stock.amount.floatValue;
+        
         double percentOfPie = totalCurrentValue/totalPortfolioValue;
-        double radius = [[radiusDict objectForKey:stock.symbol] intValue];
-        radius /= maxIncrease;
+        
         CGFloat starttime = currentTime; //1 pm = 1/6 rad
         CGFloat endtime = starttime+((2*M_PI)*percentOfPie);  //6 pm = 1 rad
         currentTime = endtime;
+        CGFloat relativePrice = (stock.buyprice.floatValue != 0 ? currentPrice/stock.buyprice.floatValue : 0);
+        
+        CGFloat radius = relativePrice;
+        NSLog(@"radius1: %f", radius);
+        if (relativePrice > 1) {
+            radius = 1 + (log(relativePrice)/log(1.4));//equation to slightly exaggerate positive gains for better visualization
+        }
+        NSLog(@"RADIUS: %f", radius);
         radius *= maxRadius;
         //draw arc
         CGPoint center = CGPointMake(self.frame.size.width*2/3, self.frame.size.height*1/2);

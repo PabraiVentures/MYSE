@@ -107,7 +107,34 @@
     }];
 }
 
+- (void) updateCoreModel {
+    /********GET COREMODEL FROM STACKMOB***********/
+    //download stackmob coremodel and save to local coremodel
+    NSFetchRequest *fetchRequest = [self getRequestForUserCoreModel];
+    //get the object context to work with stackmob data
+    self.managedObjectContext = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
+    
+    // execute the request
+    [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {
+        @try {
+            self.coreModel = (CoreModel *)[results objectAtIndex:0]; //now we can access coremodel from anywhere
+            NSLog(@"succeeded setting CoreModel");
+        }
+        @catch (NSException *exception) {
+            NSLog(@"error setting core model.");
+        }
+    } onFailure:^(NSError *error) {
+        NSLog(@"There was an error! %@", error);
+    }];
+}
 
+-(NSFetchRequest*)getRequestForUserCoreModel {
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CoreModel"];
+    // query for coremodel for THIS user
+    NSString* coreModelRequest = [NSString stringWithFormat:@"user == '%@'", self.userID];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:coreModelRequest]];
+    return fetchRequest;
+}
 
 
 @end

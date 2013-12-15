@@ -51,7 +51,9 @@
 - (void)searchAutocompleteEntriesWithSubstring:(NSString *)substring;
 - (double)getTotalBuyPriceIfPossibleWithSymbol:(NSString*)buyingSymbol andAmount: (int) amount;
 - (void) setCoreModel;
+- (void) updateCoreModel;
 - (void)initializeFBLoginView;
 - (void) makeOrderWithSymbol: (NSString*) symbol withPrice:(double)price andAmount:(int) amount andIsLong: (bool)islong andType: (int) type;
+
 
 @end

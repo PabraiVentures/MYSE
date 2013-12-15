@@ -32,7 +32,10 @@
 @synthesize profilePic = _profilePic;
 
 - (void) viewDidLoad {
+    
     [super viewDidLoad];
+//    BT_AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
+//    appDelegate.tradeView = self;
     self.userCache = [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) userCache];
     // Create Login View so that the app will be granted "status_update" permission.
     //initialize profile picture
@@ -45,7 +48,7 @@
     [self updateValue];
     self.autocompleteSymbols = [[NSMutableArray alloc] initWithObjects:@"AAPL", @"GOOG", @"CSCO", @"IBM", @"YHOO", @"F", nil];
     self.autocompleteSuggestions = [[NSMutableArray alloc] init];
-    //[self performSelectorInBackground:@selector(backgroundUpdateBuyPower) withObject:nil];
+    [self performSelectorInBackground:@selector(backgroundUpdateBuyPower) withObject:nil];
 }
 
 /*Check if page has been updated in the last 1 minute.*/
@@ -59,15 +62,16 @@
     NSTimeInterval timeSinceUpdate = [lastUpdated timeIntervalSinceNow];
     NSLog(@"here");
     NSLog(@"time since update: %f", timeSinceUpdate);
-    if (timeSinceUpdate < -10) { //60 seconds
+    if (timeSinceUpdate < -60) { //60 seconds
         NSLog(@"updating. time since update: %f", timeSinceUpdate);
-        [self setCoreModel];
+        [(BT_AppDelegate*)[[UIApplication sharedApplication] delegate] downloadCurrentStocksInfo];
+        [self viewDidLoad];
     }
 }
 
 //initializeLoginView:
 //uses a loginview to fetch user info. A delegate is called when the info is ready.
--(void) initializeFBLoginView {
+-(void) initializeFBLoginView{
     FBLoginView *loginview = [[FBLoginView alloc] init];
     loginview.frame = CGRectOffset(loginview.frame, 50, 50);
     loginview.hidden = YES;
@@ -106,11 +110,9 @@
 
 - (void) backgroundUpdateBuyPower
 {
-//    NSLog(@"updating background buy power, sleeping first");
-//    [NSThread sleepForTimeInterval:60.0];//update every 60 seconds
-//    NSLog(@"updating background buy power, executing now.");
-//    [self performSelectorOnMainThread:@selector(setCoreModel) withObject:nil waitUntilDone:YES];
-//    [self performSelectorInBackground:@selector(backgroundUpdateBuyPower) withObject:nil];
+        sleep(60.0);//update every 60 seconds
+        [self performSelectorInBackground:@selector(setCoreModel) withObject:nil];
+        [self performSelectorInBackground:@selector(backgroundUpdateBuyPower) withObject:nil];
 }
 
 - (void) initializeCoreModel {
@@ -120,15 +122,17 @@
     [self setCoreModel];
 }
 
+- (void) updateCoreModel {
+    [self.userCache updateCoreModel];
+}
+
 //assigns self.userCache.coreModel to the StackMob coreModel
 - (void) setCoreModel {
     @try {
-        [((BT_AppDelegate*)[[UIApplication sharedApplication]delegate]) updateCoreModel];
-        self.userCache = [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) userCache];
+        [self.userCache updateCoreModel];
         NSLog(@"succeeded setting CoreModel");
         [self updateBuyPower];
         [self updateValue];
-        NSLog(@"updated buy power and value.");
     }
     @catch (NSException *exception) {
         [self initializeCoreModel];
@@ -142,6 +146,8 @@
     int amt = 0;
     for(CoreStock *stock in self.userCache.coreModel.portfolio.stocks) {
         if ((stock.symbol!=NULL)) {
+            
+            
             prc = [[Controller currentPriceForSymbol:stock.symbol] doubleValue];
             amt = stock.amount.intValue;
             value += (prc * amt);
@@ -155,7 +161,6 @@
 //Updates Labels on UI to display the buying power of portfolio in userCache
 - (void)updateBuyPower {
     NSString *money = [NSString stringWithFormat:@"$%.2f", self.userCache.coreModel.portfolio.totalcashvalue.floatValue];
-    NSLog(@"money: %@", money);
     [self.cashDisplay setText: money];
 }
 
@@ -319,8 +324,8 @@
     if (tradetype==0)self.priceField.text=@("0");
     [self makeOrderWithSymbol:buyingSymbol withPrice:self.priceField.text.doubleValue andAmount:amount andIsLong:true andType:tradetype];
     [self setCoreModel];
-//    [self updateBuyPower];
-//    [self updateValue];
+    [self updateBuyPower];
+    [self updateValue];
     for(CoreStock *s in self.userCache.coreModel.portfolio.stocks)
     {
         NSLog(@"%@ : $%.2f\tamount:%i\n", s.symbol, s.buyprice.doubleValue, s.amount.intValue);
@@ -396,6 +401,7 @@
 
 - (void) sell {
     int amount = [self.amountField.text intValue];
+    matchedSaleStock.amount = [NSNumber numberWithInt:(matchedSaleStock.amount.intValue - amount)]; //only selling a portion of your chosen stock
     int ordertype= self.orderTypeSegment.selectedSegmentIndex+3;
     if (ordertype==3)self.priceField.text=@("0");
     [self makeOrderWithSymbol:matchedSaleStock.symbol withPrice: self.priceField.text.doubleValue andAmount:amount andIsLong:true andType:ordertype];

@@ -38,40 +38,21 @@
     self.userCache = [[Cache alloc] init]; //TODO should this be here?
     self.userCache.userID = [[NSUserDefaults standardUserDefaults] objectForKey:@"userID"];
     NSLog(@"did finish launching with options");
+    [self performSelectorInBackground:@selector(updateCoreModelInBackground) withObject:nil];
     return YES;
+}
+
+- (void)updateCoreModelInBackground
+{
+    sleep(60.0);
+    [self performSelectorInBackground:@selector(updateCoreModel) withObject:nil];
+    [self performSelectorInBackground:@selector(updateCoreModelInBackground) withObject:nil];
 }
 
 - (void)updateCoreModel
 {
     NSLog(@"updating core model");
-        /********GET COREMODEL FROM STACKMOB***********/
-        //download stackmob coremodel and save to local coremodel
-        NSFetchRequest *fetchRequest = [self getRequestForUserCoreModel];
-        //get the object context to work with stackmob data
-        self.managedObjectContext = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
-        
-        // execute the request
-        [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {
-            @try {
-                self.userCache.coreModel = (CoreModel *)[results objectAtIndex:0]; //now we can access coremodel from anywhere
-                NSLog(@"self.coremodel.stocks count: %i", self.userCache.coreModel.portfolio.stocks.count);
-                NSLog(@"succeeded setting CoreModel");
-            }
-            @catch (NSException *exception) {
-                NSLog(@"error setting core model.");
-            }
-        } onFailure:^(NSError *error) {
-            NSLog(@"There was an error! %@", error);
-        }];
-        NSLog(@"updated core model.");
-}
-
--(NSFetchRequest*)getRequestForUserCoreModel {
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CoreModel"];
-    // query for coremodel for THIS user
-    NSString* coreModelRequest = [NSString stringWithFormat:@"user == '%@'", self.userCache.userID];
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:coreModelRequest]];
-    return fetchRequest;
+    [userCache updateCoreModel];
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
