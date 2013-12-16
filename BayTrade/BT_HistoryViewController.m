@@ -225,6 +225,10 @@
       events = [tradeEvents sortedArrayUsingDescriptors:sortDescriptors];
       [historyTable reloadData];
     }
+    else{
+      events=NULL;
+      [historyTable reloadData];
+    }
   } onFailure:^(NSError *error) {
     NSLog(@"Error fetching: %@", error);
   }];
@@ -247,6 +251,10 @@
         NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"ordertime" ascending:NO] ;
         NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
         orders = [tradeOrders sortedArrayUsingDescriptors:sortDescriptors];
+        [historyTable reloadData];
+      }
+      else{
+        orders=NULL;
         [historyTable reloadData];
       }
     } onFailure:^(NSError *error) {
