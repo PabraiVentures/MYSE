@@ -549,13 +549,6 @@
                                     <action selector="loginButtonPressed:" destination="6np-vg-Ssd" eventType="touchUpInside" id="Dqg-u7-al7"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign in bitches" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1sX-hC-Fq3">
-                                <rect key="frame" x="103" y="231" width="114" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.0039215688589999999" green="0.8980392814" blue="1" alpha="1" colorSpace="deviceRGB"/>
                     </view>
