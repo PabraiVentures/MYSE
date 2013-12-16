@@ -106,6 +106,7 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.0039215688589999999" green="0.8980392814" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -370,7 +371,7 @@
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="346-8t-XV9">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="159"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.0039215688589999999" green="0.8980392814" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                 <inset key="contentInset" minX="8" minY="0.0" maxX="8" maxY="0.0"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="JpP-Q1-NIA">
                                     <size key="itemSize" width="100" height="100"/>
@@ -420,9 +421,10 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="5S9-v2-nGr">
                                 <rect key="frame" x="0.0" y="380" width="320" height="188"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" red="0.0039215688589999999" green="0.8980392814" blue="1" alpha="1" colorSpace="deviceRGB"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0039215688589999999" green="0.8980392814" blue="1" alpha="1" colorSpace="deviceRGB"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Portfolio" image="briefcase.png" id="KJY-w0-cJ4"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
@@ -448,6 +450,7 @@
                                 <rect key="frame" x="0.0" y="58" width="320" height="457"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexTrackingBackgroundColor" red="0.0039215688589999999" green="0.8980392814" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="hI2-3J-iRe" id="OqP-Af-zkX"/>
                                     <outlet property="delegate" destination="hI2-3J-iRe" id="APT-pG-jeO"/>
@@ -533,7 +536,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="4ay-DO-3u5">
-                                <rect key="frame" x="73" y="514" width="174" height="33"/>
+                                <rect key="frame" x="78" y="418" width="164" height="23"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" image="login_unpressed.png">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -546,8 +549,15 @@
                                     <action selector="loginButtonPressed:" destination="6np-vg-Ssd" eventType="touchUpInside" id="Dqg-u7-al7"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign in bitches" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1sX-hC-Fq3">
+                                <rect key="frame" x="103" y="231" width="114" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0039215688589999999" green="0.8980392814" blue="1" alpha="1" colorSpace="deviceRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="LKJ-X3-RvW"/>
                     <connections>
