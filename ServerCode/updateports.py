@@ -119,7 +119,7 @@ try:
         #now the totalportfoliovalues have been updated
 
 except :
-	mws=0
+	raise	
 sortedrankings=sorted(rankings)
 print sortedrankings
 rank=1

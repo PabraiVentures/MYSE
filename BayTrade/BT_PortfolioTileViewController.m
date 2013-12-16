@@ -32,6 +32,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+  self.stocks = [[((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) userCache].coreModel.portfolio.stocks allObjects];
+
     [self performSelectorInBackground:@selector(backgroundUpdateStocks) withObject:nil];
 }
 
@@ -148,7 +150,11 @@
     CoreStock *detailStock = [self.stocks objectAtIndex:selectedIndex];
     NSDictionary *data;
     @try {
-        data = [self.currentPrices objectAtIndex:selectedIndex];
+      
+   
+          data = [self.currentPrices objectAtIndex:selectedIndex];
+                  
+      
     }
     @catch (NSException *exception) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Uh Oh!" message:[NSString stringWithFormat:@"Can't get data! Error: %@", exception] delegate:self cancelButtonTitle:@"Okay." otherButtonTitles: nil];
