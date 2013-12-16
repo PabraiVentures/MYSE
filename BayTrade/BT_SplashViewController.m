@@ -59,6 +59,8 @@
   int loopcount;
     NSMutableArray *currentPrices = [[NSMutableArray alloc] init];
     @try{
+      
+      
         currentPrices = [[NSMutableArray alloc] init];
         for (CoreStock *stock in self.userCache.coreModel.portfolio.stocks) {
           loopcount=0;
@@ -71,7 +73,7 @@
                         loopcount++;
                       }
 
-            [currentPrices addObject:[Controller fetchQuotesFor:[NSArray arrayWithObject:stock.symbol]]];
+            [currentPrices addObject:priceDict];
             [self performSelectorOnMainThread:@selector(setProgressStatus:) withObject:progPercent waitUntilDone:YES];
         }
     }

@@ -81,7 +81,9 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="8VU-WF-Iod">
                                 <rect key="frame" x="0.0" y="56" width="320" height="512"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.0039215688589999999" green="0.8980392814" blue="1" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="separatorColor" red="0.0039215688589999999" green="0.8980392814" blue="1" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="sectionIndexTrackingBackgroundColor" red="0.0039215688589999999" green="0.8980392814" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="Cell" textLabel="VCf-aP-a7G" detailTextLabel="pku-bC-1YU" style="IBUITableViewCellStyleSubtitle" id="Eya-TM-w1h">
                                         <rect key="frame" x="0.0" y="22" width="320" height="44"/>

@@ -158,7 +158,6 @@
     
     cell.textLabel.text = [self timeString:order.ordertime withAction:action];
     cell.detailTextLabel.text = actionDetail;
-    
     return cell;
     
   }

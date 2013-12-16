@@ -25,6 +25,8 @@
     [query appendString:QUOTE_QUERY_SUFFIX];
         NSData *jsonData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:query] encoding:NSUTF8StringEncoding error:nil] dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *results = jsonData ? [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil] : nil;
+      NSLog(@" RESULTS of stock fetch %@",results);
+      
         return [results valueForKeyPath:@"query.results.quote"];
     }
     @catch (NSException *exception) {
