@@ -5,6 +5,7 @@ import httplib
 import json
 import sys
 import urllib2
+import datetime
 import time
 import classes as cl
 from time import  sleep
@@ -39,7 +40,7 @@ def executeOrder(ticker,portfolio,price,amount,type,stockorder_id,client):
 	if foundstock is 0:
 		print " didnt match stock"
 	#now need to make trade event
-	body={"actionid":type,"tradeamount":amount,"tradeprice":price,"ticker":ticker,"model":port['model']['coremodel_id'],"sm_owner":port['sm_owner']}
+	body={"time":datetime.datetime.now().isoformat(),"actionid":type,"tradeamount":amount,"tradeprice":price,"ticker":ticker,"model":port['model']['coremodel_id'],"sm_owner":port['sm_owner']}
 #	print body+"iiii"
 	str3="coretradeevent"
 	client._execute(1,"POST",str3,body).read()

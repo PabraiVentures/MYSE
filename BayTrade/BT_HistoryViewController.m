@@ -144,12 +144,14 @@
 {
     NSString *time;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"MM-dd-yyyy HH:mm"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS"];
     NSDate *date = [dateFormatter dateFromString:tradeDate];
-    
     int seconds = -(int)[date timeIntervalSinceNow];
     int hours = seconds/3600;
     int minutes = seconds/60;
+  
+  NSLog(@"date\n\n = %@ hours= %d minutes= %d seconds =%d", date, hours,minutes,seconds);
+
     if (hours < 24) {
         time = [NSString stringWithFormat:@"%@ %i hours ago", action, hours];
         if (minutes < 60) time = [NSString stringWithFormat:@"%@ %i minutes ago", action, minutes];
