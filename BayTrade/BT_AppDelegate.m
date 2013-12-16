@@ -39,7 +39,7 @@
     self.userCache = [[Cache alloc] init]; //TODO should this be here?
     self.userCache.userID = [[NSUserDefaults standardUserDefaults] objectForKey:@"userID"];
     [self performSelectorInBackground:@selector(backgroundUpdateModel) withObject:nil];
-    //[self performSelectorInBackground:@selector(downloadCurrentStocksInfo) withObject:nil];
+    [self performSelectorInBackground:@selector(downloadCurrentStocksInfo) withObject:nil];
     return YES;
 }
 
@@ -124,8 +124,9 @@
     NSLog(@"downloading current stocks info APPD");
     NSMutableArray *currentPrices = [[NSMutableArray alloc] init];
     @try {
+        currentPrices = [[NSMutableArray alloc] init];
         for (CoreStock *stock in self.userCache.coreModel.portfolio.stocks) {
-            NSLog(@"quote for symbol %@: %@", stock.symbol, [Controller fetchQuotesFor:[NSArray arrayWithObject:stock.symbol]]);
+            NSLog(@"got quote for symbol %@", stock.symbol);
             [currentPrices addObject:[Controller fetchQuotesFor:[NSArray arrayWithObject:stock.symbol]]];
         }
     }

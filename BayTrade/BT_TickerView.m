@@ -129,6 +129,7 @@ static UIFont *detailFont = nil;
     CGFloat breakWidth = 0;
     for(int counter = 0 ; breakWidth < self.frame.size.width; counter ++)
     {
+        if (itemCount == 0) continue;
         int i = counter % itemCount;
         TickerItemView *tickerItemView = [[TickerItemView alloc] init];
         [tickerItemView setSymbol:[self symbolForItemAtIndex:i]

@@ -24,11 +24,13 @@
 {
     [super viewDidLoad];
     //Take the TabBarController's model
-    self.userCache=[((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) userCache];
     
-    [self.pieChart setUserCache:self.userCache];
+    //[self.pieChart calculateCurrentPrices];
+    //[self.pieChart setNeedsDisplay];
+    self.userCache = [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) userCache];
     [self.pieChart setStocks:[self.userCache.coreModel.portfolio.stocks allObjects]];
     [self.pieChart calculateCurrentPrices];
+    [self.pieChart setTotalPortfolioValue: self.userCache.coreModel.portfolio.totalportfoliovalue.doubleValue];
     [self.pieChart setNeedsDisplay];
     
     [self.tickerView loadTickerData];

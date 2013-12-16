@@ -56,8 +56,10 @@
     NSLog(@"downloading current stocks info");
     float stockNum = 1; //TODO
     float numStocks = self.userCache.coreModel.portfolio.stocks.count-1; //TODO
+    
     NSMutableArray *currentPrices = [[NSMutableArray alloc] init];
     @try{
+        currentPrices = [[NSMutableArray alloc] init];
         for (CoreStock *stock in self.userCache.coreModel.portfolio.stocks) {
             NSNumber *progPercent = [NSNumber numberWithFloat:(stockNum / numStocks)];
             stockNum++; // roll into single YQL request?

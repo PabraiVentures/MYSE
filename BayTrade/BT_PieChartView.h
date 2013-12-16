@@ -9,10 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "Cache.h"
 
-@interface BT_PieChartView : UIView {
-    double totalPortfolioValue;
-}
+@interface BT_PieChartView : UIView 
 
+@property double totalPortfolioValue;
 @property (nonatomic,strong) Cache* userCache;
 @property (nonatomic, retain) NSArray *stocks;
 @property (nonatomic, retain) NSMutableDictionary *stockColors;

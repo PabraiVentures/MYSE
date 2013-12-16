@@ -14,23 +14,21 @@
 
 @implementation BT_PieChartView
 
-@synthesize stockColors, legendView;
+@synthesize stockColors, legendView, totalPortfolioValue;
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [self calculateCurrentPrices];
     }
     return self;
 }
 
 -(void)calculateCurrentPrices
 {
-    //TODO just take from loaded values in splash screen
     totalPortfolioValue = 0;
     self.currentPrices = [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) currentStockPrices];
-    totalPortfolioValue = self.userCache.coreModel.portfolio.totalportfoliovalue.doubleValue;
+    NSLog(@"ccp totalportval: %f", totalPortfolioValue);
 }
 
 -(void)drawLegend
@@ -55,29 +53,43 @@
 {
     double maxRadius = 50;
     NSLog(@"max radius: %f", maxRadius);
-    CGFloat currentTime = 0;
     stockColors = [[NSMutableDictionary alloc] init];
-    NSMutableDictionary *radiusDict;
+    NSMutableDictionary *radiusDict = [[NSMutableDictionary alloc] init];
     double maxIncrease = 0;
+    NSLog(@"currentprices size: %i", self.currentPrices.count);
+    NSLog(@"stocks size: %i", self.stocks.count);
     for (int x = 0; x < [self.currentPrices count]; x++) {
         CoreStock *stock = [self.stocks objectAtIndex:x];
-        float currentPrice = [[[self.currentPrices objectAtIndex:x] objectForKey:@"LastTradePriceOnly"] floatValue];
+        float currentPrice;
+        @try {
+            currentPrice = [[[self.currentPrices objectAtIndex:x] objectForKey:@"LastTradePriceOnly"] floatValue];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"couldn't find currentprice.");
+        }
         CGFloat relativePrice = (stock.buyprice.floatValue != 0 ? currentPrice/stock.buyprice.floatValue : 0);
+        NSLog(@"relative price of %@: %f", stock.symbol, relativePrice);
         if (relativePrice > maxIncrease) maxIncrease = relativePrice;
-        CGFloat radius = relativePrice;
-        [radiusDict setObject:[NSNumber numberWithDouble:radius] forKey:stock.symbol];
+        [radiusDict setObject:[NSNumber numberWithDouble:relativePrice] forKey:stock.symbol];
     }
+    NSLog(@"radiusdict: %@", radiusDict);
+    CGFloat currentTime = 0;
     for (int x = 0; x < [self.currentPrices count]; x++) {
+        NSLog(@"currenttime: %f", currentTime);
         CoreStock *stock = [self.stocks objectAtIndex:x];
         float currentPrice = [[[self.currentPrices objectAtIndex:x] objectForKey:@"LastTradePriceOnly"] floatValue];
         float totalCurrentValue = currentPrice * stock.amount.floatValue;
         double percentOfPie = totalCurrentValue/totalPortfolioValue;
-        double radius = [[radiusDict objectForKey:stock.symbol] intValue];
+        NSLog(@"total port val: %f:", totalPortfolioValue);
+        double radius = [[radiusDict objectForKey:stock.symbol] floatValue];
+        NSLog(@"radius1: %f", radius);
         radius /= maxIncrease;
+        NSLog(@"radius2: %f", radius);
         CGFloat starttime = currentTime; //1 pm = 1/6 rad
         CGFloat endtime = starttime+((2*M_PI)*percentOfPie);  //6 pm = 1 rad
         currentTime = endtime;
         radius *= maxRadius;
+        NSLog(@"radius3: %f", radius);
         //draw arc
         CGPoint center = CGPointMake(self.frame.size.width*2/3, self.frame.size.height*1/2);
         UIBezierPath *arc = [UIBezierPath bezierPath]; //empty path

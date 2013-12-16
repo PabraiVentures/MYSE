@@ -59,7 +59,12 @@
 + (NSNumber*) currentPriceForSymbol: (NSString*) symbol
 {
     NSDictionary *quote = [Controller fetchQuotesFor:[NSArray arrayWithObject:symbol]];
-    return quote[@"LastTradePriceOnly"];
+    @try {
+        return quote[@"LastTradePriceOnly"];
+    }
+    @catch (NSException *exception) {
+        return [NSNumber numberWithInt:0];
+    }
 }
 
 @end
