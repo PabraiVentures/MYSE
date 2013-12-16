@@ -15,7 +15,7 @@
 
 @property (nonatomic,retain)NSNumber *price;
 @property (nonatomic, retain) NSNumber * addedtolookup;
-@property (nonatomic, retain) NSNumber * createddate;
+@property (nonatomic, retain) NSString * ordertime;
 @property (nonatomic, retain) NSNumber * islongposition;
 @property (nonatomic, retain) NSNumber * lasttimeprocessed;
 @property (nonatomic, retain) NSNumber * quantity;

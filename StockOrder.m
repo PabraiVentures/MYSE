@@ -14,7 +14,7 @@
 
 @dynamic price;
 @dynamic addedtolookup;
-@dynamic createddate;
+@dynamic ordertime;
 @dynamic islongposition;
 @dynamic lasttimeprocessed;
 @dynamic quantity;

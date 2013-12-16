@@ -18,9 +18,10 @@
 
 @interface BT_HistoryViewController : UIViewController <UITabBarControllerDelegate, UITableViewDataSource, UITableViewDelegate> {
     NSArray *events;
+  NSArray *orders;
 }
-
-
+- (IBAction)historyUpdate:(UISegmentedControl *)sender;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *historySelector;
 @property (strong, nonatomic) IBOutlet UITableView *historyTable;
 @property (weak, nonatomic) Cache* userCache;
 @property (weak,nonatomic) NSManagedObjectContext *managedObjectContext;

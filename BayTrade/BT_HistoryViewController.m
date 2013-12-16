@@ -8,6 +8,7 @@
 
 #import "BT_HistoryViewController.h"
 #import "CoreTradeEvent.h"
+#import "StockOrder.h"
 #import "BT_AppDelegate.h"
 
 @interface BT_HistoryViewController ()
@@ -47,27 +48,10 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
+  
+  [self historyUpdate:self.historySelector];
     NSLog(@"view did appear, trying to load stocks.");
-    //get the trade events for this user
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CoreTradeEvent"];
-    // query for tradeevents for THIS user
-    NSString* getRightEvents=[NSString stringWithFormat:@"sm_owner == 'user/%@'",self.userCache.userID ];
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:getRightEvents]];
-    
-    /**********START CODE BLOCK FOR REQUEST ACTION************/
-    [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *tradeEvents) {
-        
-        if([tradeEvents count] > 0)
-        {
-            /** Sort the tradeEvents by time/supposed order of events **/
-            NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:NO] ;
-            NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-            events = [tradeEvents sortedArrayUsingDescriptors:sortDescriptors];
-            [historyTable reloadData];
-        }
-    } onFailure:^(NSError *error) {
-        NSLog(@"Error fetching: %@", error);
-    }];
+  
 }
 
 #pragma mark - Table View Methods
@@ -79,7 +63,8 @@
 
 -(int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [events count];
+   if (self.historySelector.selectedSegmentIndex==0) return [events count];
+   else return [orders count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -89,6 +74,7 @@
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+  if (self.historySelector.selectedSegmentIndex ==0 ){
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -129,6 +115,53 @@
     cell.detailTextLabel.text = actionDetail;
     
     return cell;
+    
+  }
+  
+  
+  else{ // if we need to update with stock orders
+    static NSString *CellIdentifier = @"Cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+      cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    }
+    cell.textLabel.backgroundColor = [UIColor clearColor];
+    cell.detailTextLabel.backgroundColor = [UIColor clearColor];
+    cell.detailTextLabel.numberOfLines = 5;
+    
+    StockOrder *order = [orders objectAtIndex:indexPath.row];
+    
+    double doMath = order.quantity.intValue * order.price.doubleValue;
+    
+    NSString *action = @"";
+    if (order.tradetype.intValue == 0) {
+      action = @"Market buy";
+    }
+    else if (order.tradetype.intValue == 1) {
+      action = @"Limit buy";
+    }
+    else if (order.tradetype.intValue == 2) {
+      action = @"Stop buy";
+    }
+    else if (order.tradetype.intValue == 3) {
+      action = @"Market sell";
+    }
+    else if (order.tradetype.intValue == 4) {
+      action = @"Limit sell";
+    }
+    else if (order.tradetype.intValue == 5) {
+      action = @"Stop sell";
+    }
+    else NSLog(@"error in order tradetype -- no corresponding action for tradetype #%i", order.tradetype.intValue);
+    NSString *actionDetail = [NSString stringWithFormat:@"\n%@ %@ shares of %@\nEstimated Trade Value: $%.2f x %@ = $%.2f", action, order.quantity, [order.symbol uppercaseString], [order.price doubleValue], order.quantity, doMath];
+    
+    cell.textLabel.text = [self timeString:order.ordertime withAction:action];
+    cell.detailTextLabel.text = actionDetail;
+    
+    return cell;
+    
+  }
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -142,6 +175,7 @@
 
 -(NSString*) timeString: (NSString*) tradeDate withAction: (NSString*) action
 {
+  if (tradeDate ==NULL) return @"NOTIME";
     NSString *time;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS"];
@@ -171,4 +205,57 @@
     return time;
 }
 
+- (IBAction)historyUpdate:(UISegmentedControl *)sender {
+  
+  if (sender.selectedSegmentIndex == 0){
+  //get the trade events for this user
+  NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CoreTradeEvent"];
+  // query for tradeevents for THIS user
+  NSString* getRightEvents=[NSString stringWithFormat:@"sm_owner == 'user/%@'",self.userCache.userID ];
+  [fetchRequest setPredicate:[NSPredicate predicateWithFormat:getRightEvents]];
+  
+  /**********START CODE BLOCK FOR REQUEST ACTION************/
+  [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *tradeEvents) {
+    
+    if([tradeEvents count] > 0)
+    {
+      /** Sort the tradeEvents by time/supposed order of events **/
+      NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:NO] ;
+      NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+      events = [tradeEvents sortedArrayUsingDescriptors:sortDescriptors];
+      [historyTable reloadData];
+    }
+  } onFailure:^(NSError *error) {
+    NSLog(@"Error fetching: %@", error);
+  }];
+    
+  }
+  
+  else {
+    //need to load the  pending stock orders
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"StockOrder"];
+    // query for stockorder for THIS user
+    NSString* getRightEvents=[NSString stringWithFormat:@"sm_owner == 'user/%@'",self.userCache.userID ];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:getRightEvents]];
+    
+    /**********START CODE BLOCK FOR REQUEST ACTION************/
+    [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *tradeOrders) {
+      
+      if([tradeOrders count] > 0)
+      {
+        /** Sort the tradeEvents by time/supposed order of events **/
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"ordertime" ascending:NO] ;
+        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+        orders = [tradeOrders sortedArrayUsingDescriptors:sortDescriptors];
+        [historyTable reloadData];
+      }
+    } onFailure:^(NSError *error) {
+      NSLog(@"Error fetching: %@", error);
+    }];
+    
+    
+  }
+  
+  
+}
 @end

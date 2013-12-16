@@ -132,7 +132,7 @@
             openPrice = [realtimeData[@"Open"] doubleValue];
         }
         @catch (NSException *exception) {
-            NSLog(@"error fetching YQL quotes.");
+            NSLog(@"Splash error fetching YQL quotes.");
             lastPrice = -1.0;
             openPrice = -1.0;
         }

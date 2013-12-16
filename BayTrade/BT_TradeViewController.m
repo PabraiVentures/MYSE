@@ -285,6 +285,16 @@
     order.addedtolookup = false;
     order.islongposition = [NSNumber numberWithInt: islong];
     order.portfolio = self.userCache.coreModel.portfolio;
+  
+  
+  NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//  NSLocale *enUSPOSIXLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+//  [dateFormatter setLocale:enUSPOSIXLocale];
+  [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS"];
+  
+  NSDate *now = [NSDate date];
+  NSString *iso8601String = [dateFormatter stringFromDate:now];
+  order.ordertime=iso8601String;
     order.lasttimeprocessed = 0;
     order.price = [NSNumber numberWithDouble:price];
     order.quantity = [NSNumber numberWithInt:amount];

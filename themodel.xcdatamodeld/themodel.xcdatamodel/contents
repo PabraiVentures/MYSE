@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3396" systemVersion="12F37" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3396" systemVersion="13A603" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="CoreModel" syncable="YES">
         <attribute name="coremodel_id" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="portfolio" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="CorePortfolio" inverseName="model" inverseEntity="CorePortfolio" syncable="YES"/>
@@ -41,9 +41,9 @@
     </entity>
     <entity name="StockOrder" representedClassName="StockOrder" syncable="YES">
         <attribute name="addedtolookup" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="createddate" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="islongposition" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="lasttimeprocessed" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="ordertime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="Double" defaultValueString="0" syncable="YES"/>
         <attribute name="quantity" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="sm_owner" optional="YES" attributeType="String" syncable="YES"/>
@@ -58,12 +58,12 @@
         <relationship name="coremodel" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="CoreModel" inverseName="user" inverseEntity="CoreModel" syncable="YES"/>
     </entity>
     <elements>
-        <element name="CoreModel" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="CorePortfolio" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="CorePortfolioHistory" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="CoreStock" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="CoreTradeEvent" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="StockOrder" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="User" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="CoreModel" positionX="0" positionY="0" width="128" height="105"/>
+        <element name="CorePortfolio" positionX="0" positionY="0" width="128" height="165"/>
+        <element name="CorePortfolioHistory" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="CoreStock" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="CoreTradeEvent" positionX="0" positionY="0" width="128" height="150"/>
+        <element name="StockOrder" positionX="-414" positionY="36" width="128" height="223"/>
+        <element name="User" positionX="-495" positionY="-225" width="128" height="75"/>
     </elements>
 </model>
