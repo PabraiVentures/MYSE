@@ -56,13 +56,21 @@
     NSLog(@"downloading current stocks info");
     float stockNum = 1; //TODO
     float numStocks = self.userCache.coreModel.portfolio.stocks.count-1; //TODO
-    
+  int loopcount;
     NSMutableArray *currentPrices = [[NSMutableArray alloc] init];
     @try{
         currentPrices = [[NSMutableArray alloc] init];
         for (CoreStock *stock in self.userCache.coreModel.portfolio.stocks) {
+          loopcount=0;
             NSNumber *progPercent = [NSNumber numberWithFloat:(stockNum / numStocks)];
             stockNum++; // roll into single YQL request?
+          NSDictionary *priceDict=[Controller fetchQuotesFor:[NSArray arrayWithObject:stock.symbol]];
+                  while(priceDict == NULL && loopcount<4){
+                        priceDict=[Controller fetchQuotesFor:[NSArray arrayWithObject:stock.symbol]];
+            
+                        loopcount++;
+                      }
+
             [currentPrices addObject:[Controller fetchQuotesFor:[NSArray arrayWithObject:stock.symbol]]];
             [self performSelectorOnMainThread:@selector(setProgressStatus:) withObject:progPercent waitUntilDone:YES];
         }
