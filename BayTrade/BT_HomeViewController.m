@@ -31,7 +31,7 @@
     [self.pieChart setStocks:[self.userCache.coreModel.portfolio.stocks allObjects]];
     [self.pieChart calculateCurrentPrices];
     [self.pieChart setTotalPortfolioValue: self.userCache.coreModel.portfolio.totalportfoliovalue.doubleValue];
-    [self.pieChart setNeedsDisplay];
+    [self.pieChart initPieView];
     
     [self.tickerView loadTickerData];
     [self.tickerView reloadData];

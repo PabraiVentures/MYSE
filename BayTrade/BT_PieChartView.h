@@ -9,15 +9,27 @@
 #import <UIKit/UIKit.h>
 #import "Cache.h"
 
-@interface BT_PieChartView : UIView 
+@class BT_PieChartView;
+@interface PieView : UIView
+
+@property double totalPortfolioValue;
+@property (nonatomic, retain) NSArray *stocks;
+@property (nonatomic, retain) NSMutableArray *currentPrices;
+@property (nonatomic, retain) BT_PieChartView *parent;
+
+@end
+
+@interface BT_PieChartView : UIView
 
 @property double totalPortfolioValue;
 @property (nonatomic,strong) Cache* userCache;
 @property (nonatomic, retain) NSArray *stocks;
 @property (nonatomic, retain) NSMutableDictionary *stockColors;
 @property (nonatomic, retain) NSMutableArray *currentPrices;
-@property (nonatomic, retain) UIView *legendView;
+@property (nonatomic, retain) UIScrollView *legendScrollView;
+@property (nonatomic, retain) PieView *pieView;
 
 -(void)calculateCurrentPrices;
+-(void)initPieView;
 
 @end
