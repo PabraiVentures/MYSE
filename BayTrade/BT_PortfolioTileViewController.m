@@ -20,30 +20,25 @@
 
 @implementation BT_PortfolioTileViewController
 
-@synthesize tileView, userCache, stocks, currentPrices, detailLabel, chartImage;
+@synthesize tileView, stocks, currentPrices, detailLabel, chartImage;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
+    if (self) {}
     return self;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self performSelectorInBackground:@selector(backgroundUpdateStocks) withObject:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    NSLog(@"view did appear");
-    [self calculateCurrentPrices];//must be first!
-    self.stocks = [self.userCache.coreModel.portfolio.stocks allObjects];
     [self calculateCurrentPrices];
-    if (self.stocks.count >= 1)
-        [self loadDetailForIndex:0];
+    [self loadDetailForIndex:0];
 }
 
 - (void)didReceiveMemoryWarning
@@ -55,19 +50,29 @@
 -(void)calculateCurrentPrices
 {
     self.currentPrices = [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) currentStockPrices];
+    self.stocks = [[((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) userCache].coreModel.portfolio.stocks allObjects];
+    NSLog(@"currentprices count: %i", currentPrices.count);
+}
 
-    //remove once splash screen is complete
-//    self.currentPrices = [[NSMutableArray alloc] init];
-//    for (CoreStock *stock in self.stocks) {
-//        [self.currentPrices addObject:[Controller fetchQuotesFor:[NSArray arrayWithObject:stock.symbol]]];
-//    }
+-(void)updatePrices
+{
+    self.currentPrices = [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) currentStockPrices];
+    self.stocks = [[((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) userCache].coreModel.portfolio.stocks allObjects];
+    [self.tileView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+}
+
+- (void) backgroundUpdateStocks
+{
+    [NSThread sleepForTimeInterval:60.0];//update every 60 seconds
+    NSLog(@"updating stocks in portfolio view in background.");
+    [self performSelectorInBackground:@selector(updatePrices) withObject:nil];
+    [self performSelectorInBackground:@selector(backgroundUpdateStocks) withObject:nil];
 }
 
 -(UIColor *) colorForIndex: (int)index
 {
     double tradePrice;
     double openPrice;
-    
     @try {
         tradePrice = [[[self.currentPrices objectAtIndex:index] objectForKey:@"LastTradePriceOnly"] doubleValue];
         openPrice = [[[self.currentPrices objectAtIndex:index] objectForKey:@"Open"] doubleValue];
@@ -80,27 +85,15 @@
     double pctChange =  tradePrice/openPrice - 1.0;
     
     if (pctChange < 0) {
-        if (pctChange < -0.05) {
-            return [UIColor colorWithRed:1.0 green:0 blue:0 alpha:1.0];
-        }
-        if (pctChange < -0.03) {
-            return [UIColor colorWithRed:1.0 green:0 blue:0 alpha:0.8];
-        }
-        if (pctChange < -0.01) {
-            return [UIColor colorWithRed:1.0 green:0 blue:0 alpha:0.6];
-        }
+        if (pctChange < -0.05) return [UIColor colorWithRed:1.0 green:0 blue:0 alpha:1.0];
+        if (pctChange < -0.03) return [UIColor colorWithRed:1.0 green:0 blue:0 alpha:0.8];
+        if (pctChange < -0.01) return [UIColor colorWithRed:1.0 green:0 blue:0 alpha:0.6];
         return [UIColor colorWithRed:1.0 green:0 blue:0 alpha:0.4];
     }
     if (pctChange > 0) {
-        if (pctChange > 0.05) {
-            return [UIColor colorWithRed:0 green:1.0 blue:0 alpha:1.0];
-        }
-        if (pctChange > 0.03) {
-            return [UIColor colorWithRed:0 green:1.0 blue:0 alpha:0.8];
-        }
-        if (pctChange > 0.01) {
-            return [UIColor colorWithRed:0 green:1.0 blue:0 alpha:0.6];
-        }
+        if (pctChange > 0.05) return [UIColor colorWithRed:0 green:1.0 blue:0 alpha:1.0];
+        if (pctChange > 0.03) return [UIColor colorWithRed:0 green:1.0 blue:0 alpha:0.8];
+        if (pctChange > 0.01) return [UIColor colorWithRed:0 green:1.0 blue:0 alpha:0.6];
         return [UIColor colorWithRed:0 green:1.0 blue:0 alpha:0.4];
     }
     return [UIColor yellowColor];
@@ -147,7 +140,6 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-  
     [self loadDetailForIndex:indexPath.row];
 }
 

@@ -37,33 +37,64 @@
     
     self.userCache = [[Cache alloc] init]; //TODO should this be here?
     self.userCache.userID = [[NSUserDefaults standardUserDefaults] objectForKey:@"userID"];
-    NSLog(@"did finish launching with options");
+    [self performSelectorInBackground:@selector(backgroundUpdateModel) withObject:nil];
+    //[self performSelectorInBackground:@selector(downloadCurrentStocksInfo) withObject:nil];
     return YES;
 }
 
-- (void)updateCoreModel
+//- (void)updateCoreModel
+//{
+//    //STACKMOB CORE DATA STORE initialization
+//    NSLog(@"updating core model");
+//        /********GET COREMODEL FROM STACKMOB***********/
+//        //download stackmob coremodel and save to local coremodel
+//        NSFetchRequest *fetchRequest = [self getRequestForUserCoreModel];
+//        //get the object context to work with stackmob data
+//        self.managedObjectContext = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
+//        
+//        // execute the request
+//        [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {
+//            @try {
+//                self.userCache.coreModel = (CoreModel *)[results objectAtIndex:0]; //now we can access coremodel from anywhere
+//                NSLog(@"self.coremodel.stocks count: %i", self.userCache.coreModel.portfolio.stocks.count);
+//                NSLog(@"succeeded setting CoreModel");
+//            }
+//            @catch (NSException *exception) {
+//                NSLog(@"error setting core model.");
+//            }
+//        } onFailure:^(NSError *error) {
+//            NSLog(@"There was an error! %@", error);
+//        }];
+//        NSLog(@"updated core model.");
+//}
+
+-(void)updateCoreModel
 {
-    NSLog(@"updating core model");
-        /********GET COREMODEL FROM STACKMOB***********/
-        //download stackmob coremodel and save to local coremodel
-        NSFetchRequest *fetchRequest = [self getRequestForUserCoreModel];
-        //get the object context to work with stackmob data
+    @try {
         self.managedObjectContext = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
-        
-        // execute the request
-        [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {
-            @try {
-                self.userCache.coreModel = (CoreModel *)[results objectAtIndex:0]; //now we can access coremodel from anywhere
-                NSLog(@"self.coremodel.stocks count: %i", self.userCache.coreModel.portfolio.stocks.count);
-                NSLog(@"succeeded setting CoreModel");
-            }
-            @catch (NSException *exception) {
-                NSLog(@"error setting core model.");
-            }
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CorePortfolio"];
+        // query for tradeevents for THIS user
+        fetchRequest.includesPendingChanges = false;
+        NSString* getRightModel = [NSString stringWithFormat:@"sm_owner == 'user/%@'",self.userCache.userID ];
+        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:getRightModel]];
+        [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *models) {
+            if([models count] > 0) self.userCache.coreModel.portfolio = [models firstObject];
+            [self performSelectorInBackground:@selector(downloadCurrentStocksInfo) withObject:nil];
         } onFailure:^(NSError *error) {
-            NSLog(@"There was an error! %@", error);
+            NSLog(@"Error fetching: %@", error);
         }];
-        NSLog(@"updated core model.");
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Error fetching core model in setCoreModel");
+    }
+}
+
+- (void) backgroundUpdateModel
+{
+    [NSThread sleepForTimeInterval:60.0];//update every 60 seconds
+    NSLog(@"appdelegate: updating coremodel in background");
+    [self performSelectorInBackground:@selector(updateCoreModel) withObject:nil];
+    [self performSelectorInBackground:@selector(backgroundUpdateModel) withObject:nil];
 }
 
 -(NSFetchRequest*)getRequestForUserCoreModel {
@@ -89,18 +120,17 @@
 
 -(void)downloadCurrentStocksInfo
 {
-    NSLog(@"downloading current stocks info");
-    NSLog(@"usercache stocks: %@", self.userCache.coreModel.portfolio);
+    NSLog(@"downloading current stocks info APPD");
     NSMutableArray *currentPrices = [[NSMutableArray alloc] init];
     @try {
         for (CoreStock *stock in self.userCache.coreModel.portfolio.stocks) {
+            NSLog(@"quote for symbol %@: %@", stock.symbol, [Controller fetchQuotesFor:[NSArray arrayWithObject:stock.symbol]]);
             [currentPrices addObject:[Controller fetchQuotesFor:[NSArray arrayWithObject:stock.symbol]]];
         }
     }
     @catch(NSException* e) {
-        NSLog(@"Error spashsscreen loading data\n%@",e);
+        NSLog(@"Error appd loading data\n%@",e);
         [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setCurrentStockPrices:currentPrices];
-        [self performSelectorOnMainThread:@selector(done) withObject:nil waitUntilDone:NO];
         return;
     }
     [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setCurrentStockPrices:currentPrices];
@@ -112,19 +142,20 @@
     [self updateCoreModel];
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application {
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
     [FBAppEvents activateApp];
     [FBAppCall handleDidBecomeActiveWithSession: FBSession.activeSession];
 }
 
-- (void)applicationWillTerminate:(UIApplication *)application {
+- (void)applicationWillTerminate:(UIApplication *)application
+{
     [FBSession.activeSession close];
 }
 
 - (NSManagedObjectModel *)managedObjectModel
 {
     if (_managedObjectModel != nil) return _managedObjectModel;
-    
     NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"themodel" withExtension:@"momd"];
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return _managedObjectModel;

@@ -6,7 +6,6 @@ FINAL STEPS
 Functional
 (_)encapsulate all networks functions in try/catch
 (_)Tutorial on first time opening (just pictures of how to trade) with skipping option
-(_)portfolio view - refresh tiles
 (_)failsafe for all YQL calls
 (_)graph account rank & portfolio value over time in homeview
 (_)Portfolio Value vs SP500 chart
@@ -17,9 +16,12 @@ Functional
 (_)Speed up server code: The bottleneck is networking calls
 (_)Use Yahoo accounts to increase YQL caps for servers
 (_)Push notifications to users
-(_)In history have 1 selection for pending, and one for all orders
+(_)In history have see either pending or executed orders
+(_)home view - graphs?
+(X)have view controllers ask appdelegate for data updated automatically
+(X)portfolio view - refresh tiles
 
-Esthetic
+Aesthetic
 (_)homeviewcontroller - picture
 (_)homeviewcontroller - change in ranking today
 (_)homeviewcontroller - total stocks value
@@ -34,9 +36,7 @@ Esthetic
 (_)details in legend
 (_)Good backgrounds
 (_)Finalize trade screen and put stock info on it
-(_)Finalize portfolio screen by adding info to tiles, reformatting detail text and 
-	allowing the user to pick the chart timescale
-
+(_)Finalize portfolio screen by adding info to tiles, reformatting detail text and allowing the user to pick the chart timescale
 (_)MY(\n)SE logo
 (_)Finalize home screen with labels on the pie chart
 
@@ -44,7 +44,6 @@ Esthetic
 
 
 (X)rankings server code
-
 (X)homeviewcontroller - stocks you own the most of
 (X)label pie chart
 (X)splash screen animation

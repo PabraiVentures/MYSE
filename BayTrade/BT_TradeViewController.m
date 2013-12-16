@@ -45,25 +45,19 @@
     [self updateValue];
     self.autocompleteSymbols = [[NSMutableArray alloc] initWithObjects:@"AAPL", @"GOOG", @"CSCO", @"IBM", @"YHOO", @"F", nil];
     self.autocompleteSuggestions = [[NSMutableArray alloc] init];
-    //[self performSelectorInBackground:@selector(backgroundUpdateBuyPower) withObject:nil];
+    [self performSelectorInBackground:@selector(backgroundUpdateCoreModel) withObject:nil];
 }
 
-/*Check if page has been updated in the last 1 minute.*/
+/*Check if page has been updated in the last 30 seconds.*/
 - (void) viewDidAppear:(BOOL)animated {
-    NSLog(@"last updated: %@", lastUpdated);
     if (!lastUpdated) {
-        NSLog(@"initializing lastupdated in trade.");
         lastUpdated = [NSDate date];
         return;
     }
     NSTimeInterval timeSinceUpdate = [lastUpdated timeIntervalSinceNow];
-    NSLog(@"here");
-    NSLog(@"time since update: %f", timeSinceUpdate);
-    if (timeSinceUpdate < -10) { //60 seconds
+    if (timeSinceUpdate < -30) { //max 30 seconds
         NSLog(@"updating. time since update: %f", timeSinceUpdate);
-        [self setCoreModel];
-
-      
+        [self performSelectorInBackground:@selector(setCoreModel) withObject:nil];
     }
 }
 
@@ -100,77 +94,38 @@
 
 -(NSFetchRequest*)getRequestForUserCoreModel {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CoreModel"];
-    // query for coremodel for THIS user
     NSString* coreModelRequest = [NSString stringWithFormat:@"user == '%@'", self.userCache.userID];
     [fetchRequest setPredicate:[NSPredicate predicateWithFormat:coreModelRequest]];
     return fetchRequest;
 }
 
-- (void) backgroundUpdateBuyPower
+- (void) backgroundUpdateCoreModel
 {
-//    NSLog(@"updating background buy power, sleeping first");
-//    [NSThread sleepForTimeInterval:60.0];//update every 60 seconds
-//    NSLog(@"updating background buy power, executing now.");
-//    [self performSelectorOnMainThread:@selector(setCoreModel) withObject:nil waitUntilDone:YES];
-//    [self performSelectorInBackground:@selector(backgroundUpdateBuyPower) withObject:nil];
+    [NSThread sleepForTimeInterval:60.0];//update every 60 seconds
+    NSLog(@"updating tradeview coremodel in background.");
+    [self performSelectorInBackground:@selector(getCoreModel) withObject:nil];
+    [self performSelectorInBackground:@selector(backgroundUpdateCoreModel) withObject:nil];
 }
 
-- (void) initializeCoreModel {
+- (void) initializeCoreModel
+{
     [self.valueDisplay setText:@"100000.00"];
     [self.cashDisplay  setText:@"100000.00"];
     self.userCache.coreModel.portfolio.totalcashvalue = [NSNumber numberWithFloat: 100000.0];
     [self setCoreModel];
 }
 
+- (void) getCoreModel
+{
+    self.userCache = [((BT_AppDelegate*)[[UIApplication sharedApplication]delegate]) userCache];
+    [self updateBuyPower];
+    [self updateValue];
+}
+
 //assigns self.userCache.coreModel to the StackMob coreModel
-- (void) setCoreModel {
-    @try {
-    
-      self.managedObjectContext = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
-
-      /*
-        [((BT_AppDelegate*)[[UIApplication sharedApplication]delegate]) updateCoreModel];
-        self.userCache = [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) userCache];
-        NSLog(@"succeeded setting CoreModel");
-        [self updateBuyPower];
-        [self updateValue];
-        NSLog(@"updated buy power and value.");*/
-      
-      
-      NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CorePortfolio"];
-      // query for tradeevents for THIS user
-      fetchRequest.includesPendingChanges=false;
-      NSString* getRightModel=[NSString stringWithFormat:@"sm_owner == 'user/%@'",self.userCache.userID ];
-      [fetchRequest setPredicate:[NSPredicate predicateWithFormat:getRightModel]];
-      
-      /**********START CODE BLOCK FOR REQUEST ACTION************/
-      [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *models) {
-        
-        if([models count] > 0)
-        {
-         // self.userCache.coreModel set=[models objectAtIndex:0];
-          //update model
-          CorePortfolio * corp= [models objectAtIndex:0];
-          self.userCache.coreModel.portfolio=corp;
-          ((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]).userCache.coreModel.portfolio=self.userCache.coreModel.portfolio;
-
-          NSLog(@"--\nPortfolio CASH %@", corp.totalcashvalue);
-          [self updateBuyPower];
-          [self updateValue];
-        }
-        
-      } onFailure:^(NSError *error) {
-        NSLog(@"Error fetching: %@", error);
-      }];
-    }
-
-      
-  
-    @catch (NSException *exception) {
-        //self initializeCoreModel];
-         
-         NSLog(@"Error fetching core model in setCoreModel");
-    }
+- (void) setCoreModel
+{
+    [self getCoreModel];
 }
 
 //Updates Labels on UI to display current value of portfolio in userCache
@@ -188,13 +143,13 @@
     value += self.userCache.coreModel.portfolio.totalcashvalue.doubleValue;
     NSString *valString = [NSString stringWithFormat:@"$%.2f", value];
     [self.valueDisplay setText: valString];
+    [self.valueDisplay performSelectorOnMainThread:@selector(setText:) withObject:valString waitUntilDone:NO];
 }
 
 //Updates Labels on UI to display the buying power of portfolio in userCache
 - (void)updateBuyPower {
     NSString *money = [NSString stringWithFormat:@"$%.2f", self.userCache.coreModel.portfolio.totalcashvalue.floatValue];
-    NSLog(@"money: %@", money);
-    [self.cashDisplay setText: money];
+    [self.cashDisplay performSelectorOnMainThread:@selector(setText:) withObject:money waitUntilDone:NO];
 }
 
 /************Gets stock data from YahooFinance**********/
@@ -243,7 +198,6 @@
 - (void)loginViewFetchedUserInfo:(FBLoginView *)loginView user:(id<FBGraphUser>)user {
     self.profilePic.profileID = user.id;
     self.loggedInUser = user;
-    NSLog(@"%@-----",user);
     NSString *userName = [NSString stringWithFormat:@"%@'s Trading Floor", user.first_name];
     self.investorName.text = userName;
     [[NSUserDefaults standardUserDefaults] setObject:user.first_name forKey:@"Name"];
@@ -292,20 +246,16 @@
     @try {
         data = [self callFetchQuotes:buyingSymbol];
     }
-    @catch (NSException *exception) {
+    @catch (NSException* exception) {
         [self showErrorAlert:@"Try Again" andMessage:@"Stock Data Currently Not Available"];
         return -1;
     }
-    NSLog(@"data: %@", data);
-    if (data== NULL  )return -1;
+    if (data == NULL) return -1;
     NSString *myStockPrice = data[@"LastTradePriceOnly"];
     if(myStockPrice == NULL || amount == 0) [self showErrorAlert:@"Error" andMessage:@"Invalid symbol or amount"];
     else {
-        NSLog(@"before");
         reservedBuyPrice = [myStockPrice doubleValue];
-        NSLog(@"after");
         double totalPrice = reservedBuyPrice * amount;
-        NSLog(@"totalcashval: %@", self.userCache.coreModel.portfolio.totalcashvalue);
         if (totalPrice > self.userCache.coreModel.portfolio.totalcashvalue.doubleValue) {
             [self showErrorAlert:@"Not enough cash!" andMessage:[NSString stringWithFormat:@"You don't have enough money to buy %i shares of %@ at %.2f.", amount, buyingSymbol, reservedBuyPrice]];
             return -1;
@@ -327,21 +277,22 @@
 }
 
 
--(void) makeOrderWithSymbol: (NSString*) symbol withPrice:(double)price andAmount:(int) amount andIsLong: (bool)islong andType: (int) type{
+-(void) makeOrderWithSymbol: (NSString*) symbol withPrice:(double)price andAmount:(int) amount andIsLong: (bool)islong andType: (int) type
+{
     NSManagedObjectContext *moc = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
-    StockOrder* order=[NSEntityDescription insertNewObjectForEntityForName:@"StockOrder" inManagedObjectContext:moc];
+    StockOrder* order = [NSEntityDescription insertNewObjectForEntityForName:@"StockOrder" inManagedObjectContext:moc];
     [order setValue:[order assignObjectId] forKey:[order primaryKeyField]];
     order.addedtolookup = false;
-    order.islongposition=[NSNumber numberWithInt: islong];
-    order.portfolio=self.userCache.coreModel.portfolio;
-    order.lasttimeprocessed=0;
-    order.price=[NSNumber numberWithDouble:price];
-    order.quantity=[NSNumber numberWithInt:amount];
-    order.status=@"created";
-    order.symbol=symbol;
-    order.tradetype=[NSNumber numberWithInt:type];
+    order.islongposition = [NSNumber numberWithInt: islong];
+    order.portfolio = self.userCache.coreModel.portfolio;
+    order.lasttimeprocessed = 0;
+    order.price = [NSNumber numberWithDouble:price];
+    order.quantity = [NSNumber numberWithInt:amount];
+    order.status = @"created";
+    order.symbol = symbol;
+    order.tradetype = [NSNumber numberWithInt:type];
     [self.managedObjectContext saveOnSuccess:^{
-        NSLog(@"You updated the model object with a new order!");
+        NSLog(@"You updated the model object with a new order for stock %@!", symbol);
         [self showErrorAlert:@"Order Placed!" andMessage:@"Your order has been placed. It will execute once the conditions of the order are met. Your buying power will be reduced once the order executes."];
     } onFailure:^(NSError *error) {
         NSLog(@"There was an error! %@", error);
@@ -349,21 +300,11 @@
 }
 
 - (void) buy {
-    NSLog(@"beginning buy");
     NSString *buyingSymbol = [self.symbolField.text uppercaseString];
     int amount = [self.amountField.text intValue];
-    NSLog(@"totalcashvalue: %@", self.userCache.coreModel.portfolio.totalcashvalue);
     int tradetype=self.orderTypeSegment.selectedSegmentIndex;
     if (tradetype==0)self.priceField.text=@("0");
     [self makeOrderWithSymbol:buyingSymbol withPrice:self.priceField.text.doubleValue andAmount:amount andIsLong:true andType:tradetype];
-    [self setCoreModel];
-//    [self updateBuyPower];
-//    [self updateValue];
-    for(CoreStock *s in self.userCache.coreModel.portfolio.stocks)
-    {
-        NSLog(@"%@ : $%.2f\tamount:%i\n", s.symbol, s.buyprice.doubleValue, s.amount.intValue);
-    }
-    NSLog(@"ending buy");
     self.priceField.text=@("0");
 }
 
@@ -437,12 +378,6 @@
     int ordertype= self.orderTypeSegment.selectedSegmentIndex+3;
     if (ordertype==3)self.priceField.text=@("0");
     [self makeOrderWithSymbol:matchedSaleStock.symbol withPrice: self.priceField.text.doubleValue andAmount:amount andIsLong:true andType:ordertype];
-    //SAVE COREMODEL TO STACKMOB
- //   [self.managedObjectContext saveOnSuccess:^{
-  //      NSLog(@"Updated model by making order selling stock!");
-  //  } onFailure:^(NSError *error) {
-  //      NSLog(@"There was an error! %@", error);
-  //  }];
     self.priceField.text=@("0");
     [self updateBuyPower];
     [self updateValue];

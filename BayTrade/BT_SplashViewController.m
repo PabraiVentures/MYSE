@@ -49,52 +49,38 @@
     [self performSelectorInBackground:@selector(setCoreModel) withObject:nil];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Custom Download Threads
 
 -(void)downloadCurrentStocksInfo
 {
     NSLog(@"downloading current stocks info");
-    NSLog(@"usercache stocks: %@", self.userCache.coreModel.portfolio);
     float stockNum = 1; //TODO
     float numStocks = self.userCache.coreModel.portfolio.stocks.count-1; //TODO
     NSMutableArray *currentPrices = [[NSMutableArray alloc] init];
-  @try{
-    for (CoreStock *stock in self.userCache.coreModel.portfolio.stocks) {
-        NSNumber *progPercent = [NSNumber numberWithFloat:(stockNum / numStocks)];
-        stockNum++; // roll into single YQL request?
-        [currentPrices addObject:[Controller fetchQuotesFor:[NSArray arrayWithObject:stock.symbol]]];
-        [self performSelectorOnMainThread:@selector(setProgressStatus:) withObject:progPercent waitUntilDone:YES];
+    @try{
+        for (CoreStock *stock in self.userCache.coreModel.portfolio.stocks) {
+            NSNumber *progPercent = [NSNumber numberWithFloat:(stockNum / numStocks)];
+            stockNum++; // roll into single YQL request?
+            [currentPrices addObject:[Controller fetchQuotesFor:[NSArray arrayWithObject:stock.symbol]]];
+            [self performSelectorOnMainThread:@selector(setProgressStatus:) withObject:progPercent waitUntilDone:YES];
+        }
     }
-  }
-  @catch(NSException* e){
-    NSLog(@"Error spashsscreen loading data\n%@",e);
+    @catch(NSException* e){
+        NSLog(@"Error spashsscreen loading data\n%@", e);
+    }
     [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setCurrentStockPrices:currentPrices];
-    NSLog(@"load success; going to trade view");
-    [self performSelectorOnMainThread:@selector(done) withObject:nil waitUntilDone:NO];
-
-    return;
-  }
-  
-    [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setCurrentStockPrices:currentPrices];
-    NSLog(@"load success; going to trade view");
     [self performSelectorOnMainThread:@selector(done) withObject:nil waitUntilDone:NO];
 }
 
 - (void) done
 {
+    NSLog(@"load success; going to trade view");
     [self performSegueWithIdentifier:@"loadSuccess" sender:nil];
 }
 
 - (void) setCoreModel
 {
-  
-    NSLog(@"setting core model");
+    NSLog(@"Splashview: setting core model");
     /********GET COREMODEL FROM STACKMOB***********/
     //download stackmob coremodel and save to local coremodel
     //get the model, update and send back to stackmob
@@ -102,7 +88,6 @@
     
     // query for coremodel for THIS user
     NSString* coreModelRequest=[NSString stringWithFormat:@"user == '%@'", [[NSUserDefaults standardUserDefaults] objectForKey:@"userID"]];
-    NSLog(@"userid: %@", coreModelRequest);
     [fetchRequest setPredicate:[NSPredicate predicateWithFormat:coreModelRequest]];
     
     //get the object context to work with stackmob data
@@ -110,37 +95,24 @@
     
     // execute the request
     [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {
-        BOOL needsUpdate = YES;
-        NSLog(@"succeeded executing fetch req.");
         @try {
             NSManagedObject* myModel = [results objectAtIndex:0];
-            self.userCache.coreModel = (CoreModel *) myModel; //now we can access coremodel from anywhere
-            NSLog(@"self.usercache.coremodel: %@", self.userCache.coreModel);
-            [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setUserCache:self.userCache]; // TODO is this ok?
-            NSLog(@"succeeded setting CoreModel");
+            self.userCache.coreModel = (CoreModel *) myModel;
+            [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setUserCache:self.userCache];//now we can access coremodel from anywhere
             [self performSelectorInBackground:@selector(downloadCurrentStocksInfo) withObject:nil];
         }
         @catch (NSException *exception) {
             self.userCache.coreModel.portfolio.totalcashvalue = [NSNumber numberWithFloat: 100000.0];
-            needsUpdate = NO;
             NSLog(@"repeating setcoremodel; exception: %@", exception);
             [self setCoreModel];
         }
-        if(needsUpdate)
-        {
-            NSLog(@"needs update");
-        }
-        
     } onFailure:^(NSError *error) {
         NSLog(@"There was an error! %@", error);
-        return;
     }];
-    /********DONE GETTING COREMODEL FROM STACKMOB***********/
 }
 
 -(void) loadTickerData
 {
-    NSLog(@"loading ticker data");
     NSMutableArray *tickerItems = [[NSMutableArray alloc] init];
     
     NSArray *tickers = [NSArray arrayWithObjects:@"AAPL", @"GOOG", @"MSFT", @"BA", @"F", nil];

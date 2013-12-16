@@ -11,7 +11,7 @@
 
 @interface BT_PortfolioTileViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
 
-@property (nonatomic,strong) Cache* userCache;
+//@property (nonatomic,strong) Cache* userCache;
 @property (nonatomic, retain) NSArray *stocks;
 @property (nonatomic, retain) NSMutableArray *currentPrices;
 @property (nonatomic, retain) IBOutlet UICollectionView *tileView;
