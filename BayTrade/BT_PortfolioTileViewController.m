@@ -131,9 +131,7 @@
 
     }
     @catch (NSException *exception) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Uh Oh!" message:[NSString stringWithFormat:@"Can't get data! Error: %@", exception] delegate:self cancelButtonTitle:@"Okay." otherButtonTitles: nil];
-        [alert show];
-        [self dismissViewControllerAnimated:YES completion:nil];
+      NSLog(@"Error loading tiles %@", exception);
     }
        return cell;
 }

@@ -78,7 +78,13 @@
     [self.symbolField resignFirstResponder];
     if ([self.symbolField.text length] > 0) {
         NSDictionary *stockData = [self callFetchQuotes:self.symbolField.text];
-        if (stockData == NULL) return;
+      int loopcount=0;
+        while (stockData == NULL && loopcount<4)
+        {
+          
+        stockData = [self callFetchQuotes:self.symbolField.text];
+          loopcount++;
+        }
         double lastPrice = [[stockData valueForKey:@"LastTradePriceOnly"] doubleValue];
         self.priceLabel.text = [NSString stringWithFormat:@"$%.2f", lastPrice];
         self.tickerLabel.text = [stockData valueForKey:@"symbol"];
@@ -133,7 +139,9 @@
     double value = 0.0;
     double prc = 0.0;
     int amt = 0;
-    for(CoreStock *stock in self.userCache.coreModel.portfolio.stocks) {
+  
+  @try{
+  for(CoreStock *stock in self.userCache.coreModel.portfolio.stocks) {
         if ((stock.symbol!=NULL)) {
             prc = [[Controller currentPriceForSymbol:stock.symbol] doubleValue];
             amt = stock.amount.intValue;
@@ -144,6 +152,10 @@
     NSString *valString = [NSString stringWithFormat:@"$%.2f", value];
     [self.valueDisplay setText: valString];
     [self.valueDisplay performSelectorOnMainThread:@selector(setText:) withObject:valString waitUntilDone:NO];
+  }
+  @catch (NSException* e) {
+    NSLog(@"Error in TradeView:updateValue %@" ,e);
+  }
 }
 
 //Updates Labels on UI to display the buying power of portfolio in userCache
