@@ -22,7 +22,7 @@ class BaseClient:
 			headers["X-Stackmob-Expand"]="1"
 		headers["Content-Type"] = "application/json"
 		#headers["Version"]="0"
-		self.connection.set_debuglevel(1)
+		self.connection.set_debuglevel(0)
 		bodyString = ""
 		if(body != None):
 			bodyString = json.dumps(body)
@@ -92,8 +92,9 @@ try:
 		#for each portfolio
         #calculate the current portfoliov value
 		total=port['totalcashvalue']
-		for stock in port['stocks']:
-			total=total+ float(Pyql().lookup([stock['symbol']])[0]['LastTradePriceOnly']) *stock['amount']
+		if 'stocks' in port:
+			for stock in port['stocks']:
+				total=total+ float(Pyql().lookup([stock['symbol']])[0]['LastTradePriceOnly']) *stock['amount']
 		if ('portfoliohistory' not in port):
 			port['portfoliohistory']="{}"
 		hist=json.loads(port['portfoliohistory'])
@@ -118,7 +119,7 @@ try:
         #now the totalportfoliovalues have been updated
 
 except :
-	raise
+	mws=0
 sortedrankings=sorted(rankings)
 print sortedrankings
 rank=1
@@ -135,8 +136,10 @@ u= w.read()
 portfolios=json.loads(u)
 print "------rank--------"
 print ""
-for port in portfolios:
-	body={"ranking":rankings[port['coreportfolio_id']]}
-	string="coreportfoliohistory/"+histforport[port['coreportfolio_id']]
-	client._execute(1,"PUT",string,body).read()
-
+try:
+	for port in portfolios:
+		body={"ranking":rankings[port['coreportfolio_id']]}
+		string="coreportfoliohistory/"+histforport[port['coreportfolio_id']]
+		client._execute(1,"PUT",string,body).read()
+except:
+	mws=0
