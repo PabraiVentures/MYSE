@@ -39,7 +39,7 @@
     self.userCache = [[Cache alloc] init]; //TODO should this be here?
     self.userCache.userID = [[NSUserDefaults standardUserDefaults] objectForKey:@"userID"];
     [self performSelectorInBackground:@selector(backgroundUpdateModel) withObject:nil];
-    [self performSelectorInBackground:@selector(downloadCurrentStocksInfo) withObject:nil];
+    //[self performSelectorInBackground:@selector(downloadCurrentStocksInfo) withObject:nil];
     return YES;
 }
 
