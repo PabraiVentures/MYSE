@@ -30,7 +30,7 @@ Aesthetic
 (_)Put account value and rank everywhere
 (_)Help buttons on each page with detailed explanations
 (_)portfolio detail view - buy/sell option ->takes you to trade page with stock entered
-(_)fb pics of friends on rankings
+(X)fb pics of friends on rankings
 (X)make pie chart legend scrollable
 (_)rotate pie chart when scrolling through legend
 (_)details in legend
