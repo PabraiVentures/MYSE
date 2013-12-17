@@ -60,27 +60,30 @@
     NSMutableArray *currentPrices = [[NSMutableArray alloc] init];
     @try{
       
-      
-        currentPrices = [[NSMutableArray alloc] init];
+      NSMutableArray* tickers= [[NSMutableArray alloc] init];
+      currentPrices = [[NSMutableArray alloc] init];
         for (CoreStock *stock in self.userCache.coreModel.portfolio.stocks) {
           loopcount=0;
-            NSNumber *progPercent = [NSNumber numberWithFloat:(stockNum / numStocks)];
             stockNum++; // roll into single YQL request?
-          NSDictionary *priceDict=[Controller fetchQuotesFor:[NSArray arrayWithObject:stock.symbol]];
-                  while(priceDict == NULL && loopcount<4){
-                        priceDict=[Controller fetchQuotesFor:[NSArray arrayWithObject:stock.symbol]];
-            
-                        loopcount++;
+          [tickers addObject:stock.symbol];//add stock ticker to array
+          
+
+        
+          
                       }
+      NSNumber *progPercent = [NSNumber numberWithFloat:(1)];
+
+          NSLog(@"fetching initial stocks");
+      NSDictionary *priceDict=[Controller fetchQuotesFor:tickers];
 
             [currentPrices addObject:priceDict];
             [self performSelectorOnMainThread:@selector(setProgressStatus:) withObject:progPercent waitUntilDone:YES];
         }
-    }
+  
     @catch(NSException* e){
         NSLog(@"Error spashsscreen loading data\n%@", e);
     }
-    [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setCurrentStockPrices:currentPrices];
+    [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setCurrentStockPrices:[currentPrices objectAtIndex:0]];
     [self performSelectorOnMainThread:@selector(done) withObject:nil waitUntilDone:NO];
 }
 

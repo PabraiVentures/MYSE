@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		52365510185D876000AB71DD /* libstackmob-v2.2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93F20DE1185D85F100F546D4 /* libstackmob-v2.2.0.a */; };
 		52365561185FC0BA00AB71DD /* libCorePlot-CocoaTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52365560185FC0BA00AB71DD /* libCorePlot-CocoaTouch.a */; };
 		52365563185FF02E00AB71DD /* silhouette.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 52365562185FF02E00AB71DD /* silhouette.jpg */; };
 		525122A017D774FC00A8782B /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5251229F17D774FC00A8782B /* FacebookSDK.framework */; };
@@ -34,6 +33,7 @@
 		9307A2F817A44D2D00E647DF /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 9307A2F317A44D2D00E647DF /* home.png */; };
 		931713F417A3792200B7D377 /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 931713F317A3792200B7D377 /* Controller.m */; };
 		931713F717A382DF00B7D377 /* BT_HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 931713F617A382DF00B7D377 /* BT_HistoryViewController.m */; };
+		93207F97186000B40016E270 /* libstackmob-v2.2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93207F951860009F0016E270 /* libstackmob-v2.2.0.a */; };
 		93294D7D17E4013A00CD7F42 /* CorePortfolioHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 93294D7C17E4013A00CD7F42 /* CorePortfolioHistory.m */; };
 		93294D7F17E4029300CD7F42 /* portfoliohistory.txt in Resources */ = {isa = PBXBuildFile; fileRef = 93294D7E17E4029300CD7F42 /* portfoliohistory.txt */; };
 		933D51D6185FE86900E6EF6D /* PortfolioLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 933D51D5185FE86900E6EF6D /* PortfolioLog.m */; };
@@ -196,6 +196,7 @@
 		931713F317A3792200B7D377 /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
 		931713F517A382DF00B7D377 /* BT_HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BT_HistoryViewController.h; sourceTree = "<group>"; };
 		931713F617A382DF00B7D377 /* BT_HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BT_HistoryViewController.m; sourceTree = "<group>"; };
+		93207F951860009F0016E270 /* libstackmob-v2.2.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libstackmob-v2.2.0.a"; sourceTree = "<group>"; };
 		93294D7B17E4013A00CD7F42 /* CorePortfolioHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CorePortfolioHistory.h; path = ../CorePortfolioHistory.h; sourceTree = "<group>"; };
 		93294D7C17E4013A00CD7F42 /* CorePortfolioHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CorePortfolioHistory.m; path = ../CorePortfolioHistory.m; sourceTree = "<group>"; };
 		93294D7E17E4029300CD7F42 /* portfoliohistory.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portfoliohistory.txt; sourceTree = "<group>"; };
@@ -305,7 +306,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52365510185D876000AB71DD /* libstackmob-v2.2.0.a in Frameworks */,
+				93207F97186000B40016E270 /* libstackmob-v2.2.0.a in Frameworks */,
 				52FD82AE180F2CE300DCF967 /* QuartzCore.framework in Frameworks */,
 				93D5A0CD17A3C75300ECA5D8 /* CoreLocation.framework in Frameworks */,
 				93D5A0CB17A3C74500ECA5D8 /* MobileCoreServices.framework in Frameworks */,
@@ -517,6 +518,7 @@
 		93E19F7A17A36420000D60B5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				93207F951860009F0016E270 /* libstackmob-v2.2.0.a */,
 				52365560185FC0BA00AB71DD /* libCorePlot-CocoaTouch.a */,
 				52365511185FC07C00AB71DD /* CorePlotHeaders */,
 				93F20DA9185D85F100F546D4 /* StackMob-v2.2.0 */,
@@ -932,6 +934,7 @@
 					"$(SRCROOT)/StackMob-v2.2.0",
 					"/Users/john/devNew/MYSE/StackMob-v2.2.0",
 					/Users/john/devNew/MYSE,
+					/Users/pabrai/Desktop/MYSE,
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -957,10 +960,11 @@
 				INFOPLIST_FILE = "BayTrade/BayTrade-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\\\\\\\\\\\\\"$(SRCROOT)/StackMob-v2.0.0\\\\\\\\\\\\\\\"",
+					"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"$(SRCROOT)/StackMob-v2.0.0\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
 					"/Users/pabrai/Desktop/MYSE/StackMob-v2.2.0",
 					"/Users/john/devNew/MYSE/StackMob-v2.2.0",
 					/Users/john/devNew/MYSE,
+					/Users/pabrai/Desktop/MYSE,
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
