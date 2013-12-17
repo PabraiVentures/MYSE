@@ -36,6 +36,7 @@
 		931713F717A382DF00B7D377 /* BT_HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 931713F617A382DF00B7D377 /* BT_HistoryViewController.m */; };
 		93294D7D17E4013A00CD7F42 /* CorePortfolioHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 93294D7C17E4013A00CD7F42 /* CorePortfolioHistory.m */; };
 		93294D7F17E4029300CD7F42 /* portfoliohistory.txt in Resources */ = {isa = PBXBuildFile; fileRef = 93294D7E17E4029300CD7F42 /* portfoliohistory.txt */; };
+		933D51D6185FE86900E6EF6D /* PortfolioLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 933D51D5185FE86900E6EF6D /* PortfolioLog.m */; };
 		93C7138F17A3FCBC00258C6A /* themodel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 93C7138D17A3FCBC00258C6A /* themodel.xcdatamodeld */; };
 		93D5A0C517A3C72100ECA5D8 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93D5A0C417A3C72100ECA5D8 /* CoreData.framework */; };
 		93D5A0C717A3C73100ECA5D8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93D5A0C617A3C73100ECA5D8 /* Security.framework */; };
@@ -198,6 +199,8 @@
 		93294D7B17E4013A00CD7F42 /* CorePortfolioHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CorePortfolioHistory.h; path = ../CorePortfolioHistory.h; sourceTree = "<group>"; };
 		93294D7C17E4013A00CD7F42 /* CorePortfolioHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CorePortfolioHistory.m; path = ../CorePortfolioHistory.m; sourceTree = "<group>"; };
 		93294D7E17E4029300CD7F42 /* portfoliohistory.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portfoliohistory.txt; sourceTree = "<group>"; };
+		933D51D4185FE86900E6EF6D /* PortfolioLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PortfolioLog.h; path = ../PortfolioLog.h; sourceTree = "<group>"; };
+		933D51D5185FE86900E6EF6D /* PortfolioLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PortfolioLog.m; path = ../PortfolioLog.m; sourceTree = "<group>"; };
 		93C7138E17A3FCBC00258C6A /* themodel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = themodel.xcdatamodel; sourceTree = "<group>"; };
 		93D5A0C417A3C72100ECA5D8 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		93D5A0C617A3C73100ECA5D8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -468,6 +471,8 @@
 		525122A317D7759100A8782B /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				933D51D4185FE86900E6EF6D /* PortfolioLog.h */,
+				933D51D5185FE86900E6EF6D /* PortfolioLog.m */,
 				93F4DEAE183821490004D8BA /* StockOrder.h */,
 				93F4DEAF183821490004D8BA /* StockOrder.m */,
 				7DF8F95517BC7F91005553A1 /* User.h */,
@@ -788,6 +793,7 @@
 				93E19F9F17A36420000D60B5 /* BT_TradeViewController.m in Sources */,
 				93E19FC317A36492000D60B5 /* BT_TabBarController.m in Sources */,
 				93E19FCB17A365E9000D60B5 /* Cache.m in Sources */,
+				933D51D6185FE86900E6EF6D /* PortfolioLog.m in Sources */,
 				931713F417A3792200B7D377 /* Controller.m in Sources */,
 				931713F717A382DF00B7D377 /* BT_HistoryViewController.m in Sources */,
 				93DD2C5817A3E35900B3FE71 /* CoreTradeEvent.m in Sources */,

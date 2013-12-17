@@ -88,64 +88,40 @@ try:
 	print portfolios
 	print ""
 	rankings={}#key=porfolioID, value= totalportfoliovalue
+	values=[100000,90000,80000,82000,85000,81000,83000,89000,93000,87000,94000,96000,99000,104000,106000,102000,100000]
+	idx=0
 	histforport={}   
+	offset=1
 	for port in portfolios:
-		#for each portfolio
-        #calculate the current portfoliov value
-		total=port['totalcashvalue']
-		if 'stocks' in port:
-			for stock in port['stocks']:
-				total=total+ float(Pyql().lookup([stock['symbol']])[0]['LastTradePriceOnly']) *stock['amount']
-		if ('portfoliohistory' not in port):
-			port['portfoliohistory']="{}"
-		hist=json.loads(port['portfoliohistory'])
-		hist[time.strftime('%m-%d-%Y')]=total
-		histjson=json.dumps(hist)
+		offset=1
+		while (offset <31):
+			idx=idx+1
+			idx=idx%17
+			#for each portfolio
+			#calculate the current portfoliov value
 		
-		currenttime=datetime.datetime.now().isoformat()
+			currenttime=(datetime.datetime.now() -datetime.timedelta(days=offset)).isoformat()
+			offset=offset+1
+			body1={"accountvalue":float(values[idx]),"portfolio":port['coreportfolio_id'],"logtime":currenttime}
+			string2="portfoliolog"
+			client._execute(1,"POST",string2,body1).read()
+			time.sleep(.2)
+			#looking for  the log we just made
+			str1="portfoliolog?portfolio="+port['coreportfolio_id']+"&logtime="+currenttime
 		
-		body1={"accountvalue":float(total),"portfolio":port['coreportfolio_id'],"logtime":currenttime}
-		string2="portfoliolog"
-		client._execute(1,"POST",string2,body1).read()
-		time.sleep(.2)
-		#looking for  the log we just made
-		str1="portfoliolog?portfolio="+port['coreportfolio_id']+"&logtime="+currenttime
+			log=json.loads(client._execute(0,"GET",str1,None).read())
+			#print port
+			print log 
+			logid=log[0]['portfoliolog_id']
 		
-		log=json.loads(client._execute(0,"GET",str1,None).read())
-		#print port
-		print log 
-		logid=log[0]['portfoliolog_id']
-		
-		body=[logid]
-		str3="coreportfolio/"+port['coreportfolio_id']+"/logs"
-		#print "BODY: " + body+ "STRING: " +str3 
-		json.loads(client._execute(0,"PUT",str3,body).read())
+			body=[logid]
+			str3="coreportfolio/"+port['coreportfolio_id']+"/logs"
+			#print "BODY: " + body+ "STRING: " +str3 
+			json.loads(client._execute(0,"PUT",str3,body).read())
 		
 		
 		
 	
-		
-		
-		#build table of portf and portfhistory to link together later
-		#body={"totalportfoliovalue":total , "portfoliohistory":histjson}
-		body={"totalportfoliovalue":total}	
-		rankings[port['coreportfolio_id']]=total #add data into rankings
-		
-		string1="coreportfolio/"+port['coreportfolio_id']
-		client._execute(1,"PUT",string1,body).read()
-        #now the totalportfoliovalues have been updated
 
 except :
 	raise	
-sortedrankings=sorted(rankings)
-print sortedrankings
-rank=1
-
-for i in sortedrankings:
-	body={"ranking":rank}
-	string1="coreportfolio/"+i
-	client._execute(1,"PUT",string1,body).read()
-	rankings[i]=rank
-	rank=rank+1
-
-

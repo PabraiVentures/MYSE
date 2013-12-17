@@ -12,6 +12,7 @@
         <attribute name="ranking" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="totalcashvalue" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="totalportfoliovalue" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="logs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PortfolioLog" inverseName="portfolio" inverseEntity="PortfolioLog" syncable="YES"/>
         <relationship name="model" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="CoreModel" inverseName="portfolio" inverseEntity="CoreModel" syncable="YES"/>
         <relationship name="orders" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StockOrder" inverseName="portfolio" inverseEntity="StockOrder" syncable="YES"/>
         <relationship name="stocks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CoreStock" inverseName="portfolio" inverseEntity="CoreStock" syncable="YES"/>
@@ -39,6 +40,11 @@
         <attribute name="tradeprice" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <relationship name="model" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="CoreModel" inverseName="tradeevents" inverseEntity="CoreModel" syncable="YES"/>
     </entity>
+    <entity name="PortfolioLog" representedClassName="PortfolioLog" syncable="YES">
+        <attribute name="accountvalue" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="logtime" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="portfolio" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CorePortfolio" inverseName="logs" inverseEntity="CorePortfolio" syncable="YES"/>
+    </entity>
     <entity name="StockOrder" representedClassName="StockOrder" syncable="YES">
         <attribute name="addedtolookup" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="islongposition" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -65,5 +71,6 @@
         <element name="CoreTradeEvent" positionX="0" positionY="0" width="128" height="150"/>
         <element name="StockOrder" positionX="-414" positionY="36" width="128" height="223"/>
         <element name="User" positionX="-495" positionY="-225" width="128" height="75"/>
+        <element name="PortfolioLog" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>
