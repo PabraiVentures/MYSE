@@ -109,21 +109,46 @@
 {
     return 80;
 }
+- (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize
+{
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
+-(void) setCellPic: (NSDictionary*) pair
+{
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=small", [pair objectForKey: @"userID"]]];
+    NSLog(@"url: %@", url);
+    UIImage *img = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:url]];
+    NSLog(@"img: %@", img);
+    NSLog(@"set image for pic: %@", pair);
+    if (img != nil) {
+        UIImage *newImage = [self imageWithImage:img scaledToSize: CGSizeMake(100, 100)];
+        [[[rankingsTable cellForRowAtIndexPath: [pair objectForKey:@"index"]] imageView] performSelectorOnMainThread:@selector(setImage:) withObject:newImage waitUntilDone:NO];
+    }
+}
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
-    cell.textLabel.text = [[loadedRankings objectAtIndex:indexPath.row] sm_owner];
+    NSString *userID = [[loadedRankings objectAtIndex:indexPath.row] sm_owner];
+    cell.textLabel.text = userID;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%i",[[[loadedRankings objectAtIndex:indexPath.row] ranking] intValue]];
+    NSDictionary *pair = [[NSMutableDictionary alloc] init];
+    userID = [userID substringFromIndex:5];
+    [pair setValue:userID forKey:@"userID"];
+    [pair setValue:indexPath forKey:@"index"];
+    UIImage *img = [self imageWithImage:[UIImage imageNamed:@"silhouette.jpg"] scaledToSize:CGSizeMake(100, 100)];
+    [cell.imageView setImage:img];
+    [self performSelectorInBackground:@selector(setCellPic:) withObject: pair];
     NSLog(@"cell text: %@", cell.textLabel.text);
-    //cell.textLabel.text = [self timeString:event.time withAction:action];
-    //cell.detailTextLabel.text = actionDetail;
-    
     return cell;
 }
 

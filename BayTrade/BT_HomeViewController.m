@@ -12,6 +12,7 @@
 #import "BT_AppDelegate.h"
 #import "StackMob.h"
 #import "CorePortfolioHistory.h"
+#import "CPTGraph.h"
 
 @interface BT_HomeViewController ()
 
@@ -22,11 +23,9 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    //Take the TabBarController's model
+    CPTGraph *g = [[CPTGraph alloc] init];
     
-    //[self.pieChart calculateCurrentPrices];
-    //[self.pieChart setNeedsDisplay];
+    [super viewDidLoad];
     self.userCache = [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) userCache];
     [self.pieChart setStocks:[self.userCache.coreModel.portfolio.stocks allObjects]];
     [self.pieChart calculateCurrentPrices];
@@ -73,21 +72,5 @@
         [welcomeLabel setText: [NSString stringWithFormat: @"Welcome, %@!", userName]];
     }
 }
-
-//-(void) loadChangeInValue
-//{
-//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CorePortfolioHistory"];
-//    // query for coremodel for THIS user
-//    NSString* getRightHist = [NSString stringWithFormat:@"sm_owner == 'user/%@'",self.userCache.userID];
-//    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:getRightHist]];
-//    
-//    /**********START CODE BLOCK FOR REQUEST ACTION************/
-//    [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {
-//        CorePortfolioHistory *yesterdayHist = [results objectAtIndex:0];
-//        NSLog(@"results: %@", yesterdayHist);
-//    } onFailure:^(NSError *error) {
-//        NSLog(@"There was an error! %@", error);
-//    }];
-//}
 
 @end

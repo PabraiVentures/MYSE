@@ -15,6 +15,6 @@
 @property (weak, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *rankingSegment;
 - (IBAction)rankSegmentChanged:(id)sender;
-
+- (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 
 @end
