@@ -129,7 +129,7 @@
 
 -(void) loadTickerData
 {
-    NSMutableArray *tickerItems = [[NSMutableArray alloc] init];
+    /*NSMutableArray *tickerItems = [[NSMutableArray alloc] init];
     
     NSArray *tickers = [NSArray arrayWithObjects:@"AAPL", @"GOOG", @"MSFT", @"BA", @"F", nil];
     
@@ -160,7 +160,7 @@
         [example setObject:[NSNumber numberWithDouble:lastPrice] forKey:@"CurrentPrice"];
         [tickerItems addObject:example];
     }
-    [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setTickerItems:tickerItems];
+    [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setTickerItems:tickerItems];*/
 }
 
 //move progress indicator
