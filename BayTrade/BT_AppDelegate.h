@@ -25,7 +25,7 @@
 @property (strong, nonatomic) SMClient *client;
 @property (strong, nonatomic) BT_LoginViewController *loginView;
 @property (strong, nonatomic) Cache *userCache;
-@property (strong, nonatomic) NSDictionary *currentStockPrices;
+@property (strong, nonatomic) NSMutableDictionary *currentStockPrices;
 @property (strong, nonatomic) NSMutableArray *tickerItems;
 
 @property (strong, nonatomic) CoreStock *selectedPortfolioStock;

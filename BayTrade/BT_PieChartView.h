@@ -14,7 +14,7 @@
 
 @property double totalPortfolioValue;
 @property (nonatomic, retain) NSArray *stocks;
-@property (nonatomic, retain) NSMutableArray *currentPrices;
+@property (nonatomic, retain) NSMutableDictionary *currentPrices;
 @property (nonatomic, retain) BT_PieChartView *parent;
 
 @end
@@ -25,7 +25,7 @@
 @property (nonatomic,strong) Cache* userCache;
 @property (nonatomic, retain) NSArray *stocks;
 @property (nonatomic, retain) NSMutableDictionary *stockColors;
-@property (nonatomic, retain) NSMutableArray *currentPrices;
+@property (nonatomic, retain) NSMutableDictionary *currentPrices;
 @property (nonatomic, retain) UIScrollView *legendScrollView;
 @property (nonatomic, retain) PieView *pieView;
 

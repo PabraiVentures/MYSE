@@ -122,21 +122,29 @@
 -(void)downloadCurrentStocksInfo
 {
     NSLog(@"downloading current stocks info APPD");
-    NSMutableArray *currentPrices = [[NSMutableArray alloc] init];
-    @try {
-        currentPrices = [[NSMutableArray alloc] init];
-        for (CoreStock *stock in self.userCache.coreModel.portfolio.stocks) {
-            NSLog(@"got quote for symbol %@", stock.symbol);
-            [currentPrices addObject:[Controller fetchQuotesFor:[NSArray arrayWithObject:stock.symbol]]];
-        }
+    NSMutableDictionary *currentPrices = [[NSMutableDictionary alloc] init];
+  @try{
+    
+    NSMutableArray* tickers= [[NSMutableArray alloc] init];
+    currentPrices = [[NSMutableDictionary alloc] init];
+    for (CoreStock *stock in self.userCache.coreModel.portfolio.stocks) {
+      [tickers addObject:stock.symbol];//add stock ticker to array
+      
+      
+      
+      
     }
-    @catch(NSException* e) {
-        NSLog(@"Error appd loading data\n%@",e);
-        [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setCurrentStockPrices:currentPrices];
-        return;
-    }
+    
+    NSLog(@"fetching initial stocks");
+    currentPrices=[NSMutableDictionary dictionaryWithDictionary:[Controller fetchQuotesFor:tickers]];
+    
     [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setCurrentStockPrices:currentPrices];
-}
+  }
+    @catch(NSException* e){
+      NSLog(@"Error spashsscreen loading data\n%@", e);
+    }
+
+  }
 
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {

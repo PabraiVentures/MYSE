@@ -11,8 +11,8 @@
 
 @interface BT_SplashViewController : UIViewController
 
-@property (nonatomic, retain) IBOutlet UIProgressView *progressIndicator;
-@property (nonatomic, retain) Cache *userCache;
+@property (nonatomic, strong) IBOutlet UIProgressView *progressIndicator;
+@property (nonatomic, strong) Cache *userCache;
 @property (weak, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 -(void)downloadCurrentStocksInfo;

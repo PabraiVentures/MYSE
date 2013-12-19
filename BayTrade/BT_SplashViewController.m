@@ -12,7 +12,7 @@
 #import <CoreData/CoreData.h>
 #import "Controller.h"
 #import "BT_GraphAnimationView.h"
-
+#import "BT_TradeViewController.h"
 @interface BT_SplashViewController ()
 
 @end
@@ -57,11 +57,11 @@
     float stockNum = 1; //TODO
     float numStocks = self.userCache.coreModel.portfolio.stocks.count-1; //TODO
   int loopcount;
-    NSMutableArray *currentPrices = [[NSMutableArray alloc] init];
-    @try{
+  NSMutableDictionary *currentPrices;
+  NSMutableArray* tickers= [[NSMutableArray alloc] init];
+
+  @try{
       
-      NSMutableArray* tickers= [[NSMutableArray alloc] init];
-      currentPrices = [[NSMutableArray alloc] init];
         for (CoreStock *stock in self.userCache.coreModel.portfolio.stocks) {
           loopcount=0;
             stockNum++; // roll into single YQL request?
@@ -74,17 +74,18 @@
       NSNumber *progPercent = [NSNumber numberWithFloat:(1)];
 
           NSLog(@"fetching initial stocks");
-      NSDictionary *priceDict=[Controller fetchQuotesFor:tickers];
+      currentPrices=[[Controller fetchQuotesFor:tickers] mutableCopy];
 
-            [currentPrices addObject:priceDict];
             [self performSelectorOnMainThread:@selector(setProgressStatus:) withObject:progPercent waitUntilDone:YES];
-        }
-  
+    }
     @catch(NSException* e){
         NSLog(@"Error spashsscreen loading data\n%@", e);
-    }
-    [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setCurrentStockPrices:[currentPrices objectAtIndex:0]];
-    [self performSelectorOnMainThread:@selector(done) withObject:nil waitUntilDone:NO];
+    
+        }
+
+  [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setCurrentStockPrices:currentPrices];
+  [self performSelectorOnMainThread:@selector(done) withObject:nil waitUntilDone:NO];
+
 }
 
 - (void) done
@@ -143,8 +144,8 @@
         double lastPrice, openPrice;
         
         @try {
-            lastPrice = [realtimeData[@"LastTradePriceOnly"] doubleValue];
-            openPrice = [realtimeData[@"Open"] doubleValue];
+            lastPrice = [[realtimeData valueForKeyPath:@"query.results.quote.LastTradePriceOnly" ]doubleValue];
+          openPrice = [[realtimeData valueForKeyPath:@"query.results.quote.Open" ]doubleValue];
         }
         @catch (NSException *exception) {
             NSLog(@"Splash error fetching YQL quotes.");

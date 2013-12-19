@@ -84,7 +84,9 @@
         CoreStock *stock = [self.stocks objectAtIndex:x];
         float currentPrice;
         @try {
-            currentPrice = [[[self.currentPrices objectAtIndex:x] objectForKey:@"LastTradePriceOnly"] floatValue];
+          
+          currentPrice=    [[[[self.currentPrices valueForKeyPath:@"query.results.quote" ] objectAtIndex:x] objectForKey:@"LastTradePriceOnly"] floatValue];
+          
         }
         @catch (NSException *exception) {
             NSLog(@"couldn't find currentprice.");
@@ -97,7 +99,7 @@
     parent.stockColors = [[NSMutableDictionary alloc] init];
     for (int x = 0; x < [self.currentPrices count]; x++) {
         CoreStock *stock = [self.stocks objectAtIndex:x];
-        float currentPrice = [[[self.currentPrices objectAtIndex:x] objectForKey:@"LastTradePriceOnly"] floatValue];
+        float currentPrice=    [[[[self.currentPrices valueForKeyPath:@"query.results.quote" ] objectAtIndex:x] objectForKey:@"LastTradePriceOnly"] floatValue];
         float totalCurrentValue = currentPrice * stock.amount.floatValue;
         double percentOfPie = totalCurrentValue/totalPortfolioValue;
         double radius = [[radiusDict objectForKey:stock.symbol] floatValue] / maxIncrease * maxRadius;
