@@ -26,8 +26,9 @@
         NSData *jsonData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:query] encoding:NSUTF8StringEncoding error:nil] dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *results = jsonData ? [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil] : nil;
       NSLog(@" RESULTS of stock fetch %@",results);
+     return results;
       
-        return [results valueForKeyPath:@"query.results.quote"];
+      //  return  [results valueForKeyPath:@"query.results"];
     }
     @catch (NSException *exception) {
         UIAlertView *quoteRetrievalAlert = [[UIAlertView alloc] initWithTitle:@"Error!" message:[ NSString stringWithFormat:@"Could not retrieve stock quote. Please try again later. Exception: %@", exception] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil];

@@ -33,6 +33,7 @@
 
 - (void) viewDidLoad {
     [super viewDidLoad];
+  NSLog(@"TradeViewControllerDidLoad");
     self.userCache = [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) userCache];
     // Create Login View so that the app will be granted "status_update" permission.
     //initialize profile picture

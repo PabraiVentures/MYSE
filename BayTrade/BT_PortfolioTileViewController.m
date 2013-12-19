@@ -76,8 +76,8 @@
     double tradePrice;
     double openPrice;
     @try {
-        tradePrice = [[[self.currentPrices objectAtIndex:index] objectForKey:@"LastTradePriceOnly"] doubleValue];
-        openPrice = [[[self.currentPrices objectAtIndex:index] objectForKey:@"Open"] doubleValue];
+      tradePrice= [[[[self.currentPrices valueForKeyPath:@"query.results.quote"] objectAtIndex: index] objectForKey:@"LastTradePriceOnly"] doubleValue ];
+            openPrice= [[[[self.currentPrices valueForKeyPath:@"query.results.quote"] objectAtIndex: index] objectForKey:@"Open"] doubleValue ];
     }
     @catch (NSException *exception) {
         NSLog(@"error fetching YQL quotes");
@@ -121,9 +121,9 @@
     UILabel *percentLabel = (UILabel*)[cell viewWithTag:kTagPercentLabel];
     NSDictionary *data;
     @try {
-        data = [self.currentPrices objectAtIndex:indexPath.row];
-      NSString *myStockPrice = data[@"LastTradePriceOnly"];
-      NSString *openPrice = data[@"Open"];
+        data = self.currentPrices ;
+      NSString *myStockPrice = [[[data valueForKeyPath:@"query.results.quote" ] objectAtIndex:indexPath.row] valueForKey:@"LastTradePriceOnly"];
+      NSString *openPrice =[[[data valueForKeyPath:@"query.results.quote" ] objectAtIndex:indexPath.row] valueForKey:@"Open"];
       double percentChange = ([myStockPrice doubleValue] / [openPrice doubleValue] - 1) *100;
       NSString *percentChangeString;
       if (percentChange >= 0) percentChangeString = [NSString stringWithFormat: @"+%.2f", percentChange];
@@ -151,9 +151,9 @@
     NSDictionary *data;
     @try {
       
-   
-          data = [self.currentPrices objectAtIndex:selectedIndex];
-                  
+   ;
+
+      data =    [[data valueForKeyPath:@"query.results.quote" ] objectAtIndex:selectedIndex];
       
     }
     @catch (NSException *exception) {

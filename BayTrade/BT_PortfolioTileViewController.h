@@ -13,7 +13,7 @@
 
 //@property (nonatomic,strong) Cache* userCache;
 @property (nonatomic, retain) NSArray *stocks;
-@property (nonatomic, retain) NSMutableArray *currentPrices;
+@property (nonatomic, retain) NSMutableDictionary *currentPrices;
 @property (nonatomic, retain) IBOutlet UICollectionView *tileView;
 @property (nonatomic, retain) IBOutlet UITextView *detailLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *chartImage;
