@@ -129,11 +129,15 @@
 
 -(void) loadTickerData
 {
-    /*NSMutableArray *tickerItems = [[NSMutableArray alloc] init];
+/*    NSMutableArray *tickerItems = [[NSMutableArray alloc] init];
     
     NSArray *tickers = [NSArray arrayWithObjects:@"AAPL", @"GOOG", @"MSFT", @"BA", @"F", nil];
-    
-    for (NSString *ticker in tickers) {
+  //PROBLEM FIGURED OUT. SOLUTION BELOW. STUDYING FOR A CERTFICIATION TOMORROW./// -----------<            JUST NEED TO CREATE PROPER DICT HERE... WELL AFTER FETCHING.
+  
+  [Controller fetchQuotesFor:tickers];
+  
+  //example is a dictionary. it has Symbol, Positive, PercentChange, CurrentPrice
+//    for (NSString *ticker in tickers) { //needs to be for each stock returned from fetchquotes set  all of the example dictionary's values.
         NSMutableDictionary *example = [[NSMutableDictionary alloc] init];
         [example setObject:ticker forKey:@"Symbol"];
         
