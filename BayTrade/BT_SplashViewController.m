@@ -129,13 +129,16 @@
 
 -(void) loadTickerData
 {
-/*    NSMutableArray *tickerItems = [[NSMutableArray alloc] init];
+   NSMutableArray *tickerItems = [[NSMutableArray alloc] init];
     
     NSArray *tickers = [NSArray arrayWithObjects:@"AAPL", @"GOOG", @"MSFT", @"BA", @"F", nil];
-  //PROBLEM FIGURED OUT. SOLUTION BELOW. STUDYING FOR A CERTFICIATION TOMORROW./// -----------<            JUST NEED TO CREATE PROPER DICT HERE... WELL AFTER FETCHING.
+  //PROBLEM FIGURED OUT. SOLUTION BELOW. STUDYING FOR A CERTFICIATION TOMORROW./// -----------          JUST NEED TO CREATE PROPER DICT HERE... WELL AFTER FETCHING.
   
-  [Controller fetchQuotesFor:tickers];
-  
+ NSArray *results= [Controller fetchQuotesFor:tickers];
+  for (NSDictionary *stock in results){
+    ... do stuff for each value
+    
+  }
   //example is a dictionary. it has Symbol, Positive, PercentChange, CurrentPrice
 //    for (NSString *ticker in tickers) { //needs to be for each stock returned from fetchquotes set  all of the example dictionary's values.
         NSMutableDictionary *example = [[NSMutableDictionary alloc] init];
@@ -164,7 +167,7 @@
         [example setObject:[NSNumber numberWithDouble:lastPrice] forKey:@"CurrentPrice"];
         [tickerItems addObject:example];
     }
-    [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setTickerItems:tickerItems];*/
+    [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setTickerItems:tickerItems];
 }
 
 //move progress indicator
