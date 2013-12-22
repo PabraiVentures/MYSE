@@ -134,41 +134,48 @@
     NSArray *tickers = [NSArray arrayWithObjects:@"AAPL", @"GOOG", @"MSFT", @"BA", @"F", nil];
   //PROBLEM FIGURED OUT. SOLUTION BELOW. STUDYING FOR A CERTFICIATION TOMORROW./// -----------          JUST NEED TO CREATE PROPER DICT HERE... WELL AFTER FETCHING.
   
- NSArray *results= [Controller fetchQuotesFor:tickers];
-  for (NSDictionary *stock in results){
-    ... do stuff for each value
-      
+ NSArray *results= [[Controller fetchQuotesFor:tickers]valueForKeyPath:@"query.results.quote"];// this is an array of quotes
+  int index=0;
+  for (NSDictionary *stock in results ){
+    //for each stocks quote
     
+    
+    
+    NSString* ticker= [results valueForKey:@"symbol"];
+    
+    
+    NSMutableDictionary *example = [[NSMutableDictionary alloc] init];
+    // example has the ticker data for each stock , there are multiple of these
+    [example setObject:ticker forKey:@"Symbol"];
+    
+    NSArray *stock = [NSArray arrayWithObjects: ticker, nil];
+    //TODO load from AppDelegate
+    bool isUp = FALSE;
+    double lastPrice, openPrice;
+    
+    @try {
+      lastPrice = [[[results objectAtIndex: index ] valueForKey:@"LastTradePriceOnly" ]doubleValue];
+      openPrice = [[[results objectAtIndex:index ] valueForKey:@"Open" ]doubleValue];
+    }
+    @catch (NSException *exception) {
+      NSLog(@"Splash error fetching YQL quotes.");
+      lastPrice = -1.0;
+      openPrice = -1.0;
+    }
+    double changeInPercent = (lastPrice / openPrice - 1.0) * 100.0;
+    
+    if (changeInPercent >= 0) isUp = TRUE;
+    [example setObject:[NSNumber numberWithBool:isUp] forKey:@"Positive"];
+    [example setObject:[NSNumber numberWithDouble:changeInPercent] forKey:@"PercentChange"];
+    [example setObject:[NSNumber numberWithDouble:lastPrice] forKey:@"CurrentPrice"];
+    [tickerItems addObject:example];
+
+    index++;
   }
   //example is a dictionary. it has Symbol, Positive, PercentChange, CurrentPrice
 //    for (NSString *ticker in tickers) { //needs to be for each stock returned from fetchquotes set  all of the example dictionary's values.
-        NSMutableDictionary *example = [[NSMutableDictionary alloc] init];
-        [example setObject:ticker forKey:@"Symbol"];
-        
-        NSArray *stock = [NSArray arrayWithObjects: ticker, nil];
-        NSDictionary *realtimeData = [Controller fetchQuotesFor:stock];
-        //TODO load from AppDelegate
-        bool isUp = FALSE;
-        double lastPrice, openPrice;
-        
-        @try {
-            lastPrice = [[realtimeData valueForKeyPath:@"query.results.quote.LastTradePriceOnly" ]doubleValue];
-          openPrice = [[realtimeData valueForKeyPath:@"query.results.quote.Open" ]doubleValue];
-        }
-        @catch (NSException *exception) {
-            NSLog(@"Splash error fetching YQL quotes.");
-            lastPrice = -1.0;
-            openPrice = -1.0;
-        }
-        double changeInPercent = (lastPrice / openPrice - 1.0) * 100.0;
-        
-        if (changeInPercent >= 0) isUp = TRUE;
-        [example setObject:[NSNumber numberWithBool:isUp] forKey:@"Positive"];
-        [example setObject:[NSNumber numberWithDouble:changeInPercent] forKey:@"PercentChange"];
-        [example setObject:[NSNumber numberWithDouble:lastPrice] forKey:@"CurrentPrice"];
-        [tickerItems addObject:example];
-    }
-    [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setTickerItems:tickerItems];
+  [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setTickerItems:tickerItems];
+
 }
 
 //move progress indicator

@@ -12,6 +12,8 @@
 @interface Controller : NSObject
 
 + (NSDictionary*) fetchQuotesFor: (NSArray *) tickers;
++ (NSDictionary*) fetchQuoteFor: (NSArray *) tickers;
+
 + (NSNumber*) currentPriceForSymbol: (NSString*) symbol;
 
 @end
