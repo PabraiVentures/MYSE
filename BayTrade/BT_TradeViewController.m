@@ -167,8 +167,7 @@
 
 /************Gets stock data from YahooFinance**********/
 - (NSDictionary *) callFetchQuotes: (NSString*) stockSymbol {
-    NSArray *stock = [NSArray arrayWithObjects: stockSymbol, nil];
-    NSDictionary *data = [Controller fetchQuotesFor:stock];
+    NSDictionary *data = [Controller fetchQuoteFor:stockSymbol];
     return data;
 }
 
