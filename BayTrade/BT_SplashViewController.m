@@ -137,6 +137,7 @@
  NSArray *results= [Controller fetchQuotesFor:tickers];
   for (NSDictionary *stock in results){
     ... do stuff for each value
+      
     
   }
   //example is a dictionary. it has Symbol, Positive, PercentChange, CurrentPrice

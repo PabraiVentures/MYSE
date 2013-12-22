@@ -7,8 +7,8 @@ Functional
 (x)encapsulate all networks functions in try/catch
 (_)Tutorial on first time opening (just pictures of how to trade) with skipping option
 (x)failsafe for all YQL calls
-(_)graph account rank & portfolio value over time in homeview
-(_)Portfolio Value vs SP500 chart
+priority (_)graph account rank & portfolio value over time in homeview
+priority (_)Portfolio Value vs SP500 chart
 (_)Portfolio view- multiple timespan graphs
 (_)Error checking in iOS code for edge stock cases and market hours
 (_)Error checking in Server code for edge stock cases and market hours
@@ -20,6 +20,7 @@ Functional
 (_)home view - graphs?
 (X)have view controllers ask appdelegate for data updated automatically
 (X)portfolio view - refresh tiles
+priority (_) completely change for multiple quote requests
 
 Aesthetic
 (_)homeviewcontroller - picture
