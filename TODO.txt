@@ -4,11 +4,9 @@
 FINAL STEPS
 
 Functional
-(x)encapsulate all networks functions in try/catch
 (_)Tutorial on first time opening (just pictures of how to trade) with skipping option
-(x)failsafe for all YQL calls
 priority (_)graph account rank & portfolio value over time in homeview
-priority (_)Portfolio Value vs SP500 chart
+priority (_)Portfolio Value vs SP500 chart (find data for this and perhaps other common investment options, gold, bonds)
 (_)Portfolio view- multiple timespan graphs
 (_)Error checking in iOS code for edge stock cases and market hours
 (_)Error checking in Server code for edge stock cases and market hours
@@ -16,10 +14,7 @@ priority (_)Portfolio Value vs SP500 chart
 (_)Speed up server code: The bottleneck is networking calls
 (_)Use Yahoo accounts to increase YQL caps for servers
 (_)Push notifications to users
-(X)In history have see either pending or executed orders
 (_)home view - graphs?
-(X)have view controllers ask appdelegate for data updated automatically
-(X)portfolio view - refresh tiles
 priority (_) completely change for multiple quote requests
 
 Aesthetic
@@ -31,8 +26,6 @@ Aesthetic
 (_)Put account value and rank everywhere
 (_)Help buttons on each page with detailed explanations
 (_)portfolio detail view - buy/sell option ->takes you to trade page with stock entered
-(X)fb pics of friends on rankings
-(X)make pie chart legend scrollable
 (_)rotate pie chart when scrolling through legend
 (_)details in legend
 (_)Good backgrounds
@@ -42,8 +35,13 @@ Aesthetic
 (_)Finalize home screen with labels on the pie chart
 
 
-
-
+(X)portfolio view - refresh tiles
+(X)In history have see either pending or executed orders
+(x)failsafe for all YQL calls
+(x)encapsulate all networks functions in try/catch
+(X)fb pics of friends on rankings
+(X)make pie chart legend scrollable
+(X)have view controllers ask appdelegate for data updated automatically
 (X)rankings server code
 (X)homeviewcontroller - stocks you own the most of
 (X)label pie chart
