@@ -132,8 +132,7 @@
    NSMutableArray *tickerItems = [[NSMutableArray alloc] init];
     
     NSArray *tickers = [NSArray arrayWithObjects:@"AAPL", @"GOOG", @"MSFT", @"BA", @"F", nil];
-  //PROBLEM FIGURED OUT. SOLUTION BELOW. STUDYING FOR A CERTFICIATION TOMORROW./// -----------          JUST NEED TO CREATE PROPER DICT HERE... WELL AFTER FETCHING.
-  
+
  NSArray *results= [[Controller fetchQuotesFor:tickers]valueForKeyPath:@"query.results.quote"];// this is an array of quotes
   int index=0;
   for (NSDictionary *stock in results ){
