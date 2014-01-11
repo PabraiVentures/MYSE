@@ -52,7 +52,7 @@
 #pragma mark - Custom Download Threads
 
 -(void)downloadCurrentStocksInfo
-{/*
+{
     NSLog(@"downloading current stocks info");
     float stockNum = 1; //TODO
     float numStocks = self.userCache.coreModel.portfolio.stocks.count-1; //TODO
@@ -84,7 +84,7 @@
         }
 
   [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setCurrentStockPrices:currentPrices];
-  [self performSelector:@selector(done) withObject:nil afterDelay:3.4] ;*
+  [self performSelector:@selector(done) withObject:nil afterDelay:3.4];
 
 }
 
@@ -129,7 +129,6 @@
 
 -(void) loadTickerData
 {
-  /*
    NSMutableArray *tickerItems = [[NSMutableArray alloc] init];
     
     NSArray *tickers = [NSArray arrayWithObjects:@"AAPL", @"GOOG", @"MSFT", @"BA", @"F", nil];
@@ -174,8 +173,7 @@
   }
   //example is a dictionary. it has Symbol, Positive, PercentChange, CurrentPrice
 //    for (NSString *ticker in tickers) { //needs to be for each stock returned from fetchquotes set  all of the example dictionary's values.
-  [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setTickerItems:tickerItems];*/
-
+  [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setTickerItems:tickerItems];
 }
 
 //move progress indicator
