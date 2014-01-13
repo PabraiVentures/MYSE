@@ -932,8 +932,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/StackMob-v2.2.0",
-					"/Users/john/dev/MYSE/StackMob-v2.2.0",
-					/Users/john/dev/MYSE,
+					"/Users/john/devNew/MYSE/StackMob-v2.2.0",
+					/Users/john/devNew/MYSE,
 					/Users/pabrai/Desktop/MYSE,
 				);
 				OTHER_LDFLAGS = (

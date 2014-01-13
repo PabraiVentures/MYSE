@@ -45,8 +45,8 @@
 
 - (void) delaySetCoreModel
 {
-    [self performSelector:@selector(loadTickerData) withObject:nil afterDelay:2.5];
-  [self performSelector:@selector(setCoreModel) withObject:nil afterDelay: 2.5l];
+    [self performSelectorInBackground:@selector(loadTickerData) withObject:nil];
+    [self performSelectorInBackground:@selector(setCoreModel) withObject:nil];
 }
 
 #pragma mark - Custom Download Threads
@@ -76,7 +76,7 @@
           NSLog(@"fetching initial stocks");
       currentPrices=[[Controller fetchQuotesFor:tickers] mutableCopy];
 
-            [self performSelector:@selector(setProgressStatus:) withObject:progPercent ];
+            [self performSelectorOnMainThread:@selector(setProgressStatus:) withObject:progPercent waitUntilDone:YES];
     }
     @catch(NSException* e){
         NSLog(@"Error spashsscreen loading data\n%@", e);
@@ -84,14 +84,14 @@
         }
 
   [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setCurrentStockPrices:currentPrices];
-  [self performSelector:@selector(done) withObject:nil afterDelay:3.4];
+  [self performSelectorOnMainThread:@selector(done) withObject:nil waitUntilDone:NO];
 
 }
 
 - (void) done
 {
     NSLog(@"load success; going to trade view");
-    [self performSegueWithIdentifier:@"loadSuccess" sender:nil ];
+    [self performSegueWithIdentifier:@"loadSuccess" sender:nil];
 }
 
 - (void) setCoreModel
@@ -115,7 +115,7 @@
             NSManagedObject* myModel = [results objectAtIndex:0];
             self.userCache.coreModel = (CoreModel *) myModel;
             [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setUserCache:self.userCache];//now we can access coremodel from anywhere
-            [self performSelector:@selector(downloadCurrentStocksInfo) withObject:nil];
+            [self performSelectorInBackground:@selector(downloadCurrentStocksInfo) withObject:nil];
         }
         @catch (NSException *exception) {
             self.userCache.coreModel.portfolio.totalcashvalue = [NSNumber numberWithFloat: 100000.0];
@@ -174,6 +174,7 @@
   //example is a dictionary. it has Symbol, Positive, PercentChange, CurrentPrice
 //    for (NSString *ticker in tickers) { //needs to be for each stock returned from fetchquotes set  all of the example dictionary's values.
   [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setTickerItems:tickerItems];
+
 }
 
 //move progress indicator
