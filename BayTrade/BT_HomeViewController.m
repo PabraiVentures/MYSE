@@ -25,14 +25,16 @@
 {
     [super viewDidLoad];
     self.userCache = [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) userCache];
-    [self.pieChart setStocks:[self.userCache.coreModel.portfolio.stocks allObjects]];
-    [self.pieChart calculateCurrentPrices];
-    [self.pieChart setTotalPortfolioValue: self.userCache.coreModel.portfolio.totalportfoliovalue.doubleValue];
-    [self.pieChart initPieView];
+  self.managedObjectContext = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
+
+  //  [self.pieChart setStocks:[self.userCache.coreModel.portfolio.stocks allObjects]];
+   // [self.pieChart calculateCurrentPrices];
+    //[self.pieChart setTotalPortfolioValue: self.userCache.coreModel.portfolio.totalportfoliovalue.doubleValue];
+    //[self.pieChart initPieView];
     
-    [self.tickerView loadTickerData];
-    [self.tickerView reloadData];
-    self.rankLabel.text=[NSString stringWithFormat:@"%@", self.userCache.coreModel.portfolio.ranking];
+    //[self.tickerView loadTickerData];
+ //   [self.tickerView reloadData];
+ //   self.rankLabel.text=[NSString stringWithFormat:@"%@", self.userCache.coreModel.portfolio.ranking];
     
     [self initPlot];
 }
@@ -48,11 +50,18 @@
     [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *logData) {
         if([logData count] > 0) {
             /** Sort the tradeEvents by time/supposed order of events **/
+          
             NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"logtime" ascending:NO] ;
             NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
             [self setLogs:[NSMutableArray arrayWithArray:[logData sortedArrayUsingDescriptors:sortDescriptors]]];
+          NSLog(@"EVENTS: %@",logData);
             NSLog(@"logdata: %@", logData);
             NSLog(@"logs: %@", logs);
+          [self configureHost];
+          [self configureGraph];
+          [self configurePlots];
+          [self configureAxes];
+          NSLog(@"finished initializing plot.");
         }
         else {
             NSLog(@"couldn't get historical data.");
@@ -61,15 +70,11 @@
         NSLog(@"Error fetching: %@", error);
     }];
     
-    [self configureHost];
-    [self configureGraph];
-    [self configurePlots];
-    [self configureAxes];
-    NSLog(@"finished initializing plot.");
+
 }
 
 -(void)configureHost {
-    self.hostView = [(CPTGraphHostingView *) [CPTGraphHostingView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height/2, self.view.frame.size.height/2, self.view.frame.size.width)];
+    self.hostView = [(CPTGraphHostingView *) [CPTGraphHostingView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height/2 +60, self.view.frame.size.width, self.view.frame.size.height/3)];
     self.hostView.allowPinchScaling = YES;
     [self.view addSubview:self.hostView];
 }
@@ -118,7 +123,7 @@
     plotSpace.yRange = yRange;
     // 4 - Create styles and symbols
     CPTMutableLineStyle *historyLineStyle = [historyPlot.dataLineStyle mutableCopy];
-    historyLineStyle.lineWidth = 2.5;
+    historyLineStyle.lineWidth = 0.5;
     historyLineStyle.lineColor = aaplColor;
     historyPlot.dataLineStyle = historyLineStyle;
     CPTMutableLineStyle *aaplSymbolLineStyle = [CPTMutableLineStyle lineStyle];
@@ -145,7 +150,7 @@
     axisTextStyle.fontSize = 11.0f;
     CPTMutableLineStyle *tickLineStyle = [CPTMutableLineStyle lineStyle];
     tickLineStyle.lineColor = [CPTColor whiteColor];
-    tickLineStyle.lineWidth = 2.0f;
+    tickLineStyle.lineWidth = .5f;
     CPTMutableLineStyle *gridLineStyle = [CPTMutableLineStyle lineStyle];
     tickLineStyle.lineColor = [CPTColor blackColor];
     tickLineStyle.lineWidth = 1.0f;
@@ -162,13 +167,14 @@
     x.majorTickLineStyle = axisLineStyle;
     x.majorTickLength = 4.0f;
     x.tickDirection = CPTSignNegative;
-    CGFloat dateCount = 10;//TODO
+    CGFloat dateCount = 30;//TODO
     NSMutableSet *xLabels = [NSMutableSet setWithCapacity:dateCount];
     NSMutableSet *xLocations = [NSMutableSet setWithCapacity:dateCount];
     NSInteger i = 0;
     //TODO
     
-    for (NSString *date in logs) {
+    for (PortfolioLog * log in logs) {
+      NSString *date= log.logtime;
         CPTAxisLabel *label = [[CPTAxisLabel alloc] initWithText:date  textStyle:x.labelTextStyle];
         CGFloat location = i++;
         label.tickLocation = CPTDecimalFromCGFloat(location);
@@ -194,9 +200,9 @@
     y.majorTickLength = 4.0f;
     y.minorTickLength = 2.0f;
     y.tickDirection = CPTSignPositive;
-    NSInteger majorIncrement = 100;
-    NSInteger minorIncrement = 50;
-    CGFloat yMax = 700.0f;  // should determine dynamically based on max price
+    NSInteger majorIncrement = 10000;
+    NSInteger minorIncrement = 2000;
+    CGFloat yMax = 130000.0f;  // should determine dynamically based on max price
     NSMutableSet *yLabels = [NSMutableSet set];
     NSMutableSet *yMajorLocations = [NSMutableSet set];
     NSMutableSet *yMinorLocations = [NSMutableSet set];
@@ -263,7 +269,17 @@
 
 -(NSNumber*) numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)idx
 {
+  if (fieldEnum == CPTScatterPlotFieldY)
     return [((PortfolioLog*)[logs objectAtIndex:idx]) accountvalue];
+  else if (fieldEnum == CPTScatterPlotFieldX){
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+  [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS"];
+  NSDate *date = [dateFormatter dateFromString: [((PortfolioLog*)[logs objectAtIndex:idx]) logtime]];
+   return [NSNumber numberWithDouble: [date timeIntervalSince1970]] ;
+  }
+
+  
+
     //TODO return historical data
     return [NSDecimalNumber zero];
 }

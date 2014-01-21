@@ -84,6 +84,7 @@
         }
 
   [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) setCurrentStockPrices:currentPrices];
+  NSLog(@"CURRENT PRICES---\n\n %@", currentPrices);
   [self performSelectorOnMainThread:@selector(done) withObject:nil waitUntilDone:NO];
 
 }
@@ -135,6 +136,7 @@
 
  NSArray *results= [[Controller fetchQuotesFor:tickers]valueForKeyPath:@"query.results.quote"];// this is an array of quotes
   int index=0;
+  if (results ==NULL) return;
   for (NSDictionary *stock in results ){
     //for each stocks quote
     
