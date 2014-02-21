@@ -137,8 +137,15 @@
 
  NSArray *results= [[Controller fetchQuotesFor:tickers]valueForKeyPath:@"query.results.quote"];// this is an array of quotes
   int index=0;
-  if (!results)return;
-  if ([results count] ==0) return;
+  if (results==Nil)return;
+  @try{
+    if ([results count] ==0) return;
+
+  }
+  @catch (NSException *e) {
+    [self loadTickerData];
+    return;
+  }
   NSLog(@"RESULTS---\n%@",results);
   for (NSDictionary *stock in results ){
     //for each stocks quote

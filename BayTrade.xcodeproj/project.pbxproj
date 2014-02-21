@@ -66,6 +66,10 @@
 		93E19FB817A36420000D60B5 /* BayTradeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E19FB717A36420000D60B5 /* BayTradeTests.m */; };
 		93E19FC317A36492000D60B5 /* BT_TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E19FC217A36492000D60B5 /* BT_TabBarController.m */; };
 		93E19FCB17A365E9000D60B5 /* Cache.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E19FC817A365E8000D60B5 /* Cache.m */; };
+		93EF04E418B71CBE00632542 /* icon1p 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 93EF04E318B71CBE00632542 /* icon1p 2.png */; };
+		93EF04E618B71D8D00632542 /* icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 93EF04E518B71D8D00632542 /* icon2.png */; };
+		93EF04E818B71DFF00632542 /* icon3.png in Resources */ = {isa = PBXBuildFile; fileRef = 93EF04E718B71DFF00632542 /* icon3.png */; };
+		93EF04EA18B71E6600632542 /* icon4.png in Resources */ = {isa = PBXBuildFile; fileRef = 93EF04E918B71E6600632542 /* icon4.png */; };
 		93F20DE2185D85F100F546D4 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 93F20DAA185D85F100F546D4 /* CHANGELOG.md */; };
 		93F4DEB0183821490004D8BA /* StockOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F4DEAF183821490004D8BA /* StockOrder.m */; };
 /* End PBXBuildFile section */
@@ -243,6 +247,10 @@
 		93E19FC217A36492000D60B5 /* BT_TabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BT_TabBarController.m; sourceTree = "<group>"; };
 		93E19FC717A365E8000D60B5 /* Cache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cache.h; sourceTree = "<group>"; };
 		93E19FC817A365E8000D60B5 /* Cache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cache.m; sourceTree = "<group>"; };
+		93EF04E318B71CBE00632542 /* icon1p 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon1p 2.png"; sourceTree = "<group>"; };
+		93EF04E518B71D8D00632542 /* icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon2.png; sourceTree = "<group>"; };
+		93EF04E718B71DFF00632542 /* icon3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon3.png; sourceTree = "<group>"; };
+		93EF04E918B71E6600632542 /* icon4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon4.png; sourceTree = "<group>"; };
 		93F20DAA185D85F100F546D4 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG.md; sourceTree = "<group>"; };
 		93F20DAC185D85F100F546D4 /* AFHTTPClient+StackMob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPClient+StackMob.h"; sourceTree = "<group>"; };
 		93F20DAD185D85F100F546D4 /* AFHTTPRequestOperation+RemoveContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPRequestOperation+RemoveContentType.h"; sourceTree = "<group>"; };
@@ -498,6 +506,10 @@
 		93E19F6F17A36420000D60B5 = {
 			isa = PBXGroup;
 			children = (
+				93EF04E918B71E6600632542 /* icon4.png */,
+				93EF04E718B71DFF00632542 /* icon3.png */,
+				93EF04E518B71D8D00632542 /* icon2.png */,
+				93EF04E318B71CBE00632542 /* icon1p 2.png */,
 				93C7138D17A3FCBC00258C6A /* themodel.xcdatamodeld */,
 				93E19F8117A36420000D60B5 /* BayTrade */,
 				93E19FB017A36420000D60B5 /* BayTradeTests */,
@@ -736,8 +748,10 @@
 			files = (
 				93E19F8617A36420000D60B5 /* InfoPlist.strings in Resources */,
 				93E19F8E17A36420000D60B5 /* Default.png in Resources */,
+				93EF04E818B71DFF00632542 /* icon3.png in Resources */,
 				93E19F9017A36420000D60B5 /* Default@2x.png in Resources */,
 				93E19F9217A36420000D60B5 /* Default-568h@2x.png in Resources */,
+				93EF04EA18B71E6600632542 /* icon4.png in Resources */,
 				93E19F9517A36420000D60B5 /* MainStoryboard.storyboard in Resources */,
 				9307A2EE17A43E6B00E647DF /* wallpaper.jpg in Resources */,
 				93F20DE2185D85F100F546D4 /* CHANGELOG.md in Resources */,
@@ -745,6 +759,8 @@
 				9307A2F517A44D2D00E647DF /* bar-chart.png in Resources */,
 				9307A2F617A44D2D00E647DF /* briefcase.png in Resources */,
 				9307A2F717A44D2D00E647DF /* clock.png in Resources */,
+				93EF04E618B71D8D00632542 /* icon2.png in Resources */,
+				93EF04E418B71CBE00632542 /* icon1p 2.png in Resources */,
 				9307A2F817A44D2D00E647DF /* home.png in Resources */,
 				525122AD17D976CD00A8782B /* login_unpressed.png in Resources */,
 				525122AE17D976CD00A8782B /* login_pressed.png in Resources */,

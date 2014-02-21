@@ -14,7 +14,7 @@
 
 #define kTagSymbolLabel 50
 #define kTagPercentLabel 60
-
+#define KTagPrice 70
 @interface BT_PortfolioTileViewController ()
 
 @end
@@ -115,7 +115,8 @@
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     
     cell.backgroundColor = [self colorForIndex:indexPath.row];
-    
+  UILabel *priceLabel = (UILabel*)[cell viewWithTag:KTagPrice];
+
     UILabel *symbolLabel = (UILabel*)[cell viewWithTag:kTagSymbolLabel];
     symbolLabel.text = [(CoreStock*)[stocks objectAtIndex:indexPath.row] symbol];
     
@@ -123,13 +124,22 @@
     NSDictionary *data;
     @try {
         data = self.currentPrices ;
-      NSString *myStockPrice = [[[data valueForKeyPath:@"query.results.quote" ] objectAtIndex:indexPath.row] valueForKey:@"LastTradePriceOnly"];
-      NSString *openPrice =[[[data valueForKeyPath:@"query.results.quote" ] objectAtIndex:indexPath.row] valueForKey:@"Open"];
-      double percentChange = ([myStockPrice doubleValue] / [openPrice doubleValue] - 1) *100;
-      NSString *percentChangeString;
-      if (percentChange >= 0) percentChangeString = [NSString stringWithFormat: @"+%.2f", percentChange];
-      else percentChangeString = [NSString stringWithFormat: @"%.2f", percentChange];
+      NSLog(@"Self.currentprices: \n\n:::::%@",data);
       
+      NSString *myStockPrice;
+      double percentChange;
+  if([stocks count]>1)   myStockPrice = [[[data valueForKeyPath:@"query.results.quote" ] objectAtIndex:indexPath.row] valueForKey:@"LastTradePriceOnly"];
+      
+  else   myStockPrice = [[data valueForKeyPath:@"query.results.quote" ]  valueForKey:@"LastTradePriceOnly"];
+    
+      if([stocks count]>1) percentChange = [[[[data valueForKeyPath:@"query.results.quote" ] objectAtIndex:indexPath.row] valueForKey:@"ChangeinPercent"] doubleValue];
+      
+      else percentChange = [[[data valueForKeyPath:@"query.results.quote" ] valueForKey:@"ChangeinPercent"] doubleValue];
+      
+      NSString *percentChangeString;
+      if (percentChange >= 0) percentChangeString = [NSString stringWithFormat: @"+%.2f%%", percentChange];
+      else percentChangeString = [NSString stringWithFormat: @"%.2f%%", percentChange];
+      priceLabel.text=myStockPrice;
       percentLabel.text = percentChangeString;
 
     }
@@ -151,10 +161,10 @@
     CoreStock *detailStock = [self.stocks objectAtIndex:selectedIndex];
     NSDictionary *data;
     @try {
-      data
-   ;
+    
+      data= [Controller fetchQuoteFor:detailStock.symbol];
 
-      data =    [[data valueForKeyPath:@"query.results.quote" ] objectAtIndex:selectedIndex];
+      data =    [data valueForKeyPath:@"query.results.quote" ] ;
       
     }
     @catch (NSException *exception) {
@@ -180,7 +190,7 @@
     int       amount = [detailStock.amount intValue];
     double  buyPrice = [detailStock.buyprice doubleValue];
     
-    NSString *detailString = [NSString stringWithFormat:@"Symbol: %@\n\nAmount Owned: %i\n\nBuy Price: %.2f\nTotal Purchase Value: %.2f\n\nLast Trade Price: %.2f\nTotal Current Value: %.2f\n\nOpen Price: %.2f", detailStock.symbol, amount, buyPrice, buyPrice*amount, lastPrice, lastPrice*amount, open];
+    NSString *detailString = [NSString stringWithFormat:@"Symbol: %@\nAmount Owned: %i\nBuy Price: %.2f\nTotal Purchase Value: %.2f\nLast Trade Price: %.2f\nTotal Current Value: %.2f\nOpen Price: %.2f", detailStock.symbol, amount, buyPrice, buyPrice*amount, lastPrice, lastPrice*amount, open];
     
     [detailLabel setText:detailString];
     [detailLabel setContentOffset:CGPointMake(0, 0) animated:YES];
