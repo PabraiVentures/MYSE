@@ -17,5 +17,6 @@
 @property (nonatomic, retain) IBOutlet UICollectionView *tileView;
 @property (nonatomic, retain) IBOutlet UITextView *detailLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *chartImage;
+- (IBAction)tradePressed:(id)sender;
 
 @end

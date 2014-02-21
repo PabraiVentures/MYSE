@@ -9,7 +9,7 @@
 #import "CorePortfolio.h"
 #import "CoreStock.h"
 #import "Controller.h"
-
+#import "PortfolioLog.h"
 
 @implementation CorePortfolio
 @dynamic coreportfolio_id;
@@ -19,7 +19,7 @@
 @dynamic owner;
 @dynamic ranking;
 @dynamic portfoliohistory;
-
+@dynamic logs;
 + (CorePortfolio*)initSelf
 {
     CorePortfolio* thePortfolio = [[CorePortfolio alloc] init];

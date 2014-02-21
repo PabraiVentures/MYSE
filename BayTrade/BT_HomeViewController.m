@@ -41,34 +41,14 @@
 
 -(void)initPlot {
     NSLog(@"initializing plot.");
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"PortfolioLog"];
-    // query for stockorder for THIS user
-    NSString* getRightEvents=[NSString stringWithFormat:@"portfolio == '%@'",self.userCache.coreModel.portfolio.coreportfolio_id];
-    NSLog(@"getrightevents: %@", getRightEvents);
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:getRightEvents]];
-    /**********START CODE BLOCK FOR REQUEST ACTION************/
-    [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *logData) {
-        if([logData count] > 0) {
-            /** Sort the tradeEvents by time/supposed order of events **/
-          
-            NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"logtime" ascending:NO] ;
-            NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-            [self setLogs:[NSMutableArray arrayWithArray:[logData sortedArrayUsingDescriptors:sortDescriptors]]];
-          NSLog(@"EVENTS: %@",logData);
-            NSLog(@"logdata: %@", logData);
-            NSLog(@"logs: %@", logs);
-          [self configureHost];
-          [self configureGraph];
-          [self configurePlots];
-          [self configureAxes];
-          NSLog(@"finished initializing plot.");
-        }
-        else {
-            NSLog(@"couldn't get historical data.");
-        }
-    } onFailure:^(NSError *error) {
-        NSLog(@"Error fetching: %@", error);
-    }];
+    [self setLogs:[NSMutableArray arrayWithArray:[self.userCache.coreModel.portfolio.logs allObjects] ]];
+
+  NSLog(@"logs: %@\n\n LOG COUNT:%d", logs, [logs count]);
+  [self configureHost];
+  [self configureGraph];
+  [self configurePlots];
+  [self configureAxes];
+ 
     
 
 }
@@ -85,7 +65,7 @@
     [graph applyTheme:[CPTTheme themeNamed:kCPTDarkGradientTheme]];
     self.hostView.hostedGraph = graph;
     // 2 - Set graph title
-    NSString *title = @"Portfolio Prices: April 2012";
+    NSString *title = @"Your Portfolio";
     graph.title = title;
     // 3 - Create and set text style
     CPTMutableTextStyle *titleStyle = [CPTMutableTextStyle textStyle];

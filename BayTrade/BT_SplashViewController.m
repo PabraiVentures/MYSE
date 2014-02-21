@@ -73,9 +73,9 @@
                       }
       NSNumber *progPercent = [NSNumber numberWithFloat:(1)];
 
-          NSLog(@"fetching initial stocks");
+          NSLog(@"fetching initial stocks:\n%@",tickers);
       currentPrices=[[Controller fetchQuotesFor:tickers] mutableCopy];
-
+    
             [self performSelectorOnMainThread:@selector(setProgressStatus:) withObject:progPercent waitUntilDone:YES];
     }
     @catch(NSException* e){
@@ -92,6 +92,7 @@
 - (void) done
 {
     NSLog(@"load success; going to trade view");
+  
     [self performSegueWithIdentifier:@"loadSuccess" sender:nil];
 }
 
@@ -136,7 +137,9 @@
 
  NSArray *results= [[Controller fetchQuotesFor:tickers]valueForKeyPath:@"query.results.quote"];// this is an array of quotes
   int index=0;
-  if (results ==NULL) return;
+  if (!results)return;
+  if ([results count] ==0) return;
+  NSLog(@"RESULTS---\n%@",results);
   for (NSDictionary *stock in results ){
     //for each stocks quote
     

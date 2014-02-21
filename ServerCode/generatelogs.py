@@ -94,7 +94,7 @@ try:
 	offset=1
 	for port in portfolios:
 		offset=1
-		while (offset <31):
+		while (offset <101):
 			idx=idx+1
 			idx=idx%17
 			#for each portfolio

@@ -80,17 +80,21 @@
     if ([self.symbolField.text length] > 0) {
         NSDictionary *stockData = [self callFetchQuotes:self.symbolField.text];
       int loopcount=0;
-        while (stockData == NULL && loopcount<4)
+        while ([[stockData valueForKeyPath:@"query.count"] intValue] == 0 && loopcount<4)
         {
           
         stockData = [self callFetchQuotes:self.symbolField.text];
           loopcount++;
         }
-        double lastPrice = [[stockData valueForKey:@"LastTradePriceOnly"] doubleValue];
+        NSLog(@"THE STOCKDATA-------\n%@",stockData);
+
+        double lastPrice = [[stockData valueForKeyPath:@"query.results.quote.LastTradePriceOnly"] doubleValue];
+        NSLog(@"LASTPRICE IS %f",lastPrice);
         self.priceLabel.text = [NSString stringWithFormat:@"$%.2f", lastPrice];
         self.tickerLabel.text = [stockData valueForKey:@"symbol"];
         int maxPurchase = floor(self.userCache.coreModel.portfolio.totalcashvalue.doubleValue / lastPrice);
-        self.maxPurchaseLabel.text = (lastPrice > 0 ? [NSString stringWithFormat: @"%i", maxPurchase] : @"Error");
+      
+        self.maxPurchaseLabel.text = (/*lastPrice > 0*/ 1? [NSString stringWithFormat: @"%i", maxPurchase] : @"Error");
         [self.stockLabel1 setHidden:false];
         [self.stockLabel2 setHidden:false];
         [self.stockLabel3 setHidden:false];
@@ -257,16 +261,23 @@
     NSDictionary *data;
     @try {
         data = [self callFetchQuotes:buyingSymbol];
+      
     }
     @catch (NSException* exception) {
         [self showErrorAlert:@"Try Again" andMessage:@"Stock Data Currently Not Available"];
         return -1;
     }
     if (data == NULL) return -1;
-    NSString *myStockPrice = data[@"LastTradePriceOnly"];
-    if(myStockPrice == NULL || amount == 0) [self showErrorAlert:@"Error" andMessage:@"Invalid symbol or amount"];
+  
+  
+  NSString *myStockPrice =[data valueForKeyPath:@"query.results.quote.LastTradePriceOnly"] ;
+  
+  
+  
+  if(myStockPrice == NULL || amount == 0) [self showErrorAlert:@"Error" andMessage:@"Invalid symbol or amount"];
     else {
         reservedBuyPrice = [myStockPrice doubleValue];
+      self.priceLabel.text=[NSString stringWithFormat:@"%f",reservedBuyPrice];
         double totalPrice = reservedBuyPrice * amount;
         if (totalPrice > self.userCache.coreModel.portfolio.totalcashvalue.doubleValue) {
             [self showErrorAlert:@"Not enough cash!" andMessage:[NSString stringWithFormat:@"You don't have enough money to buy %i shares of %@ at %.2f.", amount, buyingSymbol, reservedBuyPrice]];
@@ -350,7 +361,7 @@
         return false;
     }
     NSDictionary *stockData = [self callFetchQuotes:symbol];
-    NSString *myStockPrice = stockData[@"LastTradePriceOnly"];
+  NSString *myStockPrice = [stockData valueForKeyPath:@"query.results.quote.LastTradePriceOnly"];
     reservedSalePrice = [myStockPrice doubleValue];
     if (reservedSalePrice <= 0) {
         [self showErrorAlert:@"Error Fetching Quote" andMessage:@"The symbol you requested returned an invalid quote. Please try again."];
@@ -381,8 +392,8 @@
         if ([symbol caseInsensitiveCompare:stock.symbol] == NSOrderedSame) {
             if (![self isStockValidGivenStock:stock andAmount: amount andSymbol:symbol]) return;
             NSDictionary *stockData = [self callFetchQuotes:symbol];
-            NSString *myStockPrice = stockData[@"LastTradePriceOnly"];
-            reservedSalePrice = [myStockPrice doubleValue];
+          NSString *myStockPrice = [stockData valueForKeyPath:@"query.results.quote.LastTradePriceOnly"] ;
+          reservedSalePrice = [myStockPrice doubleValue];
             double totalPrice = reservedSalePrice * amount;
             NSString *confirmationString = [NSString stringWithFormat:@"Are you sure you'd like to sell %i shares of %@ for $%.2f?", amount, symbol, totalPrice];
             UIAlertView *sellConfirmation = [[UIAlertView alloc] initWithTitle:@"Confirm Trade" message:confirmationString delegate:self cancelButtonTitle:@"Nevermind" otherButtonTitles:@"Confirm Trade", nil];

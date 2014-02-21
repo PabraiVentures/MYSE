@@ -22,6 +22,7 @@
 @property (nonatomic, retain) NSMutableSet *stocks;
 @property (nonatomic,retain) NSString* portfoliohistory;
 @property (nonatomic,retain) NSNumber* ranking;
+@property (nonatomic,retain) NSMutableSet *logs;
 
 -(double)totalPortfolioValue;
 

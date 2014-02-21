@@ -10,6 +10,7 @@
 #import "Controller.h"
 #import "CoreStock.h"
 #import "BT_AppDelegate.h"
+#import "BT_TradeViewController.h"
 
 #define kTagSymbolLabel 50
 #define kTagPercentLabel 60
@@ -40,7 +41,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self calculateCurrentPrices];
-    [self loadDetailForIndex:0];
+   if ([stocks count] >0) [self loadDetailForIndex:0];
 }
 
 - (void)didReceiveMemoryWarning
@@ -150,7 +151,7 @@
     CoreStock *detailStock = [self.stocks objectAtIndex:selectedIndex];
     NSDictionary *data;
     @try {
-      
+      data
    ;
 
       data =    [[data valueForKeyPath:@"query.results.quote" ] objectAtIndex:selectedIndex];
@@ -221,4 +222,8 @@
 //    });
 //}
 
+- (IBAction)tradePressed:(id)sender {
+  //if ([stocks count] ==0)
+    [self.tabBarController setSelectedIndex:0];
+}
 @end
