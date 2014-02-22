@@ -28,6 +28,7 @@
     pieView = [[PieView alloc] initWithFrame:CGRectMake(self.frame.size.width/3, 0, self.frame.size.width/2, self.frame.size.height)];
     pieView.stocks = self.stocks;
     pieView.currentPrices = self.currentPrices;
+  NSLog(@"PRICES:%@",self.currentPrices);
     pieView.totalPortfolioValue = self.totalPortfolioValue;
     pieView.parent = self;
     [pieView setNeedsDisplay];
@@ -84,6 +85,7 @@
         CoreStock *stock = [self.stocks objectAtIndex:x];
         float currentPrice;
         @try {
+          NSLog(@"CURRENTPRICES:\n\n%@",currentPrices);
           
           currentPrice=    [[[[self.currentPrices valueForKeyPath:@"query.results.quote" ] objectAtIndex:x] objectForKey:@"LastTradePriceOnly"] floatValue];
           
@@ -97,7 +99,13 @@
     }
     CGFloat currentTime = 0;
     parent.stockColors = [[NSMutableDictionary alloc] init];
-    for (int x = 0; x < [self.currentPrices count]; x++) {
+    for (int x = 0; x < [[self.currentPrices valueForKeyPath:@"query.results.quote" ] count]; x++) {
+      CoreStock *stock = [self.stocks objectAtIndex:x];
+
+      
+      while (stock.symbol) {
+        <#statements#>
+      }
         CoreStock *stock = [self.stocks objectAtIndex:x];
         float currentPrice=    [[[[self.currentPrices valueForKeyPath:@"query.results.quote" ] objectAtIndex:x] objectForKey:@"LastTradePriceOnly"] floatValue];
         float totalCurrentValue = currentPrice * stock.amount.floatValue;
