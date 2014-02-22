@@ -31,6 +31,7 @@
 		9307A2F617A44D2D00E647DF /* briefcase.png in Resources */ = {isa = PBXBuildFile; fileRef = 9307A2F117A44D2D00E647DF /* briefcase.png */; };
 		9307A2F717A44D2D00E647DF /* clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 9307A2F217A44D2D00E647DF /* clock.png */; };
 		9307A2F817A44D2D00E647DF /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 9307A2F317A44D2D00E647DF /* home.png */; };
+		93082A0B18B7D53A00B6A1AF /* MYSE-120icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 93082A0A18B7D53A00B6A1AF /* MYSE-120icon.png */; };
 		931713F417A3792200B7D377 /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 931713F317A3792200B7D377 /* Controller.m */; };
 		931713F717A382DF00B7D377 /* BT_HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 931713F617A382DF00B7D377 /* BT_HistoryViewController.m */; };
 		93207F97186000B40016E270 /* libstackmob-v2.2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93207F951860009F0016E270 /* libstackmob-v2.2.0.a */; };
@@ -66,10 +67,7 @@
 		93E19FB817A36420000D60B5 /* BayTradeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E19FB717A36420000D60B5 /* BayTradeTests.m */; };
 		93E19FC317A36492000D60B5 /* BT_TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E19FC217A36492000D60B5 /* BT_TabBarController.m */; };
 		93E19FCB17A365E9000D60B5 /* Cache.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E19FC817A365E8000D60B5 /* Cache.m */; };
-		93EF04E418B71CBE00632542 /* icon1p 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 93EF04E318B71CBE00632542 /* icon1p 2.png */; };
-		93EF04E618B71D8D00632542 /* icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 93EF04E518B71D8D00632542 /* icon2.png */; };
-		93EF04E818B71DFF00632542 /* icon3.png in Resources */ = {isa = PBXBuildFile; fileRef = 93EF04E718B71DFF00632542 /* icon3.png */; };
-		93EF04EA18B71E6600632542 /* icon4.png in Resources */ = {isa = PBXBuildFile; fileRef = 93EF04E918B71E6600632542 /* icon4.png */; };
+		93EF04EE18B7D10900632542 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93EF04ED18B7D10900632542 /* Images.xcassets */; };
 		93F20DE2185D85F100F546D4 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 93F20DAA185D85F100F546D4 /* CHANGELOG.md */; };
 		93F4DEB0183821490004D8BA /* StockOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F4DEAF183821490004D8BA /* StockOrder.m */; };
 /* End PBXBuildFile section */
@@ -196,6 +194,7 @@
 		9307A2F117A44D2D00E647DF /* briefcase.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = briefcase.png; sourceTree = "<group>"; };
 		9307A2F217A44D2D00E647DF /* clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock.png; sourceTree = "<group>"; };
 		9307A2F317A44D2D00E647DF /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
+		93082A0A18B7D53A00B6A1AF /* MYSE-120icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MYSE-120icon.png"; sourceTree = "<group>"; };
 		931713F217A3792200B7D377 /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
 		931713F317A3792200B7D377 /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
 		931713F517A382DF00B7D377 /* BT_HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BT_HistoryViewController.h; sourceTree = "<group>"; };
@@ -247,10 +246,7 @@
 		93E19FC217A36492000D60B5 /* BT_TabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BT_TabBarController.m; sourceTree = "<group>"; };
 		93E19FC717A365E8000D60B5 /* Cache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cache.h; sourceTree = "<group>"; };
 		93E19FC817A365E8000D60B5 /* Cache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cache.m; sourceTree = "<group>"; };
-		93EF04E318B71CBE00632542 /* icon1p 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon1p 2.png"; sourceTree = "<group>"; };
-		93EF04E518B71D8D00632542 /* icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon2.png; sourceTree = "<group>"; };
-		93EF04E718B71DFF00632542 /* icon3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon3.png; sourceTree = "<group>"; };
-		93EF04E918B71E6600632542 /* icon4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon4.png; sourceTree = "<group>"; };
+		93EF04ED18B7D10900632542 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		93F20DAA185D85F100F546D4 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG.md; sourceTree = "<group>"; };
 		93F20DAC185D85F100F546D4 /* AFHTTPClient+StackMob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPClient+StackMob.h"; sourceTree = "<group>"; };
 		93F20DAD185D85F100F546D4 /* AFHTTPRequestOperation+RemoveContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPRequestOperation+RemoveContentType.h"; sourceTree = "<group>"; };
@@ -506,10 +502,6 @@
 		93E19F6F17A36420000D60B5 = {
 			isa = PBXGroup;
 			children = (
-				93EF04E918B71E6600632542 /* icon4.png */,
-				93EF04E718B71DFF00632542 /* icon3.png */,
-				93EF04E518B71D8D00632542 /* icon2.png */,
-				93EF04E318B71CBE00632542 /* icon1p 2.png */,
 				93C7138D17A3FCBC00258C6A /* themodel.xcdatamodeld */,
 				93E19F8117A36420000D60B5 /* BayTrade */,
 				93E19FB017A36420000D60B5 /* BayTradeTests */,
@@ -552,6 +544,7 @@
 		93E19F8117A36420000D60B5 /* BayTrade */ = {
 			isa = PBXGroup;
 			children = (
+				93082A0A18B7D53A00B6A1AF /* MYSE-120icon.png */,
 				93E19F9317A36420000D60B5 /* MainStoryboard.storyboard */,
 				7DF8F95417BC5CC7005553A1 /* BT_AppDelegate.h */,
 				93E19F8B17A36420000D60B5 /* BT_AppDelegate.m */,
@@ -559,6 +552,7 @@
 				931713F317A3792200B7D377 /* Controller.m */,
 				525122A217D7757300A8782B /* View Controllers */,
 				525122A317D7759100A8782B /* Objects */,
+				93EF04ED18B7D10900632542 /* Images.xcassets */,
 				93E19F8217A36420000D60B5 /* Supporting Files */,
 			);
 			path = BayTrade;
@@ -735,8 +729,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				93E19F7717A36420000D60B5 /* BayTrade */,
 				93E19FA817A36420000D60B5 /* BayTradeTests */,
+				93E19F7717A36420000D60B5 /* BayTrade */,
 			);
 		};
 /* End PBXProject section */
@@ -748,19 +742,17 @@
 			files = (
 				93E19F8617A36420000D60B5 /* InfoPlist.strings in Resources */,
 				93E19F8E17A36420000D60B5 /* Default.png in Resources */,
-				93EF04E818B71DFF00632542 /* icon3.png in Resources */,
+				93082A0B18B7D53A00B6A1AF /* MYSE-120icon.png in Resources */,
 				93E19F9017A36420000D60B5 /* Default@2x.png in Resources */,
 				93E19F9217A36420000D60B5 /* Default-568h@2x.png in Resources */,
-				93EF04EA18B71E6600632542 /* icon4.png in Resources */,
 				93E19F9517A36420000D60B5 /* MainStoryboard.storyboard in Resources */,
 				9307A2EE17A43E6B00E647DF /* wallpaper.jpg in Resources */,
+				93EF04EE18B7D10900632542 /* Images.xcassets in Resources */,
 				93F20DE2185D85F100F546D4 /* CHANGELOG.md in Resources */,
 				9307A2F417A44D2D00E647DF /* arrow-big-12.png in Resources */,
 				9307A2F517A44D2D00E647DF /* bar-chart.png in Resources */,
 				9307A2F617A44D2D00E647DF /* briefcase.png in Resources */,
 				9307A2F717A44D2D00E647DF /* clock.png in Resources */,
-				93EF04E618B71D8D00632542 /* icon2.png in Resources */,
-				93EF04E418B71CBE00632542 /* icon1p 2.png in Resources */,
 				9307A2F817A44D2D00E647DF /* home.png in Resources */,
 				525122AD17D976CD00A8782B /* login_unpressed.png in Resources */,
 				525122AE17D976CD00A8782B /* login_pressed.png in Resources */,
@@ -936,6 +928,7 @@
 		93E19FBC17A36420000D60B5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
@@ -965,6 +958,7 @@
 		93E19FBD17A36420000D60B5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",

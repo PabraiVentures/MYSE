@@ -81,8 +81,9 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
-    cell.textLabel.backgroundColor = [UIColor clearColor];
-    cell.detailTextLabel.backgroundColor = [UIColor clearColor];
+    cell.textLabel.backgroundColor = [UIColor blackColor];
+    cell.detailTextLabel.backgroundColor = [UIColor blackColor];
+    cell.detailTextLabel.textColor=[UIColor blackColor];
     cell.detailTextLabel.numberOfLines = 5;
     
     CoreTradeEvent *event = [events objectAtIndex:indexPath.row];
@@ -119,6 +120,7 @@
   }
   
   
+  
   else{ // if we need to update with stock orders
     static NSString *CellIdentifier = @"Cell";
     
@@ -128,6 +130,8 @@
     }
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.detailTextLabel.backgroundColor = [UIColor clearColor];
+    cell.detailTextLabel.textColor=[UIColor blackColor];
+
     cell.detailTextLabel.numberOfLines = 5;
     
     StockOrder *order = [orders objectAtIndex:indexPath.row];
@@ -166,10 +170,10 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if ([[(CoreTradeEvent*)[events objectAtIndex:indexPath.row] actionid] intValue] == 1) { //if this was a selling trade event
-        cell.backgroundColor = [UIColor colorWithRed:1.0 green:0 blue:0 alpha:0.2];
+        cell.backgroundColor = [UIColor colorWithRed:0.7 green:0 blue:0 alpha:0.2];
         return;
     }
-    cell.backgroundColor = [UIColor colorWithRed:0 green:1.0 blue:0 alpha:0.2];
+    cell.backgroundColor = [UIColor colorWithRed:0 green:.7 blue:0 alpha:0.2];
 }
 
 -(NSString*) timeString: (NSString*) tradeDate withAction: (NSString*) action

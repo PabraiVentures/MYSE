@@ -27,16 +27,16 @@
     self.userCache = [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) userCache];
   self.managedObjectContext = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
 
-  //  [self.pieChart setStocks:[self.userCache.coreModel.portfolio.stocks allObjects]];
-   // [self.pieChart calculateCurrentPrices];
-    //[self.pieChart setTotalPortfolioValue: self.userCache.coreModel.portfolio.totalportfoliovalue.doubleValue];
-    //[self.pieChart initPieView];
+    [self.pieChart setStocks:[self.userCache.coreModel.portfolio.stocks allObjects]];
+    [self.pieChart calculateCurrentPrices];
+    [self.pieChart setTotalPortfolioValue: self.userCache.coreModel.portfolio.totalportfoliovalue.doubleValue];
+    [self.pieChart initPieView];
     
-    //[self.tickerView loadTickerData];
- //   [self.tickerView reloadData];
- //   self.rankLabel.text=[NSString stringWithFormat:@"%@", self.userCache.coreModel.portfolio.ranking];
+    [self.tickerView loadTickerData];
+    [self.tickerView reloadData];
+    self.rankLabel.text=[NSString stringWithFormat:@"%@", self.userCache.coreModel.portfolio.ranking];
     
-    [self initPlot];
+    //[self initPlot];
 }
 
 -(void)initPlot {

@@ -15,7 +15,7 @@
 
 @interface CorePortfolio : NSManagedObject
 
-@property (nonatomic, retain) NSString *owner;
+@property (nonatomic, retain) NSString *sm_owner;
 @property (nonatomic,retain) NSNumber *totalcashvalue;
 @property (nonatomic,retain) NSNumber *totalportfoliovalue;
 @property (nonatomic, retain) NSString *coreportfolio_id;

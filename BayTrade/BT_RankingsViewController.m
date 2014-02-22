@@ -10,6 +10,7 @@
 #import "StackMob.h"
 #import "CorePortfolioHistory.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import "CorePortfolio.h"
 
 @interface BT_RankingsViewController ()
 
@@ -39,7 +40,7 @@
 -(void) loadRankings
 {
     if (rankingSegment.selectedSegmentIndex == 1) {
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CorePortfolioHistory"];
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CorePortfolio"];
         // query for coremodel for THIS user
         NSString* getRightHist = [NSString stringWithFormat:@"ranking < %i", 20];
         [fetchRequest setPredicate:[NSPredicate predicateWithFormat:getRightHist]];
@@ -47,7 +48,7 @@
         /**********START CODE BLOCK FOR REQUEST ACTION************/
         [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {
             //CorePortfolioHistory *yesterdayHist = [results objectAtIndex:0];
-            for (CorePortfolioHistory *rank in results) {
+            for (CorePortfolio *rank in results) {
                 [loadedRankings addObject:rank];
             }
             NSLog(@"results: %@", loadedRankings);
@@ -69,14 +70,14 @@
          }
          NSArray* hardArray = [NSArray arrayWithArray:predicateArray];
          NSPredicate* cpredicate = [NSPredicate predicateWithFormat:@"sm_owner IN %@",hardArray];
-         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CorePortfolioHistory"];
+         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CorePortfolio"];
          // query for coremodel for THIS user
          [fetchRequest setPredicate:cpredicate];
          loadedRankings = [[NSMutableArray alloc] init];
          /**********START CODE BLOCK FOR REQUEST ACTION************/
          [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {
              //CorePortfolioHistory *yesterdayHist = [results objectAtIndex:0];
-             for (CorePortfolioHistory *rank in results) {
+             for (CorePortfolio *rank in results) {
                  [loadedRankings addObject:rank];
              }
              NSLog(@"results: %@", results);
@@ -120,7 +121,7 @@
 
 -(void) setCellPic: (NSDictionary*) pair
 {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=small", [pair objectForKey: @"userID"]]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=normal", [pair objectForKey: @"userID"]]];
     NSLog(@"url: %@", url);
     UIImage *img = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:url]];
     NSLog(@"img: %@", img);
@@ -138,9 +139,19 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
-    NSString *userID = [[loadedRankings objectAtIndex:indexPath.row] sm_owner];
-    cell.textLabel.text = userID;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%i",[[[loadedRankings objectAtIndex:indexPath.row] ranking] intValue]];
+    NSString *userID = ((CorePortfolio*)([loadedRankings objectAtIndex:indexPath.row])).sm_owner ;
+    NSLog(@"The User ID is :\n\n%@",userID);
+  
+    NSData *namedata = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/?fields=name", [userID substringFromIndex:5] ] ]] ;
+  NSError* error=nil;
+                      NSDictionary* obj=[NSJSONSerialization JSONObjectWithData:namedata options:0 error:&error];
+                      NSString* name= [obj objectForKey:@"name"];
+  
+  name=[name substringFromIndex:0];
+  name=[name substringToIndex:[name length]-0];
+    cell.textLabel.text = name;
+
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"Ranked #%i $%@",[[[loadedRankings objectAtIndex:indexPath.row] ranking] intValue], [[loadedRankings objectAtIndex:indexPath.row] totalportfoliovalue]];
     NSDictionary *pair = [[NSMutableDictionary alloc] init];
     userID = [userID substringFromIndex:5];
     [pair setValue:userID forKey:@"userID"];

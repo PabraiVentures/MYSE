@@ -10,6 +10,7 @@
         <attribute name="coreportfolio_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="portfoliohistory" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="ranking" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="sm_owner" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="totalcashvalue" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="totalportfoliovalue" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <relationship name="logs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PortfolioLog" inverseName="portfolio" inverseEntity="PortfolioLog" syncable="YES"/>

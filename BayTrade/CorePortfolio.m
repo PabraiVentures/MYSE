@@ -16,7 +16,7 @@
 @dynamic stocks;
 @dynamic totalcashvalue;
 @dynamic totalportfoliovalue;
-@dynamic owner;
+@dynamic sm_owner;
 @dynamic ranking;
 @dynamic portfoliohistory;
 @dynamic logs;
