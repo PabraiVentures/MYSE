@@ -32,8 +32,8 @@
     [self.pieChart setTotalPortfolioValue: self.userCache.coreModel.portfolio.totalportfoliovalue.doubleValue];
     [self.pieChart initPieView];
     
-  //  [self.tickerView loadTickerData];
-  //  [self.tickerView reloadData];
+    [self.tickerView loadTickerData];
+    [self.tickerView reloadData];
     self.rankLabel.text=[NSString stringWithFormat:@"%@", self.userCache.coreModel.portfolio.ranking];
     
     //[self initPlot];

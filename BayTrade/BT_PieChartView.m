@@ -81,10 +81,20 @@
     double maxRadius = 50;
     NSMutableDictionary *radiusDict = [[NSMutableDictionary alloc] init];
     double maxIncrease = 0;
-    for (int x = 0; x < [self.currentPrices count]; x++) {
-        CoreStock *stock = [self.stocks objectAtIndex:x];
+    for (int x = 0; x < [[self.currentPrices valueForKeyPath:@"query.results.quote" ] count]; x++) {
+        CoreStock *stock = [self.stocks objectAtIndex:0];
         float currentPrice;
         @try {
+       int cs=0;
+          
+          while (![stock.symbol isEqualToString:([(NSDictionary*)[[self.currentPrices valueForKeyPath:@"query.results.quote" ] objectAtIndex:x] valueForKey:@"symbol"])]) {
+            cs++;
+            if (cs>=[self.stocks count])break;
+            stock = [self.stocks objectAtIndex:cs];
+            
+            
+          }
+
           NSLog(@"CURRENTPRICES:\n\n%@",currentPrices);
           
           currentPrice=    [[[[self.currentPrices valueForKeyPath:@"query.results.quote" ] objectAtIndex:x] objectForKey:@"LastTradePriceOnly"] floatValue];
@@ -98,15 +108,19 @@
         [radiusDict setObject:[NSNumber numberWithDouble:relativePrice] forKey:stock.symbol];
     }
     CGFloat currentTime = 0;
+  int cs=0;
     parent.stockColors = [[NSMutableDictionary alloc] init];
     for (int x = 0; x < [[self.currentPrices valueForKeyPath:@"query.results.quote" ] count]; x++) {
-      CoreStock *stock = [self.stocks objectAtIndex:x];
-
+      CoreStock *stock = [self.stocks objectAtIndex:0];
+      cs=0;
       
-      while (stock.symbol) {
-        <#statements#>
+      while (![stock.symbol isEqualToString:([(NSDictionary*)[[self.currentPrices valueForKeyPath:@"query.results.quote" ] objectAtIndex:x] valueForKey:@"symbol"])]) {
+        cs++;
+        if (cs>=[self.stocks count])break;
+        stock = [self.stocks objectAtIndex:cs];
+
+        
       }
-        CoreStock *stock = [self.stocks objectAtIndex:x];
         float currentPrice=    [[[[self.currentPrices valueForKeyPath:@"query.results.quote" ] objectAtIndex:x] objectForKey:@"LastTradePriceOnly"] floatValue];
         float totalCurrentValue = currentPrice * stock.amount.floatValue;
         double percentOfPie = totalCurrentValue/totalPortfolioValue;

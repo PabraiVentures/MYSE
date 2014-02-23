@@ -11,14 +11,14 @@
 #import "CorePortfolioHistory.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "CorePortfolio.h"
-
+#import "BT_AppDelegate.h"
 @interface BT_RankingsViewController ()
 
 @end
 
 @implementation BT_RankingsViewController
 
-@synthesize rankingsTable, loadedRankings,rankingSegment;
+@synthesize rankingsTable, loadedRankings,rankingSegment,userCache;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,6 +33,8 @@
 {
     [super viewDidLoad];
     self.managedObjectContext = [[[SMClient defaultClient]coreDataStore] contextForCurrentThread];
+    self.userCache = [((BT_AppDelegate*)[[UIApplication sharedApplication] delegate]) userCache];
+
     [self loadRankings];
     NSLog(@"view did load");
 }
@@ -68,6 +70,8 @@
              // for each friend
              [predicateArray addObject: [NSString stringWithFormat: @"user/%@",[( (NSDictionary*) [fetchedFriendData objectAtIndex:i] ) objectForKey:@"id"]]]; //build predicate array
          }
+       [predicateArray addObject: [NSString stringWithFormat: @"user/%@",self.userCache.userID]]; //build predicate array
+
          NSArray* hardArray = [NSArray arrayWithArray:predicateArray];
          NSPredicate* cpredicate = [NSPredicate predicateWithFormat:@"sm_owner IN %@",hardArray];
          NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CorePortfolio"];

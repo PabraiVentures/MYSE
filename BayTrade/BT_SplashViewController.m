@@ -147,19 +147,20 @@
     return;
   }
   NSLog(@"RESULTS---\n%@",results);
+  
   for (NSDictionary *stock in results ){
     //for each stocks quote
     
     
     
-    NSString* ticker= [results valueForKey:@"symbol"];
+    NSString* ticker= [((NSArray*)[results valueForKey:@"symbol"]) objectAtIndex:index];
     
     
     NSMutableDictionary *example = [[NSMutableDictionary alloc] init];
     // example has the ticker data for each stock , there are multiple of these
     [example setObject:ticker forKey:@"Symbol"];
     
-    NSArray *stock = [NSArray arrayWithObjects: ticker, nil];
+  //  NSArray *stock = [NSArray arrayWithObjects: ticker, nil];
     //TODO load from AppDelegate
     bool isUp = FALSE;
     double lastPrice, openPrice;

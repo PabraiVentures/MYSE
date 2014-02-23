@@ -174,12 +174,15 @@ static UIFont *detailFont = nil;
 - (NSString*) symbolForItemAtIndex:(NSUInteger)index
 {
     NSDictionary *thisDict = [self.tickerItems objectAtIndex:index];
-    return [thisDict objectForKey:@"Symbol"];
+  NSLog(@"SYM: %@",thisDict);
+    return ([thisDict objectForKey:@"Symbol"]);
 }
 
 - (NSString*) percentForItemAtIndex:(NSUInteger)index
 {
     NSDictionary *thisDict = [self.tickerItems objectAtIndex:index];
+  NSLog(@"pct: %@",thisDict);
+
     NSString *percent = [NSString stringWithFormat:@"%.2f%%",[[thisDict objectForKey:@"PercentChange"]doubleValue]];
     return percent;
 }
@@ -187,13 +190,18 @@ static UIFont *detailFont = nil;
 - (NSString*) priceForItemAtIndex:(NSUInteger) index
 {
     NSDictionary *thisDict = [self.tickerItems objectAtIndex:index];
+  NSLog(@"prc: %@",thisDict);
+
     NSString *price = [NSString stringWithFormat:@"$%.2f",[[thisDict objectForKey:@"CurrentPrice"] doubleValue]];
     return price;
 }
 
 - (UIImage*) imageForItemAtIndex:(NSUInteger) index
 {
+
     NSDictionary *thisDict = [self.tickerItems objectAtIndex:index];
+  NSLog(@"img: %@",thisDict);
+
     NSString *imageFileName = [[thisDict objectForKey:@"Positive"] boolValue] ? @"greenArrow" : @"redArrow";
     return [UIImage imageNamed:imageFileName];
 }

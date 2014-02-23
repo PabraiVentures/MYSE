@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Cache.h"
 
 @interface BT_RankingsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, retain) IBOutlet UITableView *rankingsTable;
 @property (nonatomic, retain) NSMutableArray *loadedRankings;
 @property (weak, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (weak,nonatomic) Cache* userCache;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *rankingSegment;
 - (IBAction)rankSegmentChanged:(id)sender;
 - (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
