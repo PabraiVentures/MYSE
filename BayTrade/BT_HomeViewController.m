@@ -19,7 +19,7 @@
 @end
 
 @implementation BT_HomeViewController
-@synthesize userCache, welcomeLabel, tickerView, pieChart, hostView, logs;
+@synthesize userCache, welcomeLabel, tickerView, pieChart, hostView, logs,iAd;
 
 - (void)viewDidLoad
 {
@@ -38,7 +38,12 @@
     
     //[self initPlot];
 }
-
+- (void) viewWillDisappear:(BOOL)animated
+{
+  [self.iAd removeFromSuperview];
+  self.iAd.delegate = nil;
+  self.iAd=nil;
+}
 -(void)initPlot {
     NSLog(@"initializing plot.");
     [self setLogs:[NSMutableArray arrayWithArray:[self.userCache.coreModel.portfolio.logs allObjects] ]];

@@ -41,6 +41,7 @@
 
 -(void) loadRankings
 {
+  @try{
     if (rankingSegment.selectedSegmentIndex == 1) {
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CorePortfolio"];
         // query for coremodel for THIS user
@@ -90,6 +91,11 @@
              NSLog(@"There was an error! %@", error);
          }];
      }];
+    
+  }
+  @catch (NSException* e) {
+    return;
+  }
 }
 
 - (void)didReceiveMemoryWarning
@@ -138,6 +144,7 @@
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+  @try{
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -165,6 +172,10 @@
     [self performSelectorInBackground:@selector(setCellPic:) withObject: pair];
     NSLog(@"cell text: %@", cell.textLabel.text);
     return cell;
+  }
+  @catch (NSException *e) {
+    return nil;
+  }
 }
 
 - (IBAction)rankSegmentChanged:(id)sender {

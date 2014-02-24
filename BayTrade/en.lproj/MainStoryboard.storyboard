@@ -47,6 +47,10 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <adBannerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="pzV-m0-ob2">
+                                <rect key="frame" x="0.0" y="466" width="320" height="50"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            </adBannerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -54,6 +58,7 @@
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="changeInRankingImage" destination="MyH-SD-baZ" id="5kf-7s-I1e"/>
+                        <outlet property="iAd" destination="pzV-m0-ob2" id="qch-TR-NM9"/>
                         <outlet property="pieChart" destination="gR6-3V-EjK" id="gBR-Nu-VLL"/>
                         <outlet property="rankLabel" destination="J4Z-dx-NT4" id="GyM-4a-ZfZ"/>
                         <outlet property="tickerView" destination="ec1-Tn-DWl" id="Cfc-hg-uAY"/>

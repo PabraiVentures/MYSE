@@ -10,6 +10,7 @@
 #import "Cache.h"
 #import "BT_TickerView.h"
 #import "BT_PieChartView.h"
+#import <iAd/iAd.h>
 //#import "CPTGraph.h"
 //#import "CPTPlot.h"
 //#import "CPTGraphHostingView.h"
@@ -33,5 +34,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *welcomeLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *changeInRankingImage;
 @property (strong, nonatomic) IBOutlet UILabel *rankLabel;
+@property (weak, nonatomic) IBOutlet ADBannerView *iAd;
 
 @end

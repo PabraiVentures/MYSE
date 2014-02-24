@@ -35,6 +35,7 @@
 		931713F417A3792200B7D377 /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 931713F317A3792200B7D377 /* Controller.m */; };
 		931713F717A382DF00B7D377 /* BT_HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 931713F617A382DF00B7D377 /* BT_HistoryViewController.m */; };
 		93207F97186000B40016E270 /* libstackmob-v2.2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93207F951860009F0016E270 /* libstackmob-v2.2.0.a */; };
+		9323D23818BAFCD7000594F1 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9323D23718BAFCD7000594F1 /* iAd.framework */; };
 		93294D7D17E4013A00CD7F42 /* CorePortfolioHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 93294D7C17E4013A00CD7F42 /* CorePortfolioHistory.m */; };
 		93294D7F17E4029300CD7F42 /* portfoliohistory.txt in Resources */ = {isa = PBXBuildFile; fileRef = 93294D7E17E4029300CD7F42 /* portfoliohistory.txt */; };
 		933D51D6185FE86900E6EF6D /* PortfolioLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 933D51D5185FE86900E6EF6D /* PortfolioLog.m */; };
@@ -200,6 +201,7 @@
 		931713F517A382DF00B7D377 /* BT_HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BT_HistoryViewController.h; sourceTree = "<group>"; };
 		931713F617A382DF00B7D377 /* BT_HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BT_HistoryViewController.m; sourceTree = "<group>"; };
 		93207F951860009F0016E270 /* libstackmob-v2.2.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libstackmob-v2.2.0.a"; sourceTree = "<group>"; };
+		9323D23718BAFCD7000594F1 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		93294D7B17E4013A00CD7F42 /* CorePortfolioHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CorePortfolioHistory.h; path = ../CorePortfolioHistory.h; sourceTree = "<group>"; };
 		93294D7C17E4013A00CD7F42 /* CorePortfolioHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CorePortfolioHistory.m; path = ../CorePortfolioHistory.m; sourceTree = "<group>"; };
 		93294D7E17E4029300CD7F42 /* portfoliohistory.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portfoliohistory.txt; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9323D23818BAFCD7000594F1 /* iAd.framework in Frameworks */,
 				93207F97186000B40016E270 /* libstackmob-v2.2.0.a in Frameworks */,
 				52FD82AE180F2CE300DCF967 /* QuartzCore.framework in Frameworks */,
 				93D5A0CD17A3C75300ECA5D8 /* CoreLocation.framework in Frameworks */,
@@ -522,6 +525,7 @@
 		93E19F7A17A36420000D60B5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9323D23718BAFCD7000594F1 /* iAd.framework */,
 				93207F951860009F0016E270 /* libstackmob-v2.2.0.a */,
 				52365560185FC0BA00AB71DD /* libCorePlot-CocoaTouch.a */,
 				52365511185FC07C00AB71DD /* CorePlotHeaders */,
