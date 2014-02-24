@@ -955,6 +955,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "11EC4420-0807-40B8-BF71-C0477DFE3290";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -986,6 +987,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "11EC4420-0807-40B8-BF71-C0477DFE3290";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
