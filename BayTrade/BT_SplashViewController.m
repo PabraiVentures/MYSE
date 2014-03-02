@@ -61,6 +61,7 @@
   NSMutableArray* tickers= [[NSMutableArray alloc] init];
 
   @try{
+    if ([self.userCache.coreModel.portfolio.stocks count]>0){
       
         for (CoreStock *stock in self.userCache.coreModel.portfolio.stocks) {
           loopcount=0;
@@ -78,6 +79,7 @@
     
             [self performSelectorOnMainThread:@selector(setProgressStatus:) withObject:progPercent waitUntilDone:YES];
     }
+  }
     @catch(NSException* e){
         NSLog(@"Error spashsscreen loading data\n%@", e);
     
