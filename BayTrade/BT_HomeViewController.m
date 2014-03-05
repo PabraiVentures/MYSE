@@ -50,20 +50,20 @@
 
   NSLog(@"logs: %@\n\n LOG COUNT:%d", logs, [logs count]);
   [self configureHost];
-  [self configureGraph];
-  [self configurePlots];
-  [self configureAxes];
+ // [self configureGraph];
+ // [self configurePlots];
+ // [self configureAxes];
  
     
 
 }
 
 -(void)configureHost {
-    self.hostView = [(CPTGraphHostingView *) [CPTGraphHostingView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height/2 +60, self.view.frame.size.width, self.view.frame.size.height/3)];
-    self.hostView.allowPinchScaling = YES;
-    [self.view addSubview:self.hostView];
+ //   self.hostView = [(CPTGraphHostingView *) [CPTGraphHostingView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height/2 +60, self.view.frame.size.width, self.view.frame.size.height/3)];
+  //  self.hostView.allowPinchScaling = YES;
+  //  [self.view addSubview:self.hostView];
 }
-
+/*
 -(void)configureGraph {
     // 1 - Create the graph
     CPTGraph *graph = [[CPTXYGraph alloc] initWithFrame:self.hostView.bounds];
@@ -210,7 +210,7 @@
     y.majorTickLocations = yMajorLocations;
     y.minorTickLocations = yMinorLocations;
 }
-
+*/
 - (void)didReceiveMemoryWarning
 {
     NSLog(@"received memory warning!");

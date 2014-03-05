@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		52365561185FC0BA00AB71DD /* libCorePlot-CocoaTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52365560185FC0BA00AB71DD /* libCorePlot-CocoaTouch.a */; };
 		52365563185FF02E00AB71DD /* silhouette.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 52365562185FF02E00AB71DD /* silhouette.jpg */; };
 		525122A017D774FC00A8782B /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5251229F17D774FC00A8782B /* FacebookSDK.framework */; };
 		525122AD17D976CD00A8782B /* login_unpressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 525122AB17D976CD00A8782B /* login_unpressed.png */; };
@@ -162,7 +161,6 @@
 		5236555D185FC07C00AB71DD /* NSCoderExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSCoderExtensions.h; sourceTree = "<group>"; };
 		5236555E185FC07C00AB71DD /* NSDecimalNumberExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDecimalNumberExtensions.h; sourceTree = "<group>"; };
 		5236555F185FC07C00AB71DD /* NSNumberExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSNumberExtensions.h; sourceTree = "<group>"; };
-		52365560185FC0BA00AB71DD /* libCorePlot-CocoaTouch.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libCorePlot-CocoaTouch.a"; sourceTree = "<group>"; };
 		52365562185FF02E00AB71DD /* silhouette.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = silhouette.jpg; sourceTree = "<group>"; };
 		5251229F17D774FC00A8782B /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		525122AB17D976CD00A8782B /* login_unpressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_unpressed.png; sourceTree = "<group>"; };
@@ -324,7 +322,6 @@
 				93E19F7E17A36420000D60B5 /* Foundation.framework in Frameworks */,
 				93E19F8017A36420000D60B5 /* CoreGraphics.framework in Frameworks */,
 				525122A017D774FC00A8782B /* FacebookSDK.framework in Frameworks */,
-				52365561185FC0BA00AB71DD /* libCorePlot-CocoaTouch.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -527,7 +524,6 @@
 			children = (
 				9323D23718BAFCD7000594F1 /* iAd.framework */,
 				93207F951860009F0016E270 /* libstackmob-v2.2.0.a */,
-				52365560185FC0BA00AB71DD /* libCorePlot-CocoaTouch.a */,
 				52365511185FC07C00AB71DD /* CorePlotHeaders */,
 				93F20DA9185D85F100F546D4 /* StackMob-v2.2.0 */,
 				52FD82AD180F2CE300DCF967 /* QuartzCore.framework */,
