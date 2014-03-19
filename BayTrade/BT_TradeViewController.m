@@ -144,11 +144,16 @@
     double value = 0.0;
     double prc = 0.0;
     int amt = 0;
-  
   @try{
+    //add upp stock value
+    
   for(CoreStock *stock in self.userCache.coreModel.portfolio.stocks) {
+    NSLog(@"Updating value 1023");
         if ((stock.symbol!=NULL)) {
-            prc = [[Controller currentPriceForSymbol:stock.symbol] doubleValue];
+          prc = [[[Controller fetchQuoteFor:stock.symbol] valueForKeyPath:@"query.results.quote.LastTradePriceOnly"] doubleValue];
+          NSLog(@"PriceData is %f",prc );
+         // NSLog(@"for symbol %@",[Controller currentPriceForSymbol:stock.symbol]);
+          
             amt = stock.amount.intValue;
             value += (prc * amt);
         }

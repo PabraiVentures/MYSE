@@ -81,15 +81,15 @@
     }
 }
 
-+ (NSNumber*) currentPriceForSymbol: (NSString*) symbol
+/*+ (NSNumber*) currentPriceForSymbol: (NSString*) symbol
 {
     NSDictionary *quote = [Controller fetchQuotesFor:[NSArray arrayWithObject:symbol]];
     @try {
-        return quote[@"LastTradePriceOnly"];
+        return quote  valueForKey;
     }
     @catch (NSException *exception) {
         return [NSNumber numberWithInt:0];
     }
-}
+}*/
 
 @end

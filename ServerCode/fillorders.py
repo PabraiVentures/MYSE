@@ -1,4 +1,5 @@
 #HELLO: to install: on command line do easy_install oauth, then easy_install urllib2.
+#this looks for orders that can be filled.
 
 import oauth.oauth as oauth
 import httplib
@@ -8,6 +9,7 @@ import urllib2
 import datetime
 import time
 import classes as cl
+import checkopen as co
 from time import  sleep
 def executeOrder(ticker,portfolio,price,amount,type,stockorder_id,client):
 	print ticker+" "+portfolio+" "+str(price)+" "+str(amount)+" "+str(type)+" "+stockorder_id
@@ -86,7 +88,8 @@ def executeOrder(ticker,portfolio,price,amount,type,stockorder_id,client):
 	
 	client._execute(1,"DELETE","stockorder/"+stockorder_id,None).read()
 		 
-while 2>0:
+if 2>0 and (co.checkSEOpen()):
+
 	try:
 		sleep(2)
 		client=cl.BaseClient("api.mob1.stackmob.com","ef598654-95fb-4ecd-8f13-9309f2fcad0f", "9ac9ecaa-21eb-4ef2-8ddc-10ce40ca67e4")
@@ -115,7 +118,8 @@ while 2>0:
 	except:
 		print "error", sys.exc_info()[0]
 		
-		
+else:
+	print "didnt fill orders"
 	
 	#know that type is not market so need to check current price
 

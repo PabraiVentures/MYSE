@@ -7,6 +7,7 @@ import json
 import sys
 import urllib2
 import time
+import checkopen as co
 class BaseClient:
 	
 	def __init__(self, baseURL, key, secret):
@@ -79,73 +80,78 @@ class Pyql:
 	
 		return pythonQuotes
 try:
-
-	client=BaseClient("api.mob1.stackmob.com","ef598654-95fb-4ecd-8f13-9309f2fcad0f", "9ac9ecaa-21eb-4ef2-8ddc-10ce40ca67e4")
-	w=client._execute(0,"GET","coreportfolio",None)
-	u= w.read()
-	portfolios=json.loads(u)
-	print "--------------"
-	print portfolios
-	print ""
-	rankings={}#key=porfolioID, value= totalportfoliovalue
-	histforport={}   
-	for port in portfolios:
-		#for each portfolio
-        #calculate the current portfoliov value
-		total=port['totalcashvalue']
-		if 'stocks' in port:
-			for stock in port['stocks']:
-				total=total+ float(Pyql().lookup([stock['symbol']])[0]['LastTradePriceOnly']) *stock['amount']
-		if ('portfoliohistory' not in port):
-			port['portfoliohistory']="{}"
-		hist=json.loads(port['portfoliohistory'])
-		hist[time.strftime('%m-%d-%Y')]=total
-		histjson=json.dumps(hist)
+	if (co.checkSEOpen()):
+		client=BaseClient("api.mob1.stackmob.com","ef598654-95fb-4ecd-8f13-9309f2fcad0f", "9ac9ecaa-21eb-4ef2-8ddc-10ce40ca67e4")
+		w=client._execute(0,"GET","coreportfolio",None)
+		u= w.read()
+		portfolios=json.loads(u)
+		print "--------------"
+		print portfolios
+		print ""
+		rankings={}#key=porfolioID, value= totalportfoliovalue
+		histforport={}   
+		for port in portfolios:
+			#for each portfolio
+			#calculate the current portfoliov value
+			total=port['totalcashvalue']
+			if 'stocks' in port:
+				for stock in port['stocks']:
+					total=total+ float(Pyql().lookup([stock['symbol']])[0]['LastTradePriceOnly']) *stock['amount']
+			if ('portfoliohistory' not in port):
+				port['portfoliohistory']="{}"
+			hist=json.loads(port['portfoliohistory'])
+			hist[time.strftime('%m-%d-%Y')]=total
+			histjson=json.dumps(hist)
 		
-		currenttime=datetime.datetime.now().isoformat()
+			currenttime=datetime.datetime.now().isoformat()
 		
-		body1={"accountvalue":float(total),"portfolio":port['coreportfolio_id'],"logtime":currenttime}
-		string2="portfoliolog"
-		client._execute(1,"POST",string2,body1).read()
-		time.sleep(.2)
-		#looking for  the log we just made
-		str1="portfoliolog?portfolio="+port['coreportfolio_id']+"&logtime="+currenttime
+			body1={"accountvalue":float(total),"portfolio":port['coreportfolio_id'],"logtime":currenttime}
+			string2="portfoliolog"
+			client._execute(1,"POST",string2,body1).read()
+			time.sleep(.2)
+			#looking for  the log we just made
+			str1="portfoliolog?portfolio="+port['coreportfolio_id']+"&logtime="+currenttime
 		
-		log=json.loads(client._execute(0,"GET",str1,None).read())
-		#print port
-		print log 
-		logid=log[0]['portfoliolog_id']
+			log=json.loads(client._execute(0,"GET",str1,None).read())
+			#print port
+			print log 
+			logid=log[0]['portfoliolog_id']
 		
-		body=[logid]
-		str3="coreportfolio/"+port['coreportfolio_id']+"/logs"
-		#print "BODY: " + body+ "STRING: " +str3 
-		json.loads(client._execute(0,"PUT",str3,body).read())
+			body=[logid]
+			str3="coreportfolio/"+port['coreportfolio_id']+"/logs"
+			#print "BODY: " + body+ "STRING: " +str3 
+			json.loads(client._execute(0,"PUT",str3,body).read())
 		
 		
 		
 	
 		
 		
-		#build table of portf and portfhistory to link together later
-		#body={"totalportfoliovalue":total , "portfoliohistory":histjson}
-		body={"totalportfoliovalue":total}	
-		rankings[port['coreportfolio_id']]=total #add data into rankings
+			#build table of portf and portfhistory to link together later
+			#body={"totalportfoliovalue":total , "portfoliohistory":histjson}
+			body={"totalportfoliovalue":total}	
+			rankings[port['coreportfolio_id']]=total #add data into rankings
 		
-		string1="coreportfolio/"+port['coreportfolio_id']
-		client._execute(1,"PUT",string1,body).read()
-        #now the totalportfoliovalues have been updated
+			string1="coreportfolio/"+port['coreportfolio_id']
+			client._execute(1,"PUT",string1,body).read()
+			#now the totalportfoliovalues have been updated
 
+	else:
+		print "market closed"
 except :
 	raise	
-sortedrankings=sorted(rankings)
-print sortedrankings
-rank=1
+	
+if (co.checkSEOpen()):
 
-for i in sortedrankings:
-	body={"ranking":rank}
-	string1="coreportfolio/"+i
-	client._execute(1,"PUT",string1,body).read()
-	rankings[i]=rank
-	rank=rank+1
+	sortedrankings=sorted(rankings)
+	print sortedrankings
+	rank=1
+
+	for i in sortedrankings:
+		body={"ranking":rank}
+		string1="coreportfolio/"+i
+		client._execute(1,"PUT",string1,body).read()
+		rankings[i]=rank
+		rank=rank+1
 
 

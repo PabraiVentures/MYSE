@@ -23,13 +23,13 @@ def checkSEOpen():
 	minute = now.minute
 	
 	open = datetime.time(9,30)
-	closed = datetime.time(15,30)
+	closed = datetime.time(16,00)
 	current = datetime.time(hour, minute)
 	today = calendar.weekday(year,month,day)
-	print today
-	print hour
+	#print today
+	#print hour
 	
 	if today < 5:
 		if current > open and current < closed:
-			print True
-checkSEOpen()
+			return True
+#checkSEOpen()
