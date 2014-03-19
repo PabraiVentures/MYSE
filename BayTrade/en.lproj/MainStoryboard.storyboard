@@ -331,6 +331,9 @@
                                 <rect key="frame" x="289" y="380" width="22" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <connections>
+                                    <action selector="infoViewClicked:" destination="3" eventType="touchUpInside" id="7ON-Ci-snn"/>
+                                </connections>
                             </button>
                             <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Price" minimumFontSize="17" id="xn4-RW-I1K">
                                 <rect key="frame" x="115" y="202" width="90" height="30"/>

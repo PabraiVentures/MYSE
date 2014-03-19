@@ -43,7 +43,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *tickerLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *maxPurchaseLabel;
-
+- (IBAction)infoViewClicked:(id)sender;
 - (IBAction)buyButtonClicked:(id)sender;
 - (IBAction)sellButtonClicked:(id)sender;
 - (IBAction)logoutButtonClicked:(id)sender;

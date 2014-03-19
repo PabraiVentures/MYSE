@@ -245,6 +245,7 @@
 
 /************************BUYING**************************/
 
+
 - (IBAction) buyButtonClicked:(id)sender {
     NSString *buyingSymbol;
     if([self.symbolField.text length] > 0) buyingSymbol = [self.symbolField.text uppercaseString];
@@ -471,5 +472,11 @@
     if (self.orderTypeSegment.selectedSegmentIndex==0) {
         self.priceField.hidden=true;
     }else self.priceField.hidden=false;
+}
+
+- (IBAction)infoViewClicked:(id)sender {
+  UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Trading" message: @"blah\nblah\nblah\nblah\nblah\nblah\nblah\nblah\n" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+  [alert show];
+  
 }
 @end
