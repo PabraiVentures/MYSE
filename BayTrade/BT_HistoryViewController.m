@@ -10,6 +10,7 @@
 #import "CoreTradeEvent.h"
 #import "StockOrder.h"
 #import "BT_AppDelegate.h"
+#import "Controller.h"
 
 @interface BT_HistoryViewController ()
 
@@ -158,7 +159,10 @@
       action = @"Stop sell";
     }
     else NSLog(@"error in order tradetype -- no corresponding action for tradetype #%i", order.tradetype.intValue);
-    NSString *actionDetail = [NSString stringWithFormat:@"\n%@ %@ shares of %@\nEstimated Trade Value: $%.2f x %@ = $%.2f", action, order.quantity, [order.symbol uppercaseString], [order.price doubleValue], order.quantity, doMath];
+    if (order.tradetype.intValue==0 || order.tradetype.intValue==3) {
+      order.price=       [NSNumber numberWithFloat: [[[Controller fetchQuoteFor:[order.symbol uppercaseString] ] valueForKeyPath:@"query.results.quote.LastTradePriceOnly"] doubleValue]];
+    }
+    NSString *actionDetail = [NSString stringWithFormat:@"\n%@ %@ shares of %@\nEstimated Trade Value: $%.2f x %@ = $%.2f", action, order.quantity, [order.symbol uppercaseString], [order.price doubleValue], order.quantity, [order.quantity doubleValue] *[order.price doubleValue]];
     
     cell.textLabel.text = [self timeString:order.ordertime withAction:action];
     cell.detailTextLabel.text = actionDetail;
@@ -203,7 +207,7 @@
         int day = [components day];
         int month = [components month];
         int year = [components year];
-        time = [NSString stringWithFormat:@"%@ at %i:%i on %i/%i/%i", action, hour, minute, month, day, year];
+        time = [NSString stringWithFormat:@"%@ at on %i/%i/%i", action,month, day, year];
     }
     return time;
 }

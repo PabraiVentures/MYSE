@@ -20,9 +20,11 @@
 @dynamic ranking;
 @dynamic portfoliohistory;
 @dynamic logs;
+@dynamic orders;
 + (CorePortfolio*)initSelf
 {
     CorePortfolio* thePortfolio = [[CorePortfolio alloc] init];
+    thePortfolio.orders=[NSMutableSet set];
     thePortfolio.stocks = [NSMutableSet set];
     thePortfolio.totalcashvalue = [NSNumber numberWithFloat: 100000.0];
     thePortfolio.totalportfoliovalue   =[NSNumber numberWithFloat:100000.0];

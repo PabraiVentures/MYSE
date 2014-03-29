@@ -86,9 +86,9 @@ def executeOrder(ticker,portfolio,price,amount,type,stockorder_id,client):
 	str2="coreportfolio/"+port['coreportfolio_id']
 	client._execute(1,"PUT",str2,body).read()
 	
-	client._execute(1,"DELETE","stockorder/"+stockorder_id,None).read()
+	client._execute(1,"DELETE",str2+"/orders/"+stockorder_id,None).read()
 		 
-if 2>0 and (co.checkSEOpen()):
+if 2>0 and (not co.checkSEOpen()):
 
 	try:
 		sleep(2)

@@ -24,7 +24,7 @@ class BaseClient:
 			headers["X-Stackmob-Expand"]="1"
 		headers["Content-Type"] = "application/json"
 		#headers["Version"]="0"
-		self.connection.set_debuglevel(1)
+		self.connection.set_debuglevel(0)
 		bodyString = ""
 		if(body != None):
 			bodyString = json.dumps(body)
@@ -80,7 +80,7 @@ class Pyql:
 	
 		return pythonQuotes
 try:
-	if (co.checkSEOpen()):
+	if (not co.checkSEOpen()):
 		client=BaseClient("api.mob1.stackmob.com","ef598654-95fb-4ecd-8f13-9309f2fcad0f", "9ac9ecaa-21eb-4ef2-8ddc-10ce40ca67e4")
 		w=client._execute(0,"GET","coreportfolio",None)
 		u= w.read()
@@ -141,17 +141,17 @@ try:
 except :
 	raise	
 	
-if (co.checkSEOpen()):
+if (not co.checkSEOpen()):
 
-	sortedrankings=sorted(rankings)
-	print sortedrankings
-	rank=1
+	rank=len(rankings)
 
-	for i in sortedrankings:
+	for key, value in sorted(rankings.iteritems(), key=lambda (k,v): (v,k)):
+		t= key +"\\"+ str(value)
+		print t
 		body={"ranking":rank}
-		string1="coreportfolio/"+i
+		string1="coreportfolio/"+key
 		client._execute(1,"PUT",string1,body).read()
-		rankings[i]=rank
-		rank=rank+1
-
-
+		rankings[key]=rank
+		rank=rank-1
+		
+	print rankings

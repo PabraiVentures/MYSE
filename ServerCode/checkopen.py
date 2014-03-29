@@ -31,5 +31,9 @@ def checkSEOpen():
 	
 	if today < 5:
 		if current > open and current < closed:
+			if month is 4 and day is 18:
+				return False
+			if month is 5 and day is 26:
+				return False
 			return True
 #checkSEOpen()

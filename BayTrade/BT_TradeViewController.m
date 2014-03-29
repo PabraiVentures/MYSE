@@ -475,7 +475,7 @@
 }
 
 - (IBAction)infoViewClicked:(id)sender {
-  UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Trading" message: @"blah\nblah\nblah\nblah\nblah\nblah\nblah\nblah\n" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+  UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Trading" message: @"Enter A Symbol for a company and the amount of shares to trade. Market orders execute ASAP, Limit orders will buy under or sell over a set price and Stop orders will buy over and sell under a set price. All orders will take a minimum of 15 minutes. Trading can only happen during Market hours and quotes are delayed by 15 minutes. Trade delay eliminates possible cheating." delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
   [alert show];
   
 }

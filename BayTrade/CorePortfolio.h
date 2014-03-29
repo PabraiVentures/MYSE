@@ -10,7 +10,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-
+@class CorePortfolio;
 @class CoreStock;
 
 @interface CorePortfolio : NSManagedObject
@@ -23,7 +23,7 @@
 @property (nonatomic,retain) NSString* portfoliohistory;
 @property (nonatomic,retain) NSNumber* ranking;
 @property (nonatomic,retain) NSMutableSet *logs;
-
+@property(nonatomic,retain)NSMutableSet *orders;
 -(double)totalPortfolioValue;
 
 @end
@@ -34,7 +34,8 @@
 - (void)removeStocksObject:(CoreStock *)value;
 - (void)addStocks:(NSSet *)values;
 - (void)removeStocks:(NSSet *)values;
-
+- (void)addOrders:(NSSet*) orders;
+-(void)removeOrders:(NSSet*) orders;
 + (CorePortfolio*)initSelf;
 
 @end

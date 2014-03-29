@@ -81,6 +81,20 @@
     double maxRadius = 50;
     NSMutableDictionary *radiusDict = [[NSMutableDictionary alloc] init];
     double maxIncrease = 0;
+  if (![[self.currentPrices valueForKeyPath:@"query.results.quote" ]respondsToSelector:@selector(objectAtIndex:)]){
+    //currentprices.query.results.quote is just a dictionary if theres just one stock. we need to make it an array with 1 object
+    self.currentPrices=[self.currentPrices mutableCopy];
+    [self.currentPrices setValue:[[self.currentPrices valueForKeyPath:@"query"]mutableCopy ]forKeyPath:@"query"];
+    [self.currentPrices setValue:[[self.currentPrices valueForKeyPath:@"query.results"]mutableCopy ]forKeyPath:@"query.results"];
+    [self.currentPrices setValue:[[self.currentPrices valueForKeyPath:@"query.results.quote"]mutableCopy ]forKeyPath:@"query.results.quote"];
+
+
+    NSLog(@"curr prices type is %@", [self.currentPrices class]);
+
+    [self.currentPrices setValue:[NSArray arrayWithObject:[self.currentPrices valueForKeyPath:@"query.results.quote"] ] forKeyPath:@"query.results.quote"];
+    NSLog(@"firstif");
+  }
+
     for (int x = 0; x < [[self.currentPrices valueForKeyPath:@"query.results.quote" ] count]; x++) {
         CoreStock *stock = [self.stocks objectAtIndex:0];
         float currentPrice;
@@ -98,7 +112,8 @@
           NSLog(@"CURRENTPRICES:\n\n%@",currentPrices);
           
           currentPrice=    [[[[self.currentPrices valueForKeyPath:@"query.results.quote" ] objectAtIndex:x] objectForKey:@"LastTradePriceOnly"] floatValue];
-          
+          NSLog(@"foriter %d",x);
+
         }
         @catch (NSException *exception) {
             NSLog(@"couldn't find currentprice.");
@@ -110,6 +125,9 @@
     CGFloat currentTime = 0;
   int cs=0;
     parent.stockColors = [[NSMutableDictionary alloc] init];
+  NSLog(@"IN Pie %@",[self.currentPrices valueForKeyPath:@"query.results.quote" ]);
+      //if current prices is an array
+  
     for (int x = 0; x < [[self.currentPrices valueForKeyPath:@"query.results.quote" ] count]; x++) {
       CoreStock *stock = [self.stocks objectAtIndex:0];
       cs=0;
@@ -143,7 +161,8 @@
         [parent.stockColors setValue:randomcolor forKey:stock.symbol];
         [randomcolor set];
         [arc fill];
-    }
+    
+  }
     //rest is CASH
     int radius = maxRadius / maxIncrease;
     CGPoint center = CGPointMake(self.frame.size.width*2/3, self.frame.size.height*1/2);

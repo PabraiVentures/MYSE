@@ -21,6 +21,7 @@ class BaseClient:
 		if (m is 0) :
 			headers["X-Stackmob-Expand"]="1"
 		headers["Content-Type"] = "application/json"
+		headers["X-StackMob-CascadeDelete"]= "true"
 		#headers["Version"]="0"
 		self.connection.set_debuglevel(0)
 		bodyString = ""

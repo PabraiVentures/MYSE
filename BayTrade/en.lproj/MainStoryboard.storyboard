@@ -136,7 +136,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="History" image="clock.png" id="reP-eV-nI1"/>
+                    <tabBarItem key="tabBarItem" title="Orders" image="clock.png" id="reP-eV-nI1"/>
                     <navigationItem key="navigationItem" id="4s3-yH-3tU"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>

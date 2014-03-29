@@ -44,7 +44,7 @@
       [query appendString:[NSString stringWithFormat:@"%%22%@%%22", ticker]];
     [query appendString:QUOTE_QUERY_SUFFIX];
     NSData *jsonData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:query] encoding:NSUTF8StringEncoding error:nil] dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *results = jsonData ? [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil] : nil;
+    NSMutableDictionary *results = jsonData ? [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil] : nil;
     if ([[results valueForKeyPath:@"query.count"] intValue]==0) return [self fetchQuoteFor:ticker];
     NSLog(@" RESULTS of stock fetch %@",results);
 

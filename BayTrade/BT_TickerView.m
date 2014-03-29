@@ -79,8 +79,8 @@ static UIFont *detailFont = nil;
     
     [symbol drawInRect:CGRectMake(0, 2, [self symbolWidth], 26) withFont:symbolFont];
     [price drawInRect:CGRectMake(10 + [self symbolWidth], 2, [self priceWidth], 26) withFont:detailFont];
-    [image drawInRect:CGRectMake([self symbolWidth] + [self percentWidth] + 23, 9, 12, 7)];
-    [percent drawInRect:CGRectMake(36 + [self symbolWidth] + [self percentWidth], 2, [self percentWidth], 26) withFont:detailFont];
+    [image drawInRect:CGRectMake([self symbolWidth] + [self percentWidth] + 29, 9, 12, 7)];
+    [percent drawInRect:CGRectMake(42 + [self symbolWidth] + [self percentWidth], 2, [self percentWidth], 26) withFont:detailFont];
     
     [super drawRect:rect];
 }
