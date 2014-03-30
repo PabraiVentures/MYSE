@@ -77,6 +77,7 @@
 - (void) dismissKeyboard {
     [self.amountField resignFirstResponder];
     [self.symbolField resignFirstResponder];
+  [self.priceField resignFirstResponder];
     if ([self.symbolField.text length] > 0) {
         NSDictionary *stockData = [self callFetchQuotes:self.symbolField.text];
       int loopcount=0;
@@ -226,7 +227,7 @@
 }
 
 - (BOOL) textFieldShouldReturn: (UITextField *)theTextField {
-    if ((theTextField == self.symbolField) || (theTextField == self.amountField)) {
+    if ((theTextField == self.symbolField) || (theTextField == self.amountField)||(theTextField==self.priceField)) {
         [theTextField endEditing:YES];
         [self dismissKeyboard];
     }
