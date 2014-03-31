@@ -18,8 +18,8 @@ class BaseClient:
 		request = oauth.OAuthRequest.from_consumer_and_token(self.consumer, http_method=httpmethod, http_url="http://" + self.url + "/" + path)
 		request.sign_request(oauth.OAuthSignatureMethod_HMAC_SHA1(), self.consumer, None)
 		headers = request.to_header()
-		headers["Accept"] = "application/vnd.stackmob+json; version=0"
-		headers["X-StackMob-API-Key"]="ef598654-95fb-4ecd-8f13-9309f2fcad0f"
+		headers["Accept"] = "application/vnd.stackmob+json; version=1"
+		headers["X-StackMob-API-Key"]="4d770b35-0a4e-47f9-a85b-77c8d0f0e605"
 		if (m is 0) :
 			headers["X-Stackmob-Expand"]="1"
 		headers["Content-Type"] = "application/json"
@@ -81,7 +81,7 @@ class Pyql:
 		return pythonQuotes
 try:
 	if (not co.checkSEOpen()):
-		client=BaseClient("api.mob1.stackmob.com","ef598654-95fb-4ecd-8f13-9309f2fcad0f", "9ac9ecaa-21eb-4ef2-8ddc-10ce40ca67e4")
+		client=BaseClient("api.mob1.stackmob.com","4d770b35-0a4e-47f9-a85b-77c8d0f0e605", "07c826b0-ce40-4277-8ef1-d5574cdf7196")
 		w=client._execute(0,"GET","coreportfolio",None)
 		u= w.read()
 		portfolios=json.loads(u)

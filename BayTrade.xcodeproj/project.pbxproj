@@ -38,6 +38,7 @@
 		93294D7D17E4013A00CD7F42 /* CorePortfolioHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 93294D7C17E4013A00CD7F42 /* CorePortfolioHistory.m */; };
 		93294D7F17E4029300CD7F42 /* portfoliohistory.txt in Resources */ = {isa = PBXBuildFile; fileRef = 93294D7E17E4029300CD7F42 /* portfoliohistory.txt */; };
 		933D51D6185FE86900E6EF6D /* PortfolioLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 933D51D5185FE86900E6EF6D /* PortfolioLog.m */; };
+		936C43F818E933EF002B4FB2 /* Gamedata.m in Sources */ = {isa = PBXBuildFile; fileRef = 936C43F718E933EF002B4FB2 /* Gamedata.m */; };
 		937FEE6718DA3A0B00DE3973 /* icon1p 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 937FEE6618DA3A0B00DE3973 /* icon1p 2.png */; };
 		937FEE6918DA3AA200DE3973 /* icon1p 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 937FEE6818DA3AA200DE3973 /* icon1p 3.png */; };
 		937FEE6D18DA3B6900DE3973 /* icon1p.png in Resources */ = {isa = PBXBuildFile; fileRef = 937FEE6C18DA3B6900DE3973 /* icon1p.png */; };
@@ -208,6 +209,8 @@
 		93294D7E17E4029300CD7F42 /* portfoliohistory.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portfoliohistory.txt; sourceTree = "<group>"; };
 		933D51D4185FE86900E6EF6D /* PortfolioLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PortfolioLog.h; path = ../PortfolioLog.h; sourceTree = "<group>"; };
 		933D51D5185FE86900E6EF6D /* PortfolioLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PortfolioLog.m; path = ../PortfolioLog.m; sourceTree = "<group>"; };
+		936C43F618E933EF002B4FB2 /* Gamedata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Gamedata.h; sourceTree = "<group>"; };
+		936C43F718E933EF002B4FB2 /* Gamedata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Gamedata.m; sourceTree = "<group>"; };
 		937FEE6618DA3A0B00DE3973 /* icon1p 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon1p 2.png"; sourceTree = "<group>"; };
 		937FEE6818DA3AA200DE3973 /* icon1p 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon1p 3.png"; sourceTree = "<group>"; };
 		937FEE6C18DA3B6900DE3973 /* icon1p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon1p.png; sourceTree = "<group>"; };
@@ -509,6 +512,8 @@
 			isa = PBXGroup;
 			children = (
 				93C7138D17A3FCBC00258C6A /* themodel.xcdatamodeld */,
+				936C43F618E933EF002B4FB2 /* Gamedata.h */,
+				936C43F718E933EF002B4FB2 /* Gamedata.m */,
 				93E19F8117A36420000D60B5 /* BayTrade */,
 				93E19FB017A36420000D60B5 /* BayTradeTests */,
 				93E19F7A17A36420000D60B5 /* Frameworks */,
@@ -838,6 +843,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				93E19FB817A36420000D60B5 /* BayTradeTests.m in Sources */,
+				936C43F818E933EF002B4FB2 /* Gamedata.m in Sources */,
 				7DF8F95717BC7F91005553A1 /* User.m in Sources */,
 				528E8BA317E379B7006E21FB /* UIColor+BTFlatColors.m in Sources */,
 			);

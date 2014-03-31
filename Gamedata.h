@@ -13,5 +13,6 @@
 @interface Gamedata : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * marketopen;
+@property (nonatomic, retain) NSString * gamedata_id;
 
 @end

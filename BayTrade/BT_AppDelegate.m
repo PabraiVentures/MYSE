@@ -30,7 +30,7 @@
 {
   [NSTimeZone setDefaultTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"EST"]];
     [FBProfilePictureView class]; //to make prof pic nice/right size
-    self.client = [[SMClient alloc] initWithAPIVersion:@"0" publicKey:@"ef598654-95fb-4ecd-8f13-9309f2fcad0f"];
+    self.client = [[SMClient alloc] initWithAPIVersion:@"1" publicKey:@"4d770b35-0a4e-47f9-a85b-77c8d0f0e605"];
     
     //STACKMOB CORE DATA STORE initialization
     self.coreDataStore = [self.client coreDataStoreWithManagedObjectModel:self.managedObjectModel];

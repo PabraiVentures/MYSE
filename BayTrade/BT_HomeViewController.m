@@ -13,7 +13,7 @@
 #import "StackMob.h"
 #import "CorePortfolioHistory.h"
 #import "PortfolioLog.h"
-
+#import "Gamedata.h"
 @interface BT_HomeViewController ()
 
 @end
@@ -37,7 +37,13 @@
     self.rankLabel.text=[NSString stringWithFormat:@"%@", self.userCache.coreModel.portfolio.ranking];
     
     //[self initPlot];
+  
+  
+  
+
+  
 }
+
 - (void) viewWillDisappear:(BOOL)animated
 {
   [self.iAd removeFromSuperview];
@@ -220,6 +226,27 @@
 /*Check if page has been updated in the last 1 minute.*/
 -(void)viewDidAppear:(BOOL)animated
 {
+  
+  
+  
+  NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Gamedata"];
+  // query for coremodel for THIS user
+  NSString* getRightHist = [NSString stringWithFormat:@"gamedata_id == %i", 1];
+  [fetchRequest setPredicate:[NSPredicate predicateWithFormat:getRightHist]];
+  // loadedRankings = [[NSMutableArray alloc] init];
+  /**********START CODE BLOCK FOR REQUEST ACTION************/
+  [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {
+    Gamedata* gd= [results objectAtIndex:0];
+    if ([gd.marketopen intValue]){
+      [self.statusLabel setText:@"Market is open"];
+    }
+    else{
+      [self.statusLabel setText:@"Market is closed"];
+      
+    }
+  } onFailure:^(NSError *error) {
+    NSLog(@"There was an error! %@", error);
+  }];
     NSLog(@"last updated: %@", lastUpdated);
     if (!lastUpdated) {
         NSLog(@"initializing lastupdated in home.");

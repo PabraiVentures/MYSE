@@ -35,5 +35,6 @@
 @property (strong, nonatomic) IBOutlet UIImageView *changeInRankingImage;
 @property (strong, nonatomic) IBOutlet UILabel *rankLabel;
 @property (weak, nonatomic) IBOutlet ADBannerView *iAd;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
 @end

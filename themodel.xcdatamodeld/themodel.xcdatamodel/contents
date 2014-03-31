@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3396" systemVersion="13A603" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="13C64" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="CoreModel" syncable="YES">
         <attribute name="coremodel_id" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="portfolio" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="CorePortfolio" inverseName="model" inverseEntity="CorePortfolio" syncable="YES"/>
@@ -41,6 +41,10 @@
         <attribute name="tradeprice" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <relationship name="model" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="CoreModel" inverseName="tradeevents" inverseEntity="CoreModel" syncable="YES"/>
     </entity>
+    <entity name="Gamedata" representedClassName="Gamedata" syncable="YES">
+        <attribute name="gamedata_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="marketopen" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+    </entity>
     <entity name="PortfolioLog" representedClassName="PortfolioLog" syncable="YES">
         <attribute name="accountvalue" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="logtime" optional="YES" attributeType="String" syncable="YES"/>
@@ -74,5 +78,6 @@
         <element name="PortfolioLog" positionX="0" positionY="0" width="0" height="0"/>
         <element name="StockOrder" positionX="0" positionY="0" width="0" height="0"/>
         <element name="User" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Gamedata" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

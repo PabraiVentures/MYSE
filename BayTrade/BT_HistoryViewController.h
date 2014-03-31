@@ -15,7 +15,7 @@
 #import "CorePortfolio.h"
 #import "CoreTradeEvent.h"
 #import "StackMob.h"
-
+#import <iAd/iAd.h>
 @interface BT_HistoryViewController : UIViewController <UITabBarControllerDelegate, UITableViewDataSource, UITableViewDelegate> {
     NSArray *events;
   NSArray *orders;
@@ -25,5 +25,6 @@
 @property (strong, nonatomic) IBOutlet UITableView *historyTable;
 @property (weak, nonatomic) Cache* userCache;
 @property (weak,nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (weak, nonatomic) IBOutlet ADBannerView *ad;
 
 @end

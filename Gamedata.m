@@ -12,5 +12,5 @@
 @implementation Gamedata
 
 @dynamic marketopen;
-
+@dynamic gamedata_id;
 @end

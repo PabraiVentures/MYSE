@@ -90,7 +90,11 @@
 
 
     NSLog(@"curr prices type is %@", [self.currentPrices class]);
-
+    if (!self.currentPrices){
+      
+      NSLog(@"return");
+      return;
+    }
     [self.currentPrices setValue:[NSArray arrayWithObject:[self.currentPrices valueForKeyPath:@"query.results.quote"] ] forKeyPath:@"query.results.quote"];
     NSLog(@"firstif");
   }

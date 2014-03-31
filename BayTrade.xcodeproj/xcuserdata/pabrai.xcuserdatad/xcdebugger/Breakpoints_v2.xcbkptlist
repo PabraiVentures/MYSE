@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BayTrade/BT_TradeViewController.m"
-            timestampString = "417830766.012691"
+            timestampString = "417938357.096947"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "304"
-            endingLineNumber = "304"
+            startingLineNumber = "324"
+            endingLineNumber = "324"
             landmarkName = "-stockForCorePortfolio:andAmount:andPrice:"
             landmarkType = "5">
          </BreakpointContent>
@@ -156,11 +156,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BayTrade/BT_TradeViewController.m"
-            timestampString = "417830766.012691"
+            timestampString = "417938357.096947"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "390"
-            endingLineNumber = "390"
+            startingLineNumber = "410"
+            endingLineNumber = "410"
             landmarkName = "-stockAndAmountFieldsAreValid"
             landmarkType = "5">
          </BreakpointContent>
@@ -172,11 +172,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BayTrade/BT_TradeViewController.m"
-            timestampString = "417830766.012691"
+            timestampString = "417938357.096947"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "92"
-            endingLineNumber = "92"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
             landmarkName = "-dismissKeyboard"
             landmarkType = "5">
          </BreakpointContent>
