@@ -18,7 +18,7 @@
 #import "CorePortfolio.h"
 #import "StockOrder.h"
 #import <FacebookSDK/FacebookSDK.h>
-
+#import "Gamedata.h"
 @interface BT_TradeViewController ()
 
 @end
@@ -51,6 +51,26 @@
 
 /*Check if page has been updated in the last 30 seconds.*/
 - (void) viewDidAppear:(BOOL)animated {
+  
+  NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Gamedata"];
+  // query for coremodel for THIS user
+  NSString* getRightHist = [NSString stringWithFormat:@"gamedata_id == %i", 1];
+  [fetchRequest setPredicate:[NSPredicate predicateWithFormat:getRightHist]];
+  // loadedRankings = [[NSMutableArray alloc] init];
+  /**********START CODE BLOCK FOR REQUEST ACTION************/
+  [self.managedObjectContext executeFetchRequest:fetchRequest onSuccess:^(NSArray *results) {
+    Gamedata* gd= [results objectAtIndex:0];
+    if ([gd.marketopen intValue]){
+      [self.statusLabel setText:@"Market is open"];
+    }
+    else{
+      [self.statusLabel setText:@"Market is closed"];
+      
+    }
+  } onFailure:^(NSError *error) {
+    NSLog(@"There was an error! %@", error);
+  }];
+  
     if (!lastUpdated) {
         lastUpdated = [NSDate date];
         return;
@@ -274,6 +294,8 @@
         [self showErrorAlert:@"Try Again" andMessage:@"Stock Data Currently Not Available"];
         return -1;
     }
+  
+
     if (data == NULL) return -1;
   
   
@@ -281,7 +303,7 @@
   
   
   
-  if(myStockPrice == NULL || amount == 0) [self showErrorAlert:@"Error" andMessage:@"Invalid symbol or amount"];
+  if(myStockPrice == NULL || amount == 0 || ([myStockPrice doubleValue]<.01) ) [self showErrorAlert:@"Error" andMessage:@"Invalid symbol or amount"];
     else {
         reservedBuyPrice = [myStockPrice doubleValue];
       self.priceLabel.text=[NSString stringWithFormat:@"%f",reservedBuyPrice];
